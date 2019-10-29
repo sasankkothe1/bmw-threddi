@@ -8,7 +8,8 @@ Using Terminal
 ### Run the Example
 
 ### Linux
-If you are using linux system, we recommand you to use docker
+If you are using linux system, we recommand you to use docker.
+
 Firstly you need to build the docker images in your local laptop
 
 `docker-compose build`
