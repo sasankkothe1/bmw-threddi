@@ -24,4 +24,12 @@ Name the branches according to the branch types:
 - 👶 **Minor**: `minor/xx-yy-zz` -- refactorings or something similar.
 
 #### Commit messages
+Commit Message should start with the corresponding Issue Number it is referred to. 
+
 Write commit messages based on these [guidelines](https://chris.beams.io/posts/git-commit/) ❤
+
+# Directory structure
+
+For every service within the architecture should have an own folder. Please use lowercase letters divided by underscores ( _ ).
+
+
