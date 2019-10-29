@@ -1,5 +1,23 @@
 # global-supply-chain-threat-analysis
 
+### Installation
+Using Terminal
+
+`git clone https://gitlab.lrz.de/ge72vob/global-supply-chain-threat-analysis.git`
+
+### Run the Example
+
+### Linux
+If you are using linux system, we recommand you to use docker.
+
+Firstly you need to build the docker images in your local laptop
+
+`docker-compose build`
+
+Then you can start the whole project with:
+
+`docker-compose up`
+
 
 #### Git Workflow
 Please use feature branches only to commit your code. 
