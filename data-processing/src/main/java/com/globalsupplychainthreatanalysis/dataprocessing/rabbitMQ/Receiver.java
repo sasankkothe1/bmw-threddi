@@ -1,4 +1,4 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.RabbitMQ;
+package com.globalsupplychainthreatanalysis.dataprocessing.rabbitMQ;
 
 import com.globalsupplychainthreatanalysis.dataprocessing.configuration.RabbitConfig;
 import com.globalsupplychainthreatanalysis.dataprocessing.data.Message;
