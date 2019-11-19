@@ -45,7 +45,7 @@ services:
     image: docker.elastic.co/kibana/kibana:7.4.1
     container_name: kibana
     ports:
-      - "5601:5601"
+      - 5601:5601
     volumes:
       - type: bind
         source: ./kibana/kibana.yml
@@ -57,6 +57,17 @@ services:
       - elasticsearch
     external_links:
       - elasticsearch
+
+  write-in-service:
+    build: ./write-in-elasticsearch
+    environment:
+      ## adjust the routing key!!
+      -ROUTING_KEY: "*.*.*"
+    ports:
+      - 8900:8900
+    depends_on:
+      - elasticsearch
+      - rabbit
 
 networks:
   docker-elk:

@@ -42,14 +42,12 @@ public class ElasticSearchRepository {
         IndexRequest request = new IndexRequest(index).id(event.getId() + "").source(JSON.toJSONString(event), XContentType.JSON);
 
         request.timeout(TimeValue.timeValueSeconds(10));
-        //ShardId shardId = new ShardId(new Index("my-shard", "uuid"), 10);
-        //request.setShardId(shardId);
         IndexResponse indexResponse = highLevelClient.index(request, RequestOptions.DEFAULT);
         DocWriteResponse.Result indexResponseResult = indexResponse.getResult();
         if (indexResponseResult == DocWriteResponse.Result.CREATED) {
-            // todo if created
+            logger.info("Successfully write in event " + event.getId());
         } else if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
-            // todo if updated
+            logger.error("Failed write in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
         }
         ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
         if (shardInfo.getTotal() != shardInfo.getSuccessful()) {

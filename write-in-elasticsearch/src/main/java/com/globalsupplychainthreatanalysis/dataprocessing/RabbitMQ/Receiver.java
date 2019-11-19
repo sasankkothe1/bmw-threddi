@@ -23,7 +23,7 @@ public class Receiver {
 
     @RabbitListener(queues = RabbitConfig.QUEUE)
     public void receiveDirectQueue(Event event){
-        logger.info("received event");
+        logger.info("received event" + event.getDescription());
         if(event.getId() == null){
             UUID uuid = UUID.randomUUID();
             event.setId(uuid.toString());
@@ -31,7 +31,7 @@ public class Receiver {
         try {
             elasticSearchRepository.add("security/events", event);
         } catch (IOException e) {
-            logger.error("Failed to add event in elasticsearch");
+            logger.error("Failed to add event in elasticsearch" + event.getDescription());
         }
     }
 }
