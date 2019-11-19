@@ -27,11 +27,11 @@ public class Receiver {
         if(event.getId() == null){
             UUID uuid = UUID.randomUUID();
             event.setId(uuid.toString());
-            try {
-                elasticSearchRepository.add("security/events", event);
-            } catch (IOException e) {
-                logger.error("Failed to add event in elasticsearch");
-            }
+        }
+        try {
+            elasticSearchRepository.add("security/events", event);
+        } catch (IOException e) {
+            logger.error("Failed to add event in elasticsearch");
         }
     }
 }
