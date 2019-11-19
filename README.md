@@ -7,14 +7,13 @@ Using Terminal
 
 ### Run the Example
 
-### Linux
-If you are using linux system, we recommand you to use docker.
+Firstly you need to get into folder write-in-elasticsearch and type in command 
 
-Firstly you need to build the docker images in your local laptop
+`mvn package` 
 
-`docker-compose build`
+to build the service
 
-Then you can start the whole project with:
+Then use command `cd ..` to get back to the root folder, now you can start the whole project with:
 
 `docker-compose up`
 
