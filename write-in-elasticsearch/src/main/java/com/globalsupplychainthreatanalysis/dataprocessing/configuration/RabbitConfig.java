@@ -12,11 +12,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
-    public static final String QUEUE = "events";
+
     public final static String TOPIC_EXCHANGE_NAME = "topic.exchange";
 
     @Value(value = "rabbit.mq.routing-key")
     private String routingKey;
+
+    @Value(value = "rabbit.mq.queue")
+    public String QUEUE;
+
 
     @Bean
     public Declarables topicBindings() {

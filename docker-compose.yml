@@ -62,14 +62,15 @@ services:
     build: ./write-in-elasticsearch
     environment:
       ## adjust the routing key!!
-      - ROUTING_KEY="*.*.*"
-      - ELASTIC_SEARCH_IP=192.168.99.100:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=changeme
       - RABBITMQ_HOST=192.168.99.100
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=rabbitmq
       - RABBITMQ_PASSWORD=rabbitmq
+      - ROUTING_KEY="*.*.*"
+      - RABBITMQ_QUEUE=events
+      - ELASTIC_SEARCH_IP=192.168.99.100:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
     ports:
       - 8900:8900
     depends_on:
