@@ -7,16 +7,11 @@ Using Terminal
 
 ### Run the Example
 
-Firstly you need to get into folder write-in-elasticsearch and type in command 
-
-`mvn package` 
-
-to build the service
-
-Then use command `cd ..` to get back to the root folder, now you can start the whole project with:
+start the whole project with:
 
 `docker-compose up`
 
+the images will be built up automatically. 
 
 #### Git Workflow
 Please use feature branches only to commit your code. 
