@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Supply Chain Threat Analysis Dashboard API
-  description: API providing basic functionalities of the Threddi (preliminary name)
-    BMW Supply Chain Threat Analysis Dashboard
+  version: '1.0.0'
+  title: 'Supply Chain Threat Analysis Dashboard API'
+  description: 'API providing basic functionalities of the Threddi (preliminary name) BMW Supply Chain Threat Analysis Dashboard'
   termsOfService: https://foo.com/terms-of-use
   contact:
     name: Bernhard
@@ -11,14 +11,6 @@ info:
   license:
     name: BMW License
     url: http://foo.com/dashboard
-  version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/ElHong/Supply_Chain_Threat_Analysis_Dashboard_API/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://de.foo.com/v1
-  description: Dev Server
-- url: https://de.foo.com/v2
-  description: Prod Server
 tags:
 - name: event
   description: Access to event objects
@@ -27,21 +19,12 @@ tags:
     url: https://www.gdeltproject.org/data.html#documentation
 - name: location
   description: Access to object locations
-- name: GDELT_event
-  description: Access to GDELT event objects
-  externalDocs:
-    description: Find out more
-    url: https://www.gdeltproject.org/data.html#documentation
-- name: Twitter_event
-  description: Access to Twitter event objects
-  externalDocs:
-    description: Find out more
-    url: https://developer.twitter.com/en/docs/tweets/timelines/overview
+
+
 paths:
   /events:
     summary: Event object type
-    description: This resource represents an individual event in the system. Each
-      event is identified by an unique event_id.
+    description: This resource represents an individual event in the system. Each event is identified by an unique event_id.
     get:
       tags:
       - event
@@ -56,10 +39,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/General_event'
+                  $ref: '#/components/schemas/events'
         400:
           description: Invalid request
           content: {}
+
   /events/{eventId}:
     summary: Tbd
     description: Tbd
@@ -74,8 +58,6 @@ paths:
         in: path
         description: ID of event that needs to be fetched
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       responses:
@@ -84,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/General_event'
+                $ref: '#/components/schemas/events'
         400:
           description: Invalid request
           content: {}
@@ -101,8 +83,6 @@ paths:
         in: path
         description: Event_id of the location that need to be updated
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       responses:
@@ -114,10 +94,10 @@ paths:
         404:
           description: ID not found
           content: {}
+
   /mainlocations:
     summary: Main location object type
-    description: This resource represents an individual location object in the system.
-      Each location is identified by an unique location_id.
+    description: This resource represents an individual location object in the system. Each location is identified by an unique location_id.
     get:
       tags:
       - location
@@ -154,6 +134,7 @@ paths:
         405:
           description: Invalid input
           content: {}
+
   /mainlocations/{location_id}:
     put:
       tags:
@@ -166,8 +147,6 @@ paths:
         in: path
         description: Location_id that need to be updated
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       requestBody:
@@ -201,8 +180,6 @@ paths:
         in: path
         description: Location_id of the location that need to be updated
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       responses:
@@ -214,180 +191,59 @@ paths:
         404:
           description: ID not found
           content: {}
-  /GDELT_events:
-    summary: GDELT event object type
-    description: This resource represents an individual GDELT event object in the
-      system. Each event is identified by an unique GLOBELEVENTID.
-    get:
-      tags:
-      - GDELT_event
-      summary: Return array with all GDELT event information.
-      description: Obtain information about all GDELT event objects stored in the
-        database.
-      operationId: getGDELTEvents
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GDELT_event'
-        400:
-          description: Invalid request
-          content: {}
-  /GDELT_events/{GLOBALEVENTID}:
-    delete:
-      tags:
-      - GDELT_event
-      summary: Delete GDELT event by ID
-      operationId: deleteGDELTEventByID
-      parameters:
-      - name: GLOBALEVENTID
-        in: path
-        description: GlobalEventID of the GDELT event that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        200:
-          description: successful operation
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: ID not found
-          content: {}
-  /Twitter_events:
-    summary: Twitter event object type
-    description: This resource represents an individual Twitter event object in the
-      system.
-    get:
-      tags:
-      - Twitter_event
-      summary: Return array with all Twitter event information.
-      description: Obtain information about all Twitter event objects stored in the
-        database.
-      operationId: getTwitterEvents
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Twitter_event'
-        400:
-          description: Invalid request
-          content: {}
-  /Twitter_events/{tweet_id}:
-    delete:
-      tags:
-      - Twitter_event
-      summary: Delete GDELT event by ID
-      operationId: deleteTwitterEventByID
-      parameters:
-      - name: tweet_id
-        in: path
-        description: GlobalEventID of the GDELT event that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        200:
-          description: Successful operation
-        400:
-          description: Invalid request
-          content: {}
-        404:
-          description: ID not found
-          content: {}
+
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ElHong/Supply_Chain_Threat_Analysis_Dashboard_API/1.0.0
+  - description: Dev Server
+    url: https://de.foo.com/v1
+  - description: Prod Server
+    url: https://de.foo.com/v2
+
 components:
   schemas:
-    General_event:
+    events:
       type: object
       properties:
         event_id:
           type: string
-        sentiment_group:
-          maximum: 2
-          minimum: -2
+        sentiment_group: # 2 highly positive and -2 highly negative
           type: integer
+          minimum: -2
+          maximum: 2
         lat:
           type: string
         long:
           type: string
-        url:
+        url: #Source of the Incident
           type: string
-        description:
+        description: #Short description of the event
           type: string
-        importance:
+        importance: # Importance of the Event 0 -> not -> 1 yes
           type: number
           format: float
-        origin:
-          type: string
         Actor:
-          $ref: '#/components/schemas/General_event_Actor'
-    GDELT_event:
-      type: object
-      properties:
-        GLOBALEVENTID:
-          type: string
-        event_code:
-          type: string
-        event_baseCode:
-          type: string
-        quad_class:
-          maximum: 4
-          minimum: 1
-          type: integer
-        goldstein_scale:
-          maximum: 10
-          minimum: -10
-          type: integer
-        avg_tone:
-          maximum: 100
-          minimum: -100
-          type: integer
-        nummentions:
-          type: integer
-        numsources:
-          type: integer
-        numarticles:
-          type: integer
-    Twitter_event:
-      type: object
-      properties:
-        tweet_id:
-          type: string
-        publishdate:
-          type: string
-          format: datetime
-        text:
-          type: string
-        hastags:
+          type: object
+          properties:
+              actor_id:
+                type: string
+              actor_name:
+                type: string
+              actor_origin:
+                type: string
+              actor_group:
+                type: string
+              actor_type: #//[police, military, rebels, etc]
+                type: array
+                items:
+                    type: string
+        source_dependent_information:
           type: array
           items:
-            type: string
-        poster:
-          type: string
-        likes:
-          type: integer
-          format: int64
-        count_retweets:
-          type: integer
-          format: int64
-        follower_poster:
-          type: integer
-          format: int64
-        is_influencer:
-          type: boolean
+            type: object
     mainlocations:
       type: object
       properties:
@@ -399,15 +255,15 @@ components:
           type: string
         description:
           type: string
-        location_type:
+        location_type: #plant, storage, person
           type: string
         image_url:
           type: string
         priority:
-          maximum: 10
-          minimum: 0
           type: integer
           format: int32
+          maximum: 10
+          minimum: 0
         additional_information:
           type: array
           items:
@@ -415,26 +271,11 @@ components:
     historical_events:
       type: object
       properties:
-        location_id:
+        location_id: # id of location
           type: string
         day:
           type: string
           format: datetime
-        event_count:
+        event_count: # Amount of events at a particular day
           type: integer
           format: int64
-    General_event_Actor:
-      type: object
-      properties:
-        actor_id:
-          type: string
-        actor_name:
-          type: string
-        actor_origin:
-          type: string
-        actor_group:
-          type: string
-        actor_type:
-          type: array
-          items:
-            type: string
