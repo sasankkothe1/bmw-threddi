@@ -21,7 +21,7 @@ def sigmoid(value):
 class GDELTExtractor(Extractor):
 
     def __init__(self):
-        super(GDELTExtractor, self).__init__("")
+        super(GDELTExtractor, self).__init__()
 
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")

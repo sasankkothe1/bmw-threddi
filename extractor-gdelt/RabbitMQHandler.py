@@ -106,6 +106,7 @@ class RabbitMQHandler:
         :param routing_key:
         :return:
         """
+        print(routing_key)
         self._channel.basic_publish(exchange=self._destination_exchange,
                                     routing_key=routing_key,
                                     body=message)

@@ -13,7 +13,7 @@ processing:
 default_properties:
 
   #Interval of Polling in Minutes
-  polling: 15
+  polling: 1
 
   # Describes which of the base fields, can be directly mapped to specific fields
   field_mappings:

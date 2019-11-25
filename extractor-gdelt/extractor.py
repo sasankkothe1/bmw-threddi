@@ -1,7 +1,9 @@
 import json
 import logging
 import os
+import time
 import uuid
+from threading import Thread
 
 import yaml
 import pandas as pd
@@ -18,38 +20,73 @@ class Extractor:
     _output_json = None
     _additional_information = pd.DataFrame()
     _output_exchange = None
-    _routing_key = ""
+    _routing_key = None
+    _rabbitmq_handler = None
 
-    def __init__(self, origin_name, configuration_file="source.yaml"):
+    def __init__(self, configuration_file="source.yaml"):
         self._load_config(configuration_file)
         self.origin_name = self._config.get("id") or "unknown"
-
-        self._source_df = self.fetch_current_data()
 
         self._output_exchange = os.environ.get("OUTPUT_EXCHANGE")
         assert self._output_exchange
 
+        self._logger = logging.getLogger(__name__)
+        self._logger.setLevel(int(os.environ.get('LOG_LEVEL')) or logging.WARNING)
+
         self._create_routing_key()
 
-        try:
-            self._do_mapping()
-            self._add_fields()
-        except KeyError as e:
-            logging.error("One accessed Key is not available, when adding fields...{}".format(e))
-
-        self._convert_to_json()
-
-        try:
-            self._add_additional_information()
-        except KeyError as e:
-            logging.error("One accessed Key is not available. when adding additional information.....{}".format(e))
-
         # Send to Queue
-        rabbitmq_handler = RabbitMQHandler.RabbitMQHandler()
-        rabbitmq_handler.init_destination_exchange(self._output_exchange)
+        self._rabbitmq_handler = RabbitMQHandler.RabbitMQHandler()
+        self._rabbitmq_handler.init_destination_exchange(self._output_exchange)
 
-        message = json.dumps(self._output_json, default=self.convert)
-        rabbitmq_handler.send_message(message, routing_key=self._routing_key)
+        self._init_threading()
+        self._start_threading()
+
+    def _init_threading(self):
+        minutes = int(self._config.get("default_properties").get("polling"))
+        self._polling_thread = Thread(target=self._do_polling, args=(minutes,))
+        self._logger.info("Start Logging with polling of {}".format(minutes))
+
+    def _start_threading(self):
+        self._is_polling = True
+        self._polling_thread.start()
+
+    def _do_polling(self, minutes):
+
+        logging.info("Start polling...")
+        iteration = 0
+        while self._is_polling:
+            iteration += 1
+            self._source_df = self.fetch_current_data()
+            self._logger.info("Iteration {iteration}".format(iteration=iteration))
+
+            try:
+                self._do_mapping()
+                self._add_fields()
+            except KeyError as e:
+                self._logger.error("One accessed Key is not available, when adding fields...{}".format(e))
+
+            self._convert_to_json()
+
+            try:
+                self._add_additional_information()
+            except KeyError as e:
+                self._logger.error(
+                    "One accessed Key is not available. when adding additional information.....{}".format(e))
+
+            message = json.dumps(self._output_json, default=self.convert)
+            self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)
+
+            self._logger.debug("Waiting for {min} minutes".format(min=minutes))
+            # Sleep for 60* Minutes seconds
+            time.sleep(minutes*60)
+            self._clear_data()
+
+    def _clear_data(self):
+        self._source_df = None
+        self._output_frame = pd.DataFrame()
+        self._output_json = None
+        self._additional_information = pd.DataFrame()
 
     @staticmethod
     def convert(o):
@@ -91,9 +128,6 @@ class Extractor:
     def stop_polling(self):
         pass
 
-    def _do_polling(self):
-        pass
-
     def _add_additional_information(self):
         """
         Adding the additional information based on the source.yaml. Furthermore the private JSON file
@@ -126,7 +160,7 @@ class Extractor:
         except AssertionError as e:
             logging.error("Processing step names are not allowed to contain '.'.", e)
 
-        return routing_key[:-1]
+        self._routing_key = routing_key[:-1]
 
     # Field Mappings
     def add_id(self, source_df):
