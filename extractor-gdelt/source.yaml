@@ -1,0 +1,73 @@
+
+name: GDELT Database
+id: gdelt_01
+description: Datasource which fetches data from the GDELT Database
+
+# Shows which NLP Phases have to be done
+processing:
+  - TestNLP1
+  - TestNLP2
+  - Datastore
+
+# Properties which will be copied to the configuration database and then managed from there
+default_properties:
+
+  #Interval of Polling in Minutes
+  polling: 15
+
+  # Describes which of the base fields, can be directly mapped to specific fields
+  field_mappings:
+    #importance
+    #sentiment_group
+    long: ActionGeo_Long
+    lat: ActionGeo_Lat
+    url: SOURCEURL
+    description: CAMEOCodeDescription
+
+  # Minimum of impact which an event need to be added. On the absolute Goldstein-Scale
+  filter_options:
+    - field: 'GoldsteinScale'
+      method: 'GreaterThanAbs'
+      threshold: 10
+
+    - field: 'NumArticles'
+      method: 'GreaterThan'
+      threshold: 10
+
+  # Fields to add to additional Information, CaseSensitive
+  source_dependent_information:
+    - displayname: GLOBALEVENT_ID
+      id: GLOBALEVENTID
+      description: Unique event-identifier for GDELT Events
+
+    - displayname: GDELT Event Code
+      id: EventCode
+      description: 
+
+    - displayname: GDELT Base Code
+      id: EventBaseCode
+      description: GDELT Event Code for the respective Base Event
+
+    - displayname: Quad_class
+      id: QuadClass
+      description: Quad Class of GDELT
+
+    - displayName: Number of Sources
+      id: NumSources
+      description: Number of Sources
+
+    - displayName: Number of Articles
+      id: NumArticles
+      description: Number of Articles about the event
+
+    - displayName: CAMEO Description
+      id: CAMEOCodeDescription
+      description: Description of CAMEO Code
+
+    - displayName: Impact
+      id: GoldsteinScale
+      description: Goldstein Scale to measure the impact of an event
+
+    - displayName: Average Tone
+      id: AvgTone
+      description: Sentiment Analyses on the event by GDELT
