@@ -27,11 +27,12 @@ public class ElasticSearchRepository {
     @Autowired
     private RestHighLevelClient highLevelClient;
 
-    public Event find(String index, String id) {
+    public GetResponse find(String index, String id) {
         GetRequest getRequest = new GetRequest(index, id);
         try {
             GetResponse response = highLevelClient.get(getRequest, RequestOptions.DEFAULT);
-            return JSONObject.parseObject(response.getSourceAsBytes(), Event.class);
+            return response;
+//          return JSONObject.parseObject(response.getSourceAsBytes(), Event.class);
         }catch (IOException e){
             logger.error("error happens, when trying to find the event in elasticsearch");
             return null;
@@ -44,10 +45,8 @@ public class ElasticSearchRepository {
         request.timeout(TimeValue.timeValueSeconds(10));
         IndexResponse indexResponse = highLevelClient.index(request, RequestOptions.DEFAULT);
         DocWriteResponse.Result indexResponseResult = indexResponse.getResult();
-        if (indexResponseResult == DocWriteResponse.Result.CREATED) {
-            logger.info("Successfully write in event " + event.getId());
-        } else if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
-            logger.error("Failed write in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
+        if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
+            logger.error("Overwritten in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
         }
         ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
         if (shardInfo.getTotal() != shardInfo.getSuccessful()) {

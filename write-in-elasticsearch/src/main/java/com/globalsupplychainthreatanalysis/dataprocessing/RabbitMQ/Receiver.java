@@ -1,5 +1,6 @@
 package com.globalsupplychainthreatanalysis.dataprocessing.RabbitMQ;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globalsupplychainthreatanalysis.dataprocessing.configuration.RabbitConfig;
 import com.globalsupplychainthreatanalysis.dataprocessing.data.Event;
 import com.globalsupplychainthreatanalysis.dataprocessing.elasticsearch.ElasticSearchRepository;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -21,17 +25,29 @@ public class Receiver {
     @Autowired
     ElasticSearchRepository elasticSearchRepository;
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
     @RabbitListener(queues = RabbitConfig.QUEUE)
-    public void receiveDirectQueue(Event event){
-        logger.info("received event" + event.getDescription());
-        if(event.getId() == null){
-            UUID uuid = UUID.randomUUID();
-            event.setId(uuid.toString());
-        }
+    public void receiveDirectQueue(byte[] eventsInByte) {
+
         try {
-            elasticSearchRepository.add("security/events", event);
+            List<Event> events = objectMapper.readValue(eventsInByte, objectMapper.getTypeFactory().constructCollectionType(List.class, Event.class));
+            logger.info("received events + number" + events.size());
+            for(Event event : events) {
+                if (event.getId() == null) {
+                    UUID uuid = UUID.randomUUID();
+                    event.setId(uuid.toString());
+                }
+                elasticSearchRepository.add("events", event);
+            }
         } catch (IOException e) {
-            logger.error("Failed to add event in elasticsearch" + event.getDescription());
+            logger.error("Failed to holds events from processing services" + e.getMessage());
         }
+//
+//        try {
+//
+//        } catch (IOException e) {
+//            logger.error("Failed to add event in elasticsearch" + event.getDescription());
+//        }
     }
 }
