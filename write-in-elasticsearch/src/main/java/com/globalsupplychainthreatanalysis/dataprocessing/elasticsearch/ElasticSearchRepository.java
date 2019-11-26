@@ -46,7 +46,7 @@ public class ElasticSearchRepository {
         IndexResponse indexResponse = highLevelClient.index(request, RequestOptions.DEFAULT);
         DocWriteResponse.Result indexResponseResult = indexResponse.getResult();
         if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
-            logger.error("Overwritten in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
+            logger.warn("Overwritten in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
         }
         ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
         if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
