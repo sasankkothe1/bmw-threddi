@@ -89,7 +89,12 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
-
+  BackEnd:
+    build: ./Backend
+    image: maxiaolin/web_application_bmw:latest
+    container_name: WebApplicationBMW
+    ports:
+    - "3000:3000"
 networks:
   docker-elk:
     driver: bridge
