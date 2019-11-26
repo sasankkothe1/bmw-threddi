@@ -13,6 +13,9 @@ start the whole project with:
 
 the images will be built up automatically. 
 
+### Backend Swagger-ui
+localhost:3000/api-docs
+
 #### Git Workflow
 Please use feature branches only to commit your code. 
 
