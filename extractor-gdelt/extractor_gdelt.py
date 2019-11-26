@@ -26,8 +26,9 @@ class GDELTExtractor(Extractor):
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")
         gd2 = gdelt.gdelt(version=2)
+        print(datetime.now().strftime("%Y %b %d"))
         # results = gd2.Search(datetime.now().strftime("%Y %b %d"), table="events", output='pandas')
-        results = gd2.Search("2019 Jan 8", table="events", output='pandas')
+        results = gd2.Search("2019 Nov 25", table="events", output='pandas')
         logging.info("Fetched {} DataPoints ".format(len(results)))
 
         return results
@@ -51,8 +52,6 @@ class GDELTExtractor(Extractor):
 
     def add_position(self, source_df):
         pass
-
-
 
 if __name__ == '__main__':
     GDELTExtractor()

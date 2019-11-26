@@ -59,6 +59,19 @@ services:
     external_links:
       - elasticsearch
 
+  extractor_gdelt:
+    build:
+      context: ./extractor-gdelt
+    depends_on:
+      - rabbit
+    environment:
+      - MQ_HOST=192.168.99.100
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+
 networks:
   docker-elk:
     driver: bridge
