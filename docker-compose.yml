@@ -45,7 +45,7 @@ services:
     image: docker.elastic.co/kibana/kibana:7.4.1
     container_name: kibana
     ports:
-      - "5601:5601"
+      - 5601:5601
     volumes:
       - type: bind
         source: ./kibana/kibana.yml
@@ -58,6 +58,43 @@ services:
     external_links:
       - elasticsearch
 
+  write-in-service:
+    build: ./write-in-elasticsearch
+    environment:
+      ## adjust the routing key!!
+      - RABBITMQ_HOST=192.168.99.100
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=rabbitmq
+      - RABBITMQ_PASSWORD=rabbitmq
+      - ROUTING_KEY="*.*.*"
+      - RABBITMQ_QUEUE=events
+      - ELASTIC_SEARCH_IP=192.168.99.100:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+    ports:
+      - 8900:8900
+    depends_on:
+      - elasticsearch
+      - rabbit
+
+  extractor_gdelt:
+    build:
+      context: ./extractor-gdelt
+    depends_on:
+      - rabbit
+    environment:
+      - MQ_HOST=192.168.99.100
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+  BackEnd:
+    build: ./Backend
+    image: maxiaolin/web_application_bmw:latest
+    container_name: WebApplicationBMW
+    ports:
+    - "3000:3000"
 networks:
   docker-elk:
     driver: bridge

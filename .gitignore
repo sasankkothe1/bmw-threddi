@@ -32,3 +32,5 @@ build/
 
 ### React and Javascript###
 webfrontend/node_modules
+
+/venv/
