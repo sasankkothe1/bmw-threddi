@@ -1,4 +1,4 @@
-.OptionSet:nth-child(1){
+/*.OptionSet:nth-child(1){
   vertical-align: middle;
 }
 .OptionSet:nth-child(2){
@@ -6,4 +6,26 @@
 }
 .OptionSet:nth-child(3){
     vertical-align: middle;
+}*/
+
+.asideClass {
+  display: flex;
+}
+
+.aside {
+  flex:0 0 0 ;
+  flex-direction: column;
+}
+
+.aside-1 {
+  background: gold;
+  order: 2;
+}
+
+.faIcon {
+  color: #000000;
+}
+
+.fas {
+  font-size: 100%;
 }
