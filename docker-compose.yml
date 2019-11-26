@@ -57,7 +57,6 @@ services:
       - elasticsearch
     external_links:
       - elasticsearch
-
   write-in-service:
     build: ./write-in-elasticsearch
     environment:
@@ -66,17 +65,16 @@ services:
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=rabbitmq
       - RABBITMQ_PASSWORD=rabbitmq
-      - ROUTING_KEY="*.*.*"
-      - RABBITMQ_QUEUE=events
+      - ROUTING_KEY="#.Datastore"
       - ELASTIC_SEARCH_IP=192.168.99.100:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
+      - TOPIC_EXCHANGE_NAME=ex_extractors
     ports:
       - 8900:8900
     depends_on:
       - elasticsearch
       - rabbit
-
   extractor_gdelt:
     build:
       context: ./extractor-gdelt
@@ -89,10 +87,9 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
-  BackEnd:
-    build: ./Backend
-    image: maxiaolin/web_application_bmw:latest
-    container_name: WebApplicationBMW
+  backend:
+    build: ./backend
+    container_name: WebApplicationBMWBackend
     ports:
     - "3000:3000"
 networks:

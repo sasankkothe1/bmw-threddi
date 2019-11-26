@@ -6,9 +6,10 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Event implements Serializable {
 
     private Actor[] actor;
@@ -20,7 +21,7 @@ public class Event implements Serializable {
     private String description;
     private float importance;
     private String origin;
-    private String source_dependent_information;
+    private Set<Dependency> source_dependent_information;
 
     public void setActor(Actor[] actor) {
         this.actor = actor;
@@ -94,5 +95,13 @@ public class Event implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public void setSource_dependent_information(Set<Dependency>  source_dependent_information) {
+        this.source_dependent_information = source_dependent_information;
+    }
+
+    public Set<Dependency> getSource_dependent_information() {
+        return source_dependent_information;
     }
 }
