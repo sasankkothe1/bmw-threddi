@@ -28,12 +28,8 @@ export default class Location extends Component {
     render () {
         return (
         <div className="page-content">
-          <div className="location-display">
-            <FilterableLocationTable locations = {this.state.locations} />
-          </div>
 
-          <Button variant="secondary"> Edit location </Button>
-          <Button variant="danger"> Delete location </Button>
+            <FilterableLocationTable locations = {this.state.locations} />
         </div>
         )
     }

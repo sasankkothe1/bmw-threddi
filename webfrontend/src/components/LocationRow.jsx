@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 
-import Card from "react-bootstrap/Card"
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
+import Button from 'react-bootstrap/Button';
 
 export default class LocationRow extends Component {
   render() {
     const location = this.props.location;
 
     return (
+      <Accordion>
         <Card>
           <Card.Header>
-            {this.props.location.name}
+            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              {this.props.location.name}
+            </Accordion.Toggle>
           </Card.Header>
 
-          <Card.Body>
-            <div>{this.props.location.description}</div>
-          </Card.Body>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <div>{this.props.location.description}</div>
+              <Button variant="secondary"> Edit location </Button>
+              <Button variant="danger"> Delete location </Button>
+            </Card.Body>
+          </Accordion.Collapse>
         </Card>
+      </Accordion>
     )
   }
 }
