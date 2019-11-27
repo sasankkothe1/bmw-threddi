@@ -18,11 +18,13 @@ export default class LocationRow extends Component {
           </Card.Header>
 
           <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <div>{this.props.location.description}</div>
-              <Button variant="secondary"> Edit location </Button>
-              <Button variant="danger"> Delete location </Button>
-            </Card.Body>
+              <Card.Body className="cardBody">
+                <div>{this.props.location.description}</div>
+                <div className="cardBodyButtons">
+                  <Button variant="secondary"> Edit location </Button>
+                  <Button variant="danger"> Delete location </Button>
+                </div>
+              </Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>

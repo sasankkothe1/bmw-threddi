@@ -12,13 +12,14 @@ import './components/Nav.css';
 import './components/SideBar.css';
 import './components/home.css';
 import './components/main.css';
+import './components/LocationRow.css';
 
 
 class App extends Component {
 
 /* we use handler in the name as we are not calling it particularly but we
    are using it to handle something. */
-  
+
   render() {
     return (
       <Router>
