@@ -1,4 +1,4 @@
-package com.globalsupplychainthreatanalysis.dataprocessing;
+package com.globalsupplychainthreatanalysis.writein;
 
 import org.springframework.boot.SpringApplication;
 

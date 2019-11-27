@@ -1,9 +1,9 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.RabbitMQ;
+package com.globalsupplychainthreatanalysis.writein.RabbitMQ;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.globalsupplychainthreatanalysis.dataprocessing.configuration.RabbitConfig;
-import com.globalsupplychainthreatanalysis.dataprocessing.data.Event;
-import com.globalsupplychainthreatanalysis.dataprocessing.elasticsearch.ElasticSearchRepository;
+import com.globalsupplychainthreatanalysis.writein.configuration.RabbitConfig;
+import com.globalsupplychainthreatanalysis.writein.data.Event;
+import com.globalsupplychainthreatanalysis.writein.elasticsearch.ElasticSearchRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -38,7 +36,9 @@ public class Receiver {
                     UUID uuid = UUID.randomUUID();
                     event.setId(uuid.toString());
                 }
-                elasticSearchRepository.add("events", event);
+                if(!elasticSearchRepository.find("events", event.getId())){
+                    elasticSearchRepository.add("events", event);
+                }
             }
         } catch (IOException e) {
             logger.error("Failed to holds events from processing services" + e.getMessage());
