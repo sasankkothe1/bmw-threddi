@@ -9,3 +9,15 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
+
+.typeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.priorityRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

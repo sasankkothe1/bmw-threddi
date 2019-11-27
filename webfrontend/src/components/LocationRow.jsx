@@ -19,7 +19,20 @@ export default class LocationRow extends Component {
 
           <Accordion.Collapse eventKey="0">
               <Card.Body className="cardBody">
+
+                <div className="typeRow">
+                  <div className="typeRowHeader">Type:</div>
+                  <div className="typeRowContent">{this.props.location.type}</div>
+                </div>
+
+                <div>Description:</div>
                 <div>{this.props.location.description}</div>
+
+                <div className="priorityRow">
+                  <div className="typeRowHeader">Priority:</div>
+                  <div className="typeRowContent">{this.props.location.priority}</div>
+                </div>
+
                 <div className="cardBodyButtons">
                   <Button variant="secondary"> Edit location </Button>
                   <Button variant="danger"> Delete location </Button>
