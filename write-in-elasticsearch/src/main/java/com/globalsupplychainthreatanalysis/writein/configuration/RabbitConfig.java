@@ -1,4 +1,4 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.configuration;
+package com.globalsupplychainthreatanalysis.writein.configuration;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
