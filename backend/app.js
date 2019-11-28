@@ -8,7 +8,11 @@ const elasticsearch = require('elasticsearch');
 const client = new elasticsearch.Client({
     host: config.elasticsearchHost,
     log: 'trace',
-    apiVersion: config.elasticsearchVersion, // use the same version of your Elasticsearch instance
+    apiVersion: config.elasticsearchVersion, // use the same version of your Elasticsearch instance,
+	auth: {
+		username: 'elastic',
+		password: 'changeme'
+	}
 });
 
 

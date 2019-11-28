@@ -2,6 +2,7 @@ package com.globalsupplychainthreatanalysis.writein.elasticsearch;
 
 import com.alibaba.fastjson.JSON;
 import com.globalsupplychainthreatanalysis.writein.data.Event;
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -37,6 +38,9 @@ public class ElasticSearchRepository {
 //          return JSONObject.parseObject(response.getSourceAsBytes(), Event.class);
         }catch (IOException e){
             logger.error("error happens, when trying to find the event in elasticsearch");
+            return false;
+        }catch(ElasticsearchStatusException e){
+            logger.info("No such index");
             return false;
         }
     }
