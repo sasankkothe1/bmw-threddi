@@ -1,8 +1,8 @@
 .main {
+    display:flex;
     text-align: left;
     flex-direction: column;
     background: deepskyblue;
     order: 2;
     flex: 3 0px;
   }
-
