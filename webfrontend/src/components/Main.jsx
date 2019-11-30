@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Incident from './Incident';
-import Home from './Home';
+import Home from '../views/home/home';
 import Location from './Location';
 
 export default class Main extends Component {

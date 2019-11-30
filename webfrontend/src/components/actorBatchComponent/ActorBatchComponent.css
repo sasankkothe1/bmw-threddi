@@ -1,0 +1,21 @@
+.actor-batch{
+    display: flex;
+    flex-direction: row;
+
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+
+    margin: 10px;
+    font-size: 1.2em;
+}
+
+
+.actor-field-names{
+    font-weight: bold;
+    padding-right:15px;
+}
+.actor-field-value{
+    padding-left:15px;
+    font-weight: normal;
+}
