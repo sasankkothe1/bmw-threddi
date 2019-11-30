@@ -4,16 +4,7 @@ const http       = require('http');
 const api        = require('./src/api');
 const config     = require('./src/config');
 
-const elasticsearch = require('elasticsearch');
-const client = new elasticsearch.Client({
-    host: config.elasticsearchHost,
-    log: 'trace',
-    apiVersion: config.elasticsearchVersion, // use the same version of your Elasticsearch instance,
-	auth: {
-		username: 'elastic',
-		password: 'changeme'
-	}
-});
+
 
 
 // Set the port to the API.
@@ -33,6 +24,7 @@ server.on('error', (err) => {
     console.log('Error in the server', err.message);
     process.exit(err.statusCode);
 });
+
 
 
 
