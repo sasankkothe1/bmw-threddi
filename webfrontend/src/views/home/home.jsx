@@ -7,8 +7,8 @@ import {Navbar, NavbarBrand} from 'react-bootstrap';
 
 import EventStore from "../../stores/event.store";
 import EventAction from "../../actions/actions";
-import MapComponent from "../../components/map/MapComponent";
-import EventSidebar from "../../components/eventSidebar/EventSidebar";
+import MapComponent from "../../components/mapComponent/MapComponent";
+import EventSidebar from "../../components/eventSidebarComponent/EventSidebar";
 
 export default class Home extends Component {
     render() {
