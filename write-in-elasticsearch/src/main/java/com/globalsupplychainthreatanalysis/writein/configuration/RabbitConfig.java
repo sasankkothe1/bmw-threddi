@@ -1,7 +1,9 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.configuration;
+package com.globalsupplychainthreatanalysis.writein.configuration;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.Queue;
@@ -13,20 +15,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    public final static String TOPIC_EXCHANGE_NAME = "topic.exchange";
+    Logger logger = LoggerFactory.getLogger(RabbitConfig.class);
 
-    @Value(value = "rabbit.mq.routing-key")
+    @Value(value = "${rabbit.mq.topic-exchange-name}")
+    private String TOPIC_EXCHANGE_NAME;
+
+    @Value(value = "${rabbit.mq.routing-key}")
     private String routingKey;
 
-    @Value(value = "rabbit.mq.queue")
-    public String QUEUE;
+    public static final String QUEUE = "events";
 
 
     @Bean
     public Declarables topicBindings() {
         Queue topicQueue1 = new Queue(QUEUE, false);
-
-        TopicExchange topicExchange = new TopicExchange(TOPIC_EXCHANGE_NAME, true, true);
+        logger.info("Topic = " + TOPIC_EXCHANGE_NAME + " routing key = " + routingKey);
+        TopicExchange topicExchange = new TopicExchange(TOPIC_EXCHANGE_NAME, false, false);
         return new Declarables(
                 topicQueue1,
                 topicExchange,

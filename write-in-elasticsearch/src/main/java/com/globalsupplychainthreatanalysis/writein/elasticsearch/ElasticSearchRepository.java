@@ -1,8 +1,8 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.elasticsearch;
+package com.globalsupplychainthreatanalysis.writein.elasticsearch;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.globalsupplychainthreatanalysis.dataprocessing.data.Event;
+import com.globalsupplychainthreatanalysis.writein.data.Event;
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -27,14 +27,21 @@ public class ElasticSearchRepository {
     @Autowired
     private RestHighLevelClient highLevelClient;
 
-    public Event find(String index, String id) {
+    public boolean find(String index, String id) {
         GetRequest getRequest = new GetRequest(index, id);
         try {
             GetResponse response = highLevelClient.get(getRequest, RequestOptions.DEFAULT);
-            return JSONObject.parseObject(response.getSourceAsBytes(), Event.class);
+            if(response.isExists()){
+                return true;
+            }
+            return false;
+//          return JSONObject.parseObject(response.getSourceAsBytes(), Event.class);
         }catch (IOException e){
             logger.error("error happens, when trying to find the event in elasticsearch");
-            return null;
+            return false;
+        }catch(ElasticsearchStatusException e){
+            logger.info("No such index");
+            return false;
         }
     }
 
@@ -44,11 +51,9 @@ public class ElasticSearchRepository {
         request.timeout(TimeValue.timeValueSeconds(10));
         IndexResponse indexResponse = highLevelClient.index(request, RequestOptions.DEFAULT);
         DocWriteResponse.Result indexResponseResult = indexResponse.getResult();
-        if (indexResponseResult == DocWriteResponse.Result.CREATED) {
-            logger.info("Successfully write in event " + event.getId());
-        } else if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
-            logger.error("Failed write in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
-        }
+        //if (indexResponseResult == DocWriteResponse.Result.UPDATED) {
+        //    logger.warn("Overwritten in event " + event.getId() + " reasons" + indexResponse.getShardInfo());
+        //}
         ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
         if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
 

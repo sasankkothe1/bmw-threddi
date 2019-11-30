@@ -1,7 +1,7 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.configuration;
+package com.globalsupplychainthreatanalysis.writein.configuration;
 
 
-import com.globalsupplychainthreatanalysis.dataprocessing.elasticsearch.ElasticSearchRepository;
+import com.globalsupplychainthreatanalysis.writein.elasticsearch.ElasticSearchRepository;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
