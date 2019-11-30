@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
- 
 
-export default class Incident extends Component {
+export default class EventSidebar extends Component {
     render () {
         return (
-        <div>
-            <h1> This is from Incident Page.</h1>
-        </div>
+            <h1> ICH BIN EINE SIDEBAR </h1>
         )
     }
 }

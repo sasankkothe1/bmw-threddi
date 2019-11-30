@@ -5,23 +5,28 @@ import {GoThreeBars} from "react-icons/go";
 import {GoLocation} from "react-icons/go";
 import {Navbar, NavbarBrand} from 'react-bootstrap';
 
-import EventStore from "../stores/event.store";
-import EventAction from "../actions/actions";
+import EventStore from "../../stores/event.store";
+import EventAction from "../../actions/actions";
+import MapComponent from "../../components/map/MapComponent";
+import EventSidebar from "../../components/eventSidebar/EventSidebar";
 
 export default class Home extends Component {
     render() {
         return (
-            <div className="main">
-                <h1>This is home</h1>
-                <h2>This is my number {this.state.number}</h2>
-                <button onClick={()=>this.updateNumber()}>Click me</button>
+            <div className="wrap">
+                <div className="fleft">
+                    <MapComponent/>
+                </div>
+                <div className="fright">
+                    <EventSidebar/>
+                </div>
             </div>
         )
     }
 
     constructor(props) {
         super(props);
-        this.state = {number: 0}
+        this.state = {number: 0};
 
         this.onSubmit = this.onSubmit.bind(this);
     }
