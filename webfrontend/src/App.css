@@ -1,6 +1,15 @@
+* {
+    : 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
 #root {
     display: flex;
-    height: 100vh;
 }
 
 .wrapper {
@@ -8,11 +17,10 @@
     flex-flow: row wrap;
     font-weight: bold;
     text-align: center;
+    overflow: auto;
 }
 
 .wrapper > * {
-    padding: 10px;
-    flex: 1 100%;
 }
 
 
