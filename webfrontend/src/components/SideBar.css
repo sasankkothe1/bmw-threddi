@@ -8,6 +8,12 @@
     vertical-align: middle;
 }*/
 
+.sidebarClass {
+  height: inherit;
+  display: flex;
+  align-items: center;
+}
+
 .asideClass {
   display: flex;
 }
