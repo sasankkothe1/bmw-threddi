@@ -1,9 +1,10 @@
-
-import { EventEmitter } from 'events';
+import {EventEmitter} from 'events';
 import EventDispatcher from '../dispatchers/events.dispatcher';
+import EventService from "../services/events.service";
 
 let _store = {
-    number: 0
+    number: 0,
+    events: []
 };
 
 class EventStore extends EventEmitter{
@@ -22,12 +23,14 @@ class EventStore extends EventEmitter{
         _store.number +=value;
     }
 
-    dispatcherCallback(action) {
+    async dispatcherCallback(action) {
         switch(action.actionType) {
             case 'UPDATE_NUMBER':
                 this.updateNumber(action.value);
                 break;
-            case 'TEST2':
+
+            case 'FETCH_EVENTS':
+                await this.fetchEvents(action.value);
                 break;
         }
 
@@ -47,6 +50,14 @@ class EventStore extends EventEmitter{
 
     getNumber() {
         return _store.number;
+    }
+
+    getEvents() {
+        return _store.events;
+    }
+
+    async fetchEvents(value) {
+        _store.events = await EventService.getEvents()
     }
 }
 export default new EventStore()

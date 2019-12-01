@@ -6,7 +6,7 @@ import {GoLocation} from "react-icons/go";
 import {Navbar, NavbarBrand} from 'react-bootstrap';
 
 import EventStore from "../../stores/event.store";
-import EventAction from "../../actions/actions";
+import EventAction from "../../actions/event.actions";
 import MapComponent from "../../components/mapComponent/MapComponent";
 import EventSidebar from "../../components/eventSidebarComponent/EventSidebar";
 
@@ -15,7 +15,7 @@ export default class Home extends Component {
         return (
             <div className="wrap">
                 <div className="fleft">
-                    <MapComponent/>
+                    <MapComponent events={this.state.events}/>
                 </div>
                 <div className="fright">
                     <EventSidebar/>
@@ -26,13 +26,19 @@ export default class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {number: 0};
+        this.state = {
+            number: 0,
+            events: []
+        };
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onFetchEvents = this.onFetchEvents.bind(this);
+        EventAction.fetchEvents()
     }
 
     componentDidMount() {
         EventStore.addChangeListener("UPDATE_NUMBER", this.onSubmit);
+        EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
     }
 
     updateNumber(){
@@ -44,5 +50,9 @@ export default class Home extends Component {
             number: EventStore.getNumber()
         });
     }
-
+    onFetchEvents(){
+        this.setState({
+            events: EventStore.getEvents()
+        })
+    }
 }

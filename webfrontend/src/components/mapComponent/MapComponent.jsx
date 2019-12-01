@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Map, GoogleApiWrapper} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import config from '../../config';
 
 class MapComponent extends Component {
@@ -18,6 +18,10 @@ class MapComponent extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
+    }
+
     render() {
         return (
             <Map google={this.props.google}
@@ -30,6 +34,20 @@ class MapComponent extends Component {
                      this.state.center
                  }
             >
+                {this.props.events ? (
+                    this.props.events.map((event, i) => {
+                            return (
+                                <Marker
+                                    key={i}
+                                    request={event}
+                                    requestIndex={i}
+                                    position={{
+                                        lat: event._source.lat,
+                                        lng: event._source.long
+                                    }}
+                                />)
+                        }
+                    )) : ""}
 
             </Map>
         )}
