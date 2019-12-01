@@ -1,8 +1,24 @@
-.deleteButton{
-    margin-left:2%;
-}
-
 .page-content{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  padding: 2.5%;
+}
+
+.locationTable {
+  display: flex;
+}
+
+.location-table {
+  padding-top: 2.5%
+}
+
+.pictureContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2.5%;
+}
+
+.picture{
+  display: flex;
 }

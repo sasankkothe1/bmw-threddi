@@ -13,6 +13,7 @@ import './components/SideBar.css';
 import './components/home.css';
 import './components/main.css';
 import './components/LocationRow.css';
+import './components/location.css';
 
 
 class App extends Component {
