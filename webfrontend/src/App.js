@@ -13,6 +13,12 @@ import './components/main.css';
 
 class App extends Component {
 
+  constructor(props){
+      super(props);
+      this.state={
+          title:"BWM Thread Analysis"
+      }
+  }
 /* we use handler in the name as we are not calling it particularly but we
    are using it to handle something. */
   
@@ -27,9 +33,13 @@ class App extends Component {
       </Router>
     );
 
-    //return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi, I\'m react app!!!'));
-
   }
+
+    componentDidMount(){
+        document.title = this.state.title;
+    }
+
 }
+
 
 export default App;

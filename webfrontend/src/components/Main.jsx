@@ -8,7 +8,7 @@ export default class Main extends Component {
     render () {
         return (
             <div className="main">
-                <Route exact path="/" component={Home} />
+                <Route exact path="/"          component={Home} />
                 <Route exact path="/incidents" component={Incident} />
                 <Route exact path="/locations" component={Location} />
             </div>
