@@ -7,8 +7,8 @@ export default class Incident extends Component {
         return (
             <div className="main">
                 <h1> This is from Incident Page.</h1>
-                <h3> Sample Form Container </h3>
-                <FormContainer />
+                /* <h3> Sample Form Container </h3>
+                <FormContainer /> */ // Test formContainer by removing comment
             </div>
         )
     }
