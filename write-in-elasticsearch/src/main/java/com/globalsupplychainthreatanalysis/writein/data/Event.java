@@ -1,4 +1,4 @@
-package com.globalsupplychainthreatanalysis.dataprocessing.data;
+package com.globalsupplychainthreatanalysis.writein.data;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;

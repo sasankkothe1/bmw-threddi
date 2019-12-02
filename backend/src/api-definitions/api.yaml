@@ -43,6 +43,8 @@ paths:
         400:
           description: Invalid request
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
 
   /events/{eventId}:
     summary: Tbd
@@ -73,6 +75,8 @@ paths:
         404:
           description: ID not found
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
     delete:
       tags:
       - event
@@ -94,6 +98,8 @@ paths:
         404:
           description: ID not found
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
 
   /mainlocations:
     summary: Main location object type
@@ -116,6 +122,8 @@ paths:
         400:
           description: Invalid request
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
     post:
       tags:
       - location
@@ -134,6 +142,8 @@ paths:
         405:
           description: Invalid input
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
 
   /mainlocations/{location_id}:
     put:
@@ -170,6 +180,8 @@ paths:
         405:
           description: Validation exception
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
     delete:
       tags:
       - location
@@ -191,6 +203,8 @@ paths:
         404:
           description: ID not found
           content: {}
+        500:
+          description: internal error happened by elasticsearch database
 
 # Added by API Auto Mocking Plugin
 servers:

@@ -65,7 +65,7 @@ services:
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=rabbitmq
       - RABBITMQ_PASSWORD=rabbitmq
-      - ROUTING_KEY="#.Datastore"
+      - ROUTING_KEY=#
       - ELASTIC_SEARCH_IP=192.168.99.100:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
@@ -75,6 +75,7 @@ services:
     depends_on:
       - elasticsearch
       - rabbit
+      - extractor_gdelt
   extractor_gdelt:
     build:
       context: ./extractor-gdelt
@@ -92,6 +93,11 @@ services:
     container_name: WebApplicationBMWBackend
     ports:
     - "3000:3000"
+    environment:
+      - ELASTICSEARCH_HOST=192.168.99.100:9200
+      - ELASTICSEARCH_VERSION=7.4
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
 networks:
   docker-elk:
     driver: bridge
