@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FilterableLocationTable from './FilterableLocationTable.jsx';
 import Button from 'react-bootstrap/Button';
+import Image from "./pictures/graph_events_locationView.png";
 
 
 export default class Location extends Component {
@@ -28,12 +29,15 @@ export default class Location extends Component {
     render () {
         return (
         <div className="page-content">
-          <div className="location-display">
+          <div className="locationTable">
             <FilterableLocationTable locations = {this.state.locations} />
           </div>
 
-          <Button variant="secondary"> Edit location </Button>
-          <Button variant="danger"> Delete location </Button>
+          <div className="pictureContainer">
+            <div className="picture">
+              <img src={Image} alt="website logo" height={200} width={'auto'}/>
+            </div>
+          </div>
         </div>
         )
     }
