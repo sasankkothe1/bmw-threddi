@@ -1,16 +1,28 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {withRouter} from "react-router";
 
-export default class SideBar extends Component {
-    render () {
+class SideBar extends Component {
+    render() {
         return (
             <div className="sidebarClass">
-                <aside className="aside aside-1">
-                    <Link className="faIcon" to="/"><i className="fas fa-globe-americas"></i></Link>
-                    <Link className="faIcon" to="/incidents"><i className="fas fa-bars"></i></Link>
-                    <Link className="faIcon" to="/locations"><i className="fas fa-map-marker-alt"></i></Link>
+                <aside className="aside">
+                    <div className={"nav-item active-route"} onClick={()=>this.forwardTo('/')}>
+                        <i className="fas fa-globe-americas item-nav fa-2x"/>
+                    </div>
+                    <div className={"nav-item"} onClick={()=>this.forwardTo('/incidents')}>
+                        <i className="fas fa-bars fa-2x"/>
+                    </div>
+                    <div className={"nav-item"} onClick={()=>this.forwardTo('/locations')}>
+                        <i className="fas fa-map-marker-alt fa-2x"/>
+                    </div>
                 </aside>
             </div>
         )
     }
+
+    forwardTo(route){
+        this.props.history.push(route)
+    }
 }
+
+export default withRouter(SideBar)
