@@ -17,7 +17,8 @@ class FormContainer extends Component {
         long:"",
         lat:"",
         locationType: "",
-        description: ""
+        description: "",
+        priority: ""
       },
 
       locationTypeOptions: ["Production facility", "Exhibition hall", "Research facility"],
@@ -29,6 +30,7 @@ class FormContainer extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleLat = this.handleLat.bind(this);
     this.handleLong = this.handleLong.bind(this);
+    this.handlePriority = this.handlePriority.bind(this)
   }
 
   /* This lifecycle hook gets executed when the component mounts */
@@ -66,6 +68,19 @@ class FormContainer extends Component {
         newLocation: {
           ...prevState.newLocation,
           lat: value
+        }
+      }),
+      () => console.log(this.state.newLocation)
+    );
+  }
+
+  handlePriority(e) {
+    let value = e.target.value;
+    this.setState(
+      prevState => ({
+        newLocation: {
+          ...prevState.newLocation,
+          priority: value
         }
       }),
       () => console.log(this.state.newLocation)
@@ -126,7 +141,8 @@ class FormContainer extends Component {
         long:"",
         lat:"",
         locationType: "",
-        description: ""
+        description: "",
+        priority: ""
       }
     });
   }
@@ -171,6 +187,15 @@ class FormContainer extends Component {
           handleChange={this.handleInput}
         />{" "}
         {/* Location type selection */}
+        <Input
+          inputType={"number"}
+          name={"priority"}
+          title={"Priority"}
+          value={this.state.newLocation.priority}
+          placeholder={"Enter the priority for given location"}
+          handleChange={this.handlePriority}
+        />{" "}
+        {/* Latitude information */}
         <TextArea
           title={"Description"}
           rows={10}
