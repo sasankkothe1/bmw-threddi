@@ -27,17 +27,14 @@
     color: #000000;
 }*/
 
-body {
-    font-family: sans-serif;
-  }
 
-  .site-header {
+.site-header {
     flex-wrap: wrap;
     align-content: center;
-    
+
 }
 
-.BrandLink{
+.BrandLink {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -49,4 +46,37 @@ body {
 
     color: #000000;
 }
-  
+
+.header-brand {
+    display: flex;
+    align-items: baseline;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar {
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.main-brand {
+    padding-right: 0.3em;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-size: 33px;
+    line-height: 40px;
+    display: flex;
+
+}
+
+.brand-caption {
+    font-family: Montserrat, sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    line-height: 17px;
+    font-variant-caps: all-small-caps;
+
+    color: #cccccc;
+}

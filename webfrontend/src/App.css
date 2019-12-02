@@ -1,25 +1,29 @@
+* {
+    : 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
 #root {
     display: flex;
-    height: 100vh;
 }
 
 .wrapper {
-<<<<<<< HEAD
-  display: flex;
-  flex-flow: row wrap;
-  font-weight: bold;
-  text-align: center;
-=======
     display: flex;
     flex-flow: row wrap;
     font-weight: bold;
     text-align: center;
->>>>>>> origin/develop
+<<<<<<< HEAD
+=======
+    overflow: auto;
+>>>>>>> develop
 }
 
 .wrapper > * {
-    padding: 10px;
-    flex: 1 100%;
 }
 
 
