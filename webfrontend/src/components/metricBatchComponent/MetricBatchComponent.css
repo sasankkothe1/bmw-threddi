@@ -1,0 +1,44 @@
+.metric-batch{
+    display: flex;
+    flex-direction: column;
+
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+
+    align-items: center;
+    text-align: center;
+
+    margin: 10px;
+}
+
+
+.mb-value{
+    line-height: 1;
+}
+
+.mb-field{
+}
+
+/*Medium*/
+.batch-medium{
+
+}
+.value-medium{
+    font-size: 2em;
+}
+.field-medium{
+    font-size: 1em;
+}
+
+/*Big*/
+.batch-big{
+
+}
+.value-big{
+    font-size: 3.5em;
+}
+.field-big{
+    font-size: 1.5em;
+}
+

@@ -1,0 +1,82 @@
+.event-sidebar {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding:30px;
+}
+.event-sidebar >* {
+    padding:1em 0 1em 0;
+}
+
+.ev-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ev-event-name {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 3em;
+    text-align: right;
+    line-height: 1;
+
+    color: #000;
+}
+
+.ev-source {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 2em;
+    text-align: right;
+
+    color: #666666;
+}
+.ev-description-header{
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}
+.ev-description-text{
+
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+    align-items: center;
+
+    color: #000000;
+}
+.ev-batches{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.ev-description-source-link{
+    padding-left: 5px;
+}
+.ev-actors-header{
+    font-family: Roboto, sans-serif;
+    font-size: 1.5em;
+}
+
+.ev-show-on-map{
+    align-self: end;
+}
+.event-sidebar-wrapper{
+    height: 100%;
+    background: #FCFCFC;
+}
+.close-icon{
+    padding: 10px;
+}

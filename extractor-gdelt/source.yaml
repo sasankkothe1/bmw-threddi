@@ -5,8 +5,6 @@ description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done
 processing:
-  - TestNLP1
-  - TestNLP2
   - Datastore
 
 # Properties which will be copied to the configuration database and then managed from there

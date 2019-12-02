@@ -5,6 +5,8 @@ const api        = require('./src/api');
 const config     = require('./src/config');
 
 
+
+
 // Set the port to the API.
 api.set('port', config.port);
 
@@ -22,6 +24,7 @@ server.on('error', (err) => {
     console.log('Error in the server', err.message);
     process.exit(err.statusCode);
 });
+
 
 
 
