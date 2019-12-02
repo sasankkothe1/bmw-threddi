@@ -7,7 +7,14 @@ class EventActions{
         EventDispatcher.dispatch({
             actionType: 'UPDATE_NUMBER',
             value: data
-        })
+        });
+    }
+
+    fetchEvents(data){
+        EventDispatcher.dispatch({
+            actionType: 'FETCH_EVENTS',
+            value: data
+        });
     }
 }
 

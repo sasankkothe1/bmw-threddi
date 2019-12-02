@@ -1,4 +1,4 @@
-.actor-batch{
+.batch{
     display: flex;
     flex-direction: row;
 
@@ -6,16 +6,20 @@
     font-style: normal;
     font-weight: normal;
 
+    justify-content: space-between;
     margin: 10px;
     font-size: 1.2em;
+    text-transform: capitalize;
 }
 
 
-.actor-field-names{
+.batch-field-names{
     font-weight: bold;
     padding-right:15px;
+    text-align: left;
 }
-.actor-field-value{
+.batch-field-value{
     padding-left:15px;
     font-weight: normal;
+    text-align: right;
 }
