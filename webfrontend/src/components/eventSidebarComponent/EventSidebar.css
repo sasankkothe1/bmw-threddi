@@ -18,7 +18,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 3em;
-    text-align: right;
+    text-align: left;
     line-height: 1;
 
     color: #000;
@@ -29,9 +29,11 @@
     font-style: normal;
     font-weight: 300;
     font-size: 2em;
-    text-align: right;
+    text-align: left;
 
     color: #666666;
+
+    text-transform: uppercase;
 }
 .ev-description-header{
     font-family: Roboto, sans-serif;
@@ -65,7 +67,7 @@
 .ev-description-source-link{
     padding-left: 5px;
 }
-.ev-actors-header{
+.ev-sub-header{
     font-family: Roboto, sans-serif;
     font-size: 1.5em;
 }
