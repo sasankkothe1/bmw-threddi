@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
- 
+import IncidentEventTable from './IncidentEventTable';
+import IncidentEventDetails from './IncidentEventDetails';
 
-export default class Incident extends Component {
+
+export default class Location extends Component {
     render () {
         return (
-            <div className="main">
-                <h1> This is from Incident Page.</h1>
-            </div>
+        <div className="incidentClassMain">
+            <IncidentEventTable />
+            <IncidentEventDetails />
+        </div>
         )
     }
 }
