@@ -12,51 +12,63 @@ class FormContainer extends Component {
     super(props);
 
     this.state = {
-      newUser: {
+      newLocation: {
         name: "",
-        age: "",
-        gender: "",
-        skills: [],
-        about: ""
+        long:"",
+        lat:"",
+        locationType: "",
+        description: ""
       },
 
-      genderOptions: ["Male", "Female", "Others"],
-      skillOptions: ["Programming", "Development", "Design", "Testing"]
+      locationTypeOptions: ["Production facility", "Exhibition hall", "Research facility"],
     };
     this.handleTextArea = this.handleTextArea.bind(this);
-    this.handleAge = this.handleAge.bind(this);
-    this.handleFullName = this.handleFullName.bind(this);
+    this.handleName = this.handleName.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
-    this.handleCheckBox = this.handleCheckBox.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleLat = this.handleLat.bind(this);
+    this.handleLong = this.handleLong.bind(this);
   }
 
   /* This lifecycle hook gets executed when the component mounts */
 
-  handleFullName(e) {
+  handleName(e) {
     let value = e.target.value;
     this.setState(
       prevState => ({
-        newUser: {
-          ...prevState.newUser,
+        newLocation: {
+          ...prevState.newLocation,
           name: value
         }
       }),
-      () => console.log(this.state.newUser)
+      () => console.log(this.state.newLocation)
     );
   }
 
-  handleAge(e) {
+  handleLong(e) {
     let value = e.target.value;
     this.setState(
       prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          age: value
+        newLocation: {
+          ...prevState.newLocation,
+          long: value
         }
       }),
-      () => console.log(this.state.newUser)
+      () => console.log(this.state.newLocation)
+    );
+  }
+
+  handleLat(e) {
+    let value = e.target.value;
+    this.setState(
+      prevState => ({
+        newLocation: {
+          ...prevState.newLocation,
+          lat: value
+        }
+      }),
+      () => console.log(this.state.newLocation)
     );
   }
 
@@ -65,12 +77,12 @@ class FormContainer extends Component {
     let name = e.target.name;
     this.setState(
       prevState => ({
-        newUser: {
-          ...prevState.newUser,
+        newLocation: {
+          ...prevState.newLocation,
           [name]: value
         }
       }),
-      () => console.log(this.state.newUser)
+      () => console.log(this.state.newLocation)
     );
   }
 
@@ -79,35 +91,18 @@ class FormContainer extends Component {
     let value = e.target.value;
     this.setState(
       prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          about: value
+        newLocation: {
+          ...prevState.newLocation,
+          description: value
         }
       }),
-      () => console.log(this.state.newUser)
+      () => console.log(this.state.newLocation)
     );
-  }
-
-  handleCheckBox(e) {
-    const newSelection = e.target.value;
-    let newSelectionArray;
-
-    if (this.state.newUser.skills.indexOf(newSelection) > -1) {
-      newSelectionArray = this.state.newUser.skills.filter(
-        s => s !== newSelection
-      );
-    } else {
-      newSelectionArray = [...this.state.newUser.skills, newSelection];
-    }
-
-    this.setState(prevState => ({
-      newUser: { ...prevState.newUser, skills: newSelectionArray }
-    }));
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let userData = this.state.newUser;
+    let userData = this.state.newLocation;
 
     fetch("http://example.com", {
       method: "POST",
@@ -126,12 +121,12 @@ class FormContainer extends Component {
   handleClearForm(e) {
     e.preventDefault();
     this.setState({
-      newUser: {
+      newLocation: {
         name: "",
-        age: "",
-        gender: "",
-        skills: [],
-        about: ""
+        long:"",
+        lat:"",
+        locationType: "",
+        description: ""
       }
     });
   }
@@ -142,46 +137,47 @@ class FormContainer extends Component {
       <form className="container-fluid" onSubmit={this.handleFormSubmit}>
         <Input
           inputType={"text"}
-          title={"Full Name"}
+          title={"Location name"}
           name={"name"}
-          value={this.state.newUser.name}
-          placeholder={"Enter your name"}
+          value={this.state.newLocation.name}
+          placeholder={"Enter the location name"}
           handleChange={this.handleInput}
         />{" "}
         {/* Name of the user */}
         <Input
           inputType={"number"}
-          name={"age"}
-          title={"Age"}
-          value={this.state.newUser.age}
-          placeholder={"Enter your age"}
-          handleChange={this.handleAge}
+          name={"long"}
+          title={"Longitude"}
+          value={this.state.newLocation.long}
+          placeholder={"Enter the longitude information of the location"}
+          handleChange={this.handleLong}
         />{" "}
-        {/* Age */}
+        {/* Longitude information */}
+        <Input
+          inputType={"number"}
+          name={"lat"}
+          title={"Latitude"}
+          value={this.state.newLocation.lat}
+          placeholder={"Enter the latitude information of the location"}
+          handleChange={this.handleLat}
+        />{" "}
+        {/* Latitude information */}
         <Select
-          title={"Gender"}
-          name={"gender"}
-          options={this.state.genderOptions}
-          value={this.state.newUser.gender}
-          placeholder={"Select Gender"}
+          title={"Location Type"}
+          name={"locationType"}
+          options={this.state.locationTypeOptions}
+          value={this.state.newLocation.locationType}
+          placeholder={"Select Location Type"}
           handleChange={this.handleInput}
         />{" "}
-        {/* Age Selection */}
-        <CheckBox
-          title={"Skills"}
-          name={"skills"}
-          options={this.state.skillOptions}
-          selectedOptions={this.state.newUser.skills}
-          handleChange={this.handleCheckBox}
-        />{" "}
-        {/* Skill */}
+        {/* Location type selection */}
         <TextArea
-          title={"About you."}
+          title={"Description"}
           rows={10}
-          value={this.state.newUser.about}
-          name={"currentPetInfo"}
+          value={this.state.newLocation.about}
+          name={"currentLocationInfo"}
           handleChange={this.handleTextArea}
-          placeholder={"Describe your past experience and skills"}
+          placeholder={"Description of the new location."}
         />
         {/* About you */}
         <Button
