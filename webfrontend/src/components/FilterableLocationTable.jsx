@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import LocationTable from './LocationTable.jsx';
 import SearchBar from './SearchBar.jsx';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 import "./FilterableLocationTable.css";
 
@@ -16,7 +17,7 @@ export default class FilterableLocationTable extends Component {
                 <SearchBar id="filterText"/>
           </div>
           <div className="SearchButton">
-                <a href="/locations/form"> <Button variant="success"> Create new location </Button> </a>
+                <Link to="/locations/form"> <Button variant="success"> Create new location </Button> </Link>
           </div>
           <div />
         </div>
