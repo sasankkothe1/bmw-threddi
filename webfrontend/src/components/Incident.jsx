@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import IncidentEventTable from './IncidentEventTable';
 import IncidentEventDetails from './IncidentEventDetails';
+import EventSideBar from './eventSidebarComponent/EventSidebar';
 
 
 export default class Location extends Component {
@@ -9,7 +10,7 @@ export default class Location extends Component {
         return (
         <div className="incidentClassMain">
             <IncidentEventTable />
-            <IncidentEventDetails />
+            <EventSideBar />
         </div>
         )
     }
