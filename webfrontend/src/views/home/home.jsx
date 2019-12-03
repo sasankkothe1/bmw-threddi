@@ -10,7 +10,7 @@ import EventAction from "../../actions/event.actions";
 import MapComponent from "../../components/mapComponent/MapComponent";
 import EventSidebar from "../../components/eventSidebarComponent/EventSidebar";
 import AdditionalInformationModalComponent
-    from "../../components/AdditionalInformationModal/AdditionalInformationModalComponent";
+    from "../../components/additionalInformationModal/AdditionalInformationModalComponent";
 
 export default class Home extends Component {
     render() {
