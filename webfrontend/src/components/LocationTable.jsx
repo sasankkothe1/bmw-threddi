@@ -7,7 +7,6 @@ export default class LocationTable extends Component {
     super(props)
   }
 
-
   render() {
       return (
         <div className="location-table">

@@ -34,3 +34,5 @@ build/
 webfrontend/node_modules
 
 /venv/
+extractor-gdelt/__pycache__/
+extractor-gdelt/venv/
