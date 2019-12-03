@@ -16,7 +16,7 @@ export default class FilterableLocationTable extends Component {
                 <SearchBar id="filterText"/>
           </div>
           <div className="SearchButton">
-                <Button variant="success"> Create new location </Button>
+                <a href="/locations/form"> <Button variant="success"> Create new location </Button> </a>
           </div>
           <div />
         </div>
