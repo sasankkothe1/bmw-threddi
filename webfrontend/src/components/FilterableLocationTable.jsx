@@ -10,7 +10,7 @@ import "./FilterableLocationTable.css";
 export default class FilterableLocationTable extends Component {
   render() {
     return (
-      <div>
+      <div className ="FilterableLocationTableDiv">
         <div className="searchbar">
           <div>
                 <SearchBar id="filterText"/>
