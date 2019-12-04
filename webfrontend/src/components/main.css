@@ -2,6 +2,7 @@
     display:flex;
     text-align: left;
     flex-direction: column;
+    background: #FFFFFF;
     order: 2;
     flex: 3 0px;
   }

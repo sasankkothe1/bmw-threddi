@@ -9,6 +9,9 @@ import './components/Nav.css';
 import './components/SideBar.css';
 import './views/home/home.css';
 import './components/main.css';
+import './components/IncidentEventDetails.css'
+import './components/IncidentEventTable.css'
+import './components/incident.css';
 import './components/LocationRow.css';
 import './components/location.css';
 
