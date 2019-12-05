@@ -25,8 +25,8 @@ export default class LocationRow extends Component {
                   <div className="typeRowContent">{this.props.location.type}</div>
                 </div>
 
-                <div>Description:</div>
-                <div>{this.props.location.description}</div>
+                <div className="descriptionHeader">Description:</div>
+                <div className="descriptionContent">{this.props.location.description}</div>
 
                 <div className="priorityRow">
                   <div className="typeRowHeader">Priority:</div>
