@@ -11,7 +11,7 @@ processing:
 default_properties:
 
   #Interval of Polling in Minutes
-  polling: 1
+  polling: 120
 
   # Describes which of the base fields, can be directly mapped to specific fields
   field_mappings:
@@ -21,16 +21,25 @@ default_properties:
     lat: ActionGeo_Lat
     url: SOURCEURL
     description: CAMEOCodeDescription
+    timestamp: DATEADDED
 
   # Minimum of impact which an event need to be added. On the absolute Goldstein-Scale
   filter_options:
     - field: 'GoldsteinScale'
       method: 'GreaterThanAbs'
-      threshold: 10
+      threshold: 8
 
     - field: 'NumArticles'
       method: 'GreaterThan'
+      threshold: 20
+
+    - field: 'NumSources'
+      method: 'GreaterThan'
       threshold: 10
+
+    - field: 'NumMentions'
+      method: 'GreaterThan'
+      threshold: 20
 
   # Fields to add to additional Information, CaseSensitive
   source_dependent_information:

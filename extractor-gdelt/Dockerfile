@@ -12,7 +12,6 @@ COPY extractor.py ./
 COPY extractor_gdelt.py ./
 COPY RabbitMQHandler.py ./
 
-
 ENV MODE=PROD
 ENV PYTHONPATH .
 

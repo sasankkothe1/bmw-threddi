@@ -35,6 +35,8 @@ class Extractor:
 
         self._create_routing_key()
 
+        self.default_properties = self._config.get("default_properties")
+
         # Send to Queue
         self._rabbitmq_handler = RabbitMQHandler.RabbitMQHandler()
         self._rabbitmq_handler.init_destination_exchange(self._output_exchange)
@@ -78,6 +80,7 @@ class Extractor:
             self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)
 
             self._logger.debug("Waiting for {min} minutes".format(min=minutes))
+
             # Sleep for 60* Minutes seconds
             time.sleep(minutes*60)
             self._clear_data()
