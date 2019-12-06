@@ -39,14 +39,15 @@ class GDELTExtractor(Extractor):
         return ids.reshape((len(ids), 1))
 
     def add_importance(self, source_df):
-        goldstein = np.array(sigmoid(np.abs(source_df['GoldsteinScale'])-10))
-
-        return 1*goldstein
+        # goldstein = np.array(sigmoid(np.abs(source_df['GoldsteinScale'])-10))
+        # Map goldstein on 0/1 scale
+        importance = (np.abs(source_df['GoldsteinScale']) + 10) / 20
+        return importance
 
     def add_sentiment_group(self, source_df):
         avgTone = np.array(source_df['AvgTone'])
         bins = [-100, -10, -1, 1, 10, 100]
-        classes = np.digitize(avgTone, bins)
+        classes = np.digitize(avgTone, bins) - 3
         return classes
 
     def add_position(self, source_df):

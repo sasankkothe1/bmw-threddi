@@ -109,8 +109,9 @@ class Extractor:
                 self._output_frame['id'] = id
 
         self._get_field("description", self.add_importance, "No description")
-        self._get_field("importance", self.add_importance, 0.5)
+        self._get_field("importance", self.add_importance, -1)
         self._get_field("sentiment_group", self.add_sentiment_group, 0)
+        # self._get_field("actors", self.add_actors, [])
 
         self._set_origin()
 
@@ -166,6 +167,9 @@ class Extractor:
         self._routing_key = routing_key[:-1]
 
     # Field Mappings
+    def add_actors(self, source_df):
+        pass
+
     def add_id(self, source_df):
         pass
 

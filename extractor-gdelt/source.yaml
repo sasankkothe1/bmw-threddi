@@ -26,11 +26,11 @@ default_properties:
   filter_options:
     - field: 'GoldsteinScale'
       method: 'GreaterThanAbs'
-      threshold: 8
+      threshold: 5
 
     - field: 'NumArticles'
       method: 'GreaterThan'
-      threshold: 20
+      threshold: 10
 
     - field: 'NumSources'
       method: 'GreaterThan'
@@ -38,7 +38,7 @@ default_properties:
 
     - field: 'NumMentions'
       method: 'GreaterThan'
-      threshold: 20
+      threshold: 10
 
   # Fields to add to additional Information, CaseSensitive
   source_dependent_information:
