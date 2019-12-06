@@ -4,7 +4,9 @@ Class to fetch Data from the GDELT Database
 Therefore the class follows a polling mechanism.
 """
 import logging
+from urllib.request import urlopen
 
+import lxml.html
 import numpy as np
 
 import gdelt_fetcher
@@ -57,6 +59,22 @@ class GDELTExtractor(Extractor):
         _actors = source_df.apply(self.get_actor_from_row, axis=1)
         print(_actors)
         return _actors
+
+    def add_description(self, source_df):
+        descriptions = source_df.apply(self.get_title_of_page_by_row, axis=1)
+        return descriptions
+
+    @staticmethod
+    def get_title_of_page_by_row(row):
+        try:
+            t = lxml.html.parse(urlopen(row['SOURCEURL']))
+        except OSError as e:
+            print("NOOoO", e)
+            return "no description accessible {}".format(e)
+
+        title = t.find(".//title").text
+
+        return title
 
     @staticmethod
     def get_actor_from_row(row):
