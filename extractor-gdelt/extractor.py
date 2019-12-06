@@ -190,7 +190,7 @@ class Extractor:
 
     def _do_mapping(self):
         """
-        Already maps the first values
+        Already maps the first _values
         :return:
         """
         mapping_config = self._config.get('default_properties').get('field_mappings')

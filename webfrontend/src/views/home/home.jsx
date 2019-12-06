@@ -53,7 +53,6 @@ export default class Home extends Component {
     }
 
     onChangeActiveRequest(event){
-        console.log("CLICKED THE MARKER");
         this.setActiveEvent(event)
     }
 
@@ -64,10 +63,10 @@ export default class Home extends Component {
     }
 
     setActiveEvent(event){
+        console.log(event)
         this.setState({
             activeEvent: event
         });
-        console.log("ACTIVE EVENT", this.state.activeEvent)
     }
 
     onFetchEvents(){
@@ -77,7 +76,7 @@ export default class Home extends Component {
     }
 
     onRemoveActiveEvent() {
-        console.log("REMOVE IT")
+        console.log("REMOVE IT");
         this.setState({
             activeEvent: null
         })
