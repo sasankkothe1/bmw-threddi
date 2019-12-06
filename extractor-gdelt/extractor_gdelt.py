@@ -53,6 +53,67 @@ class GDELTExtractor(Extractor):
     def add_position(self, source_df):
         pass
 
+    def add_actors(self, source_df):
+        _actors = source_df.apply(self.get_actor_from_row, axis=1)
+        print(_actors)
+        return _actors
+
+    @staticmethod
+    def get_actor_from_row(row):
+
+        _actors = []
+        for i in range(1, 3):
+
+            _actorprefix = "Actor{}".format(i)
+            actor_code = row["{}Code".format(_actorprefix)]
+            if actor_code:
+                actor_ethic = row["{}EthnicCode".format(_actorprefix)]
+
+                actor_country_code = row["{}Geo_CountryCode".format(_actorprefix)]
+                actor_country_full = row["{}Geo_FullName".format(_actorprefix)]
+
+                known_group_code = row["{}KnownGroupCode".format(_actorprefix)]
+                actor_name_data = row["{}Name".format(_actorprefix)]
+
+                religion1_code = row["{}Religion1Code".format(_actorprefix)]
+                religion2_code = row["{}Religion2Code".format(_actorprefix)]
+
+                type1_code = row["{}Type1Code".format(_actorprefix)]
+                type2_code = row["{}Type2Code".format(_actorprefix)]
+                type3_code = row["{}Type3Code".format(_actorprefix)]
+
+                actor_name = "{}({})".format(actor_name_data, actor_code)
+                actor_origin = '{}({})'.format(actor_country_full, actor_country_code)
+
+                actor_group = ""
+                if known_group_code:
+                    actor_group += known_group_code + " "
+                if actor_ethic:
+                    actor_group += actor_ethic + " "
+                if religion1_code:
+                    actor_group += religion1_code + " "
+                if religion2_code:
+                    actor_group += religion2_code + " "
+
+                actor_type = []
+                if type1_code:
+                    actor_type.append(type1_code)
+                if type2_code:
+                    actor_type.append(type2_code)
+                if type3_code:
+                    actor_type.append(type3_code)
+
+                actor = {
+                    "actor_name": actor_name,
+                    "actor_origin": actor_origin,
+                    "actor_group": actor_group,
+                    "actor_type": actor_type
+                }
+
+                _actors.append(actor)
+
+        return _actors
+
 
 if __name__ == '__main__':
     GDELTExtractor()

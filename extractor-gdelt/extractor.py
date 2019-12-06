@@ -111,7 +111,7 @@ class Extractor:
         self._get_field("description", self.add_importance, "No description")
         self._get_field("importance", self.add_importance, -1)
         self._get_field("sentiment_group", self.add_sentiment_group, 0)
-        # self._get_field("actors", self.add_actors, [])
+        self._get_field("actors", self.add_actors, [])
 
         self._set_origin()
 
