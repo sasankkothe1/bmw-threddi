@@ -5,7 +5,6 @@ Therefore the class follows a polling mechanism.
 """
 import logging
 
-import gdelt
 import numpy as np
 
 import gdelt_fetcher
@@ -27,13 +26,9 @@ class GDELTExtractor(Extractor):
 
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")
-        # gd2 = gdelt.gdelt(version=2)
-        # # results = gd2.Search(datetime.now().strftime("%Y %b %d"), table="events", output='pandas')
-        # results = gd2.Search("2019 Dec 04", table="events", output='pandas')
-        # logging.info("Fetched {} DataPoints ".format(len(results)))
 
         results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'))
-        print(results)
+        print(len(results))
         return results
 
     # Field Mappings

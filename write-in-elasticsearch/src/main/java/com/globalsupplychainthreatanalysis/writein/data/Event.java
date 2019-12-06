@@ -22,6 +22,11 @@ public class Event implements Serializable {
     private float importance;
     private String origin;
     private Set<Dependency> source_dependent_information;
+    private String timestamp;
+
+    public void getTimestamp(String timestamp){
+        this.timestamp = timestamp;
+    }
 
     public void setActor(Actor[] actor) {
         this.actor = actor;

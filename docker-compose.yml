@@ -83,7 +83,7 @@ services:
     depends_on:
       - rabbit
     volumes:
-      - ./extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json:/app
+      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
     environment:
       - MQ_HOST=192.168.99.100
       - MQ_PORT=5672
@@ -91,8 +91,9 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
+
       # GOOGLE BIGTABLE LICENCE FILE
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/WeblabThreatAnalysis-56a74c861c77.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
 
   backend:
     build: ./backend

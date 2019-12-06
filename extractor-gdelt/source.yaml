@@ -20,7 +20,6 @@ default_properties:
     long: ActionGeo_Long
     lat: ActionGeo_Lat
     url: SOURCEURL
-    description: CAMEOCodeDescription
     timestamp: DATEADDED
 
   # Minimum of impact which an event need to be added. On the absolute Goldstein-Scale
@@ -66,10 +65,6 @@ default_properties:
     - displayName: Number of Articles
       id: NumArticles
       description: Number of Articles about the event
-
-    - displayName: CAMEO Description
-      id: CAMEOCodeDescription
-      description: Description of CAMEO Code
 
     - displayName: Impact
       id: GoldsteinScale

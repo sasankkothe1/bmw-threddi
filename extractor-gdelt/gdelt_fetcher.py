@@ -1,4 +1,6 @@
 import logging
+import os
+
 import pandas as pd
 from datetime import datetime
 
@@ -23,7 +25,9 @@ class GDELTFetcher:
 
     def __init__(self):
         self.client = bigquery.Client()
-        print(self._last_fetch)
+
+        self._logger = logging.getLogger(__name__)
+        self._logger.setLevel(int(os.environ.get('LOG_LEVEL')) or logging.WARNING)
 
     def fetch_current_data(self, filter_options):
         event = pd.DataFrame()
@@ -37,7 +41,7 @@ class GDELTFetcher:
                 lastdate=self._last_fetch, conditions=conditions)
         )
 
-        logging.info("Send query {query}".format(query=query))
+        self._logger.info("Send query {query}".format(query=query))
 
         # DO THE QUERY
 
@@ -46,7 +50,7 @@ class GDELTFetcher:
         self._last_fetch = int(datetime.now().strftime("%Y%m%d%H%M%S")) - 100
 
         event = query_job.to_dataframe()
-        logging.info("{} events fetched".format(len(event)))
+        self._logger.info("{} events fetched".format(len(event)))
 
         return event
 

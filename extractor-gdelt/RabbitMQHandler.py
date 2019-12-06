@@ -25,7 +25,6 @@ class RabbitMQHandler:
         self._logger = logging.getLogger(__name__)
         self._logger.setLevel(int(os.environ.get('LOG_LEVEL')) or logging.WARNING)
 
-
         try:
             self._logger.debug("MQ_HOST {}".format(self._host))
             assert self._host
@@ -40,7 +39,8 @@ class RabbitMQHandler:
             assert self._password
 
         except AssertionError as error:
-            self._logger.error("Please define the messageQueue attribute like the host, user, port etc {}".format(error))
+            self._logger.error(
+                "Please define the messageQueue attribute like the host, user, port etc {}".format(error))
             exit(1)
 
         self.establish_rabbit_connection()
@@ -51,10 +51,7 @@ class RabbitMQHandler:
 
         self._destination_exchange = exchange_name
         self._channel.exchange_declare(exchange=exchange_name,
-                         exchange_type='topic')
-
-    def send(self, message):
-        pass
+                                       exchange_type='topic')
 
     def establish_rabbit_connection(self, mq_retries=100):
         """
@@ -90,7 +87,8 @@ class RabbitMQHandler:
                     exit(1)
 
                 retries = retries + 1
-                self._logger.warning("No connection was established. Amounts of retries: ${retries}".format(retries=retries))
+                self._logger.warning(
+                    "No connection was established. Amounts of retries: ${retries}".format(retries=retries))
 
                 time.sleep(1)
                 pass
@@ -106,9 +104,9 @@ class RabbitMQHandler:
         :param routing_key:
         :return:
         """
-        print(routing_key)
+        self._logger.info("Datapoints sent to queue")
+
         self._channel.basic_publish(exchange=self._destination_exchange,
                                     routing_key=routing_key,
                                     body=message)
-
-        pass
+        print(message)

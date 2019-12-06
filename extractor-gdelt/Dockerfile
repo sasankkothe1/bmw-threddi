@@ -11,6 +11,7 @@ COPY source.yaml ./
 COPY extractor.py ./
 COPY extractor_gdelt.py ./
 COPY RabbitMQHandler.py ./
+COPY gdelt_fetcher.py ./
 
 ENV MODE=PROD
 ENV PYTHONPATH .
@@ -18,3 +19,4 @@ ENV PYTHONPATH .
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python", "./extractor_gdelt.py"]
+#CMD tail -f /dev/null
