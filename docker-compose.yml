@@ -25,8 +25,8 @@ services:
       - bootstrap.memory_lock=true
       - ES_JAVA_OPTS=-Xms256M -Xmx256M
       - ELASTIC_PASSWORD=changeme
-    networks:
-      - docker-elk
+#    networks:
+#      - docker-elk
     volumes:
       - type: bind
         source: ./elasticsearch/master/es-master.yml
@@ -39,7 +39,6 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-    
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.4.1
@@ -51,8 +50,8 @@ services:
         source: ./kibana/kibana.yml
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
-    networks:
-      - docker-elk
+#    networks:
+#      - docker-elk
     depends_on:
       - elasticsearch
     external_links:
@@ -75,12 +74,14 @@ services:
     depends_on:
       - elasticsearch
       - rabbit
-      - extractor_gdelt
-  extractor_gdelt:
+
+  extractor-gdelt:
     build:
       context: ./extractor-gdelt
     depends_on:
       - rabbit
+    volumes:
+      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
     environment:
       - MQ_HOST=192.168.99.100
       - MQ_PORT=5672
@@ -88,6 +89,10 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
+
+      # GOOGLE BIGTABLE LICENCE FILE
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
+
   backend:
     build: ./backend
     container_name: WebApplicationBMWBackend
@@ -98,6 +103,6 @@ services:
       - ELASTICSEARCH_VERSION=7.4
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
-networks:
-  docker-elk:
-    driver: bridge
+#networks:
+#  docker-elk:
+#    driver: bridge

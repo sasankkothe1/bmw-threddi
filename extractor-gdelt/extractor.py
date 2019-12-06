@@ -35,6 +35,8 @@ class Extractor:
 
         self._create_routing_key()
 
+        self.default_properties = self._config.get("default_properties")
+
         # Send to Queue
         self._rabbitmq_handler = RabbitMQHandler.RabbitMQHandler()
         self._rabbitmq_handler.init_destination_exchange(self._output_exchange)
@@ -78,6 +80,7 @@ class Extractor:
             self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)
 
             self._logger.debug("Waiting for {min} minutes".format(min=minutes))
+
             # Sleep for 60* Minutes seconds
             time.sleep(minutes*60)
             self._clear_data()
@@ -105,9 +108,10 @@ class Extractor:
             else:
                 self._output_frame['id'] = id
 
-        self._get_field("description", self.add_importance, "No description")
-        self._get_field("importance", self.add_importance, 0.5)
+        self._get_field("description", self.add_description, "No description")
+        self._get_field("importance", self.add_importance, -1)
         self._get_field("sentiment_group", self.add_sentiment_group, 0)
+        self._get_field("actors", self.add_actors, [])
 
         self._set_origin()
 
@@ -163,6 +167,9 @@ class Extractor:
         self._routing_key = routing_key[:-1]
 
     # Field Mappings
+    def add_actors(self, source_df):
+        pass
+
     def add_id(self, source_df):
         pass
 
@@ -183,7 +190,7 @@ class Extractor:
 
     def _do_mapping(self):
         """
-        Already maps the first values
+        Already maps the first _values
         :return:
         """
         mapping_config = self._config.get('default_properties').get('field_mappings')

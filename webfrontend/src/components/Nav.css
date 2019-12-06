@@ -28,7 +28,7 @@
 }
 .navbar {
     width: 100%;
-    background: #FFFFFF;
+    background: #FFFFFF !important;
     height: 4em;
 }
 

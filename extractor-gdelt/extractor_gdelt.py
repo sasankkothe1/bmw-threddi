@@ -4,10 +4,12 @@ Class to fetch Data from the GDELT Database
 Therefore the class follows a polling mechanism.
 """
 import logging
-from datetime import datetime
+from urllib.request import urlopen
 
-import gdelt
+import lxml.html
 import numpy as np
+
+import gdelt_fetcher
 from extractor import Extractor
 
 
@@ -19,18 +21,16 @@ def sigmoid(value):
 
 
 class GDELTExtractor(Extractor):
+    _fetcher = gdelt_fetcher.GDELTFetcher()
 
     def __init__(self):
         super(GDELTExtractor, self).__init__()
 
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")
-        gd2 = gdelt.gdelt(version=2)
-        print(datetime.now().strftime("%Y %b %d"))
-        # results = gd2.Search(datetime.now().strftime("%Y %b %d"), table="events", output='pandas')
-        results = gd2.Search("2019 Nov 25", table="events", output='pandas')
-        logging.info("Fetched {} DataPoints ".format(len(results)))
 
+        results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'))
+        print(len(results))
         return results
 
     # Field Mappings
@@ -41,17 +41,97 @@ class GDELTExtractor(Extractor):
         return ids.reshape((len(ids), 1))
 
     def add_importance(self, source_df):
-        goldstein = np.array(sigmoid(np.abs(source_df['GoldsteinScale'])-10))
-        return 1*goldstein
+        # goldstein = np.array(sigmoid(np.abs(source_df['GoldsteinScale'])-10))
+        # Map goldstein on 0/1 scale
+        importance = (np.abs(source_df['GoldsteinScale']) + 10) / 20
+        return importance
 
     def add_sentiment_group(self, source_df):
         avgTone = np.array(source_df['AvgTone'])
         bins = [-100, -10, -1, 1, 10, 100]
-        classes = np.digitize(avgTone, bins)
+        classes = np.digitize(avgTone, bins) - 3
         return classes
 
     def add_position(self, source_df):
         pass
+
+    def add_actors(self, source_df):
+        _actors = source_df.apply(self.get_actor_from_row, axis=1)
+        print(_actors)
+        return _actors
+
+    def add_description(self, source_df):
+        descriptions = source_df.apply(self.get_title_of_page_by_row, axis=1)
+        return descriptions
+
+    @staticmethod
+    def get_title_of_page_by_row(row):
+        try:
+            t = lxml.html.parse(urlopen(row['SOURCEURL']))
+        except OSError as e:
+            print("NOOoO", e)
+            return "no description accessible {}".format(e)
+
+        title = t.find(".//title").text
+
+        return title
+
+    @staticmethod
+    def get_actor_from_row(row):
+
+        _actors = []
+        for i in range(1, 3):
+
+            _actorprefix = "Actor{}".format(i)
+            actor_code = row["{}Code".format(_actorprefix)]
+            if actor_code:
+                actor_ethic = row["{}EthnicCode".format(_actorprefix)]
+
+                actor_country_code = row["{}Geo_CountryCode".format(_actorprefix)]
+                actor_country_full = row["{}Geo_FullName".format(_actorprefix)]
+
+                known_group_code = row["{}KnownGroupCode".format(_actorprefix)]
+                actor_name_data = row["{}Name".format(_actorprefix)]
+
+                religion1_code = row["{}Religion1Code".format(_actorprefix)]
+                religion2_code = row["{}Religion2Code".format(_actorprefix)]
+
+                type1_code = row["{}Type1Code".format(_actorprefix)]
+                type2_code = row["{}Type2Code".format(_actorprefix)]
+                type3_code = row["{}Type3Code".format(_actorprefix)]
+
+                actor_name = "{}({})".format(actor_name_data, actor_code)
+                actor_origin = '{}({})'.format(actor_country_full, actor_country_code)
+
+                actor_group = ""
+                if known_group_code:
+                    actor_group += known_group_code + " "
+                if actor_ethic:
+                    actor_group += actor_ethic + " "
+                if religion1_code:
+                    actor_group += religion1_code + " "
+                if religion2_code:
+                    actor_group += religion2_code + " "
+
+                actor_type = []
+                if type1_code:
+                    actor_type.append(type1_code)
+                if type2_code:
+                    actor_type.append(type2_code)
+                if type3_code:
+                    actor_type.append(type3_code)
+
+                actor = {
+                    "actor_name": actor_name,
+                    "actor_origin": actor_origin,
+                    "actor_group": actor_group,
+                    "actor_type": actor_type
+                }
+
+                _actors.append(actor)
+
+        return _actors
+
 
 if __name__ == '__main__':
     GDELTExtractor()

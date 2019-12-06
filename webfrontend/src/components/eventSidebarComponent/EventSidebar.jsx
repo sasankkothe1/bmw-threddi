@@ -21,7 +21,7 @@ export default class EventSidebar extends Component {
                     <div className={"event-sidebar"}>
                         <div className={"ev-header"}>
                             <div className={"ev-event-name"}>
-                                Event Name
+                                {this.props.activeEvent.id}
                             </div>
                             <div className={"ev-source"}>{this.props.activeEvent.origin}</div>
                         </div>
@@ -45,22 +45,28 @@ export default class EventSidebar extends Component {
                                                       value={this.props.activeEvent.sentiment_group > 0 ? `+${this.props.activeEvent.sentiment_group}` : this.props.activeEvent.sentiment_group}
                                                       field="Sentiment"/>
                                 <MetricBatchComponent size="medium"
-                                                      value={moment("12.10.2019 10:10").format("DD/MM/YYYY")}
+                                                      value={moment(this.props.activeEvent.timestamp, "YYYYMMDDHHmmSS" ).format("DD/MM/YYYY")}
                                                       field="Day of Occurance"/>
-                                <MetricBatchComponent size="medium" value={moment("12.10.2019 10:12").format("hh:mm")}
+                                <MetricBatchComponent size="medium" value={moment(this.props.activeEvent.timestamp, "YYYYMMDDHHmmSS" ).format("hh:mm")}
                                                       field="Time"/>
                             </div>
                         </div>
                         <div className={"ev-actors"}>
                             <div className={"ev-sub-header"}> Actors</div>
-                            <BatchComponent element={{"name": "Republic of Kyrgyztan", "type": "Police"}}/>
+                            {this.props.activeEvent.actors.map((actor, index) =>
+                                <BatchComponent element={actor} key={index}/>
+                                )
+                            }
+
                             {/*<BatchComponent element={{"name": "Republic of Kyrgyztan", "type": "Police"}}/>*/}
                         </div>
 
 
                         <div className={"ev-show-on-map"}>
                             <Button variant="outline-primary">Show on Map</Button>
-                            <Button variant="outline-primary" onClick={()=>{UIActions.showAdditionalInformationModal()}}>Additional Information</Button>
+                            <Button variant="outline-primary" onClick={() => {
+                                UIActions.showAdditionalInformationModal()
+                            }}>Additional Information</Button>
                         </div>
 
                     </div>) : ""}

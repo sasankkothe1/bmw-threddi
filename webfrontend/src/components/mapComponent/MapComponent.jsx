@@ -20,7 +20,6 @@ class MapComponent extends Component {
     }
 
     onMarkerClick(props, marker, e) {
-        console.log(props);
         this.props.onChangeActiveRequest(props.event._source)
     }
 
