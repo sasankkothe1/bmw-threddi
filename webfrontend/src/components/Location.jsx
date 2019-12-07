@@ -33,10 +33,12 @@ export default class Location extends Component {
             <FilterableLocationTable locations = {this.state.locations} />
           </div>
 
-          <div className="pictureContainer">
+          <div className="picture-container">
             <div className="picture">
               <img src={Image} alt="website logo" height={200} width={'auto'}/>
             </div>
+
+
           </div>
         </div>
         )
