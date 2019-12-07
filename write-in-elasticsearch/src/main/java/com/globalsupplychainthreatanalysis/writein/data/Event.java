@@ -12,7 +12,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Event implements Serializable {
 
-    private Actor[] actors;
+    private Set<Actor> actors;
     private String lat;
     private String id;
     private String Long;
@@ -24,11 +24,15 @@ public class Event implements Serializable {
     private Set<Dependency> source_dependent_information;
     private String timestamp;
 
-    public void getTimestamp(String timestamp){
+    public void getTimeStamp(String timestamp){
         this.timestamp = timestamp;
     }
 
-    public void setActor(Actor[] actors) {
+    public void setTimeStamp(String timestamp){
+        this.timestamp = timestamp;
+    }
+
+    public void setActor(Set<Actor> actors) {
         this.actors = actors;
     }
 
