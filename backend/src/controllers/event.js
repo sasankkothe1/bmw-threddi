@@ -31,10 +31,10 @@ function handleError(response) {
                 client.indices.create({
                         index: "events"
                     }
-                ).then(response.status(200).send([]), handleError(response))
+                ).then(res => {response.status(404).send([])}, handleError(response))
             }
             else{
-                response.status(200).send([]);
+                response.status(404).send([]);
             }
         }else{
             response.status(500).send(err);
