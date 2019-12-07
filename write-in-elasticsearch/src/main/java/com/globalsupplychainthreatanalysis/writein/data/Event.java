@@ -69,7 +69,7 @@ public class Event implements Serializable {
         this.id = id;
     }
 
-    public Actor[] getActors() {
+    public Set<Actor> getActors() {
         return actors;
     }
 
