@@ -11,7 +11,7 @@ function handleScrollSuccess(response){
                 responseSet.push(hit)
             });
             //if more events
-            if (responseSet.length != resp.hits.total.value) {
+            if (responseSet.length !== resp.hits.total.value) {
                 responseQueue.push(
                     await client.scroll({
                         scrollId: body._scroll_id,
@@ -25,9 +25,17 @@ function handleScrollSuccess(response){
 
 function handleError(response) {
     return function(err){
-        console.log(err.statusCode);
-        if(err.statusCode == 404){
-            response.status(404).send(err);
+        console.log(err);
+        if(err.statusCode === 404){
+            if(err.message.includes('index_not_found_exception')){
+                client.indices.create({
+                        index: "events"
+                    }
+                ).then(response.status(200).send([]), handleError(response))
+            }
+            else{
+                response.status(200).send([]);
+            }
         }else{
             response.status(500).send(err);
         }
@@ -78,7 +86,7 @@ const deleteEventById = async (req, res) => {
         refresh: true,
     }).then(response => {
         console.log(response);
-        if (response.result == 'deleted') {
+        if (response.result === 'deleted') {
             console.log(response);
             return res.status(200).send(response);
         } else {
