@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import FilterableLocationTable from './FilterableLocationTable.jsx';
 import Button from 'react-bootstrap/Button';
-import Image from "./pictures/graph_events_locationView.png";
 
+import FilterableLocationTable from './FilterableLocationTable.jsx';
+import Image from "./pictures/graph_events_locationView.png";
+import LocationFormModal from "./locationFormModalComponent/LocationFormModal";
 
 export default class Location extends Component {
 
     constructor(props){
-      super(props)
+      super(props);
 
       this.state = {
         locations: [
@@ -22,11 +23,15 @@ export default class Location extends Component {
              type: 'Internal IT Service', description: 'Shared servicec center for SAP services', priority: '10'},
           { id: '00005', name: 'BMW Group Research Center Shanghai', lat: '26.513', long: '100.251',
                 type: 'R&D Center Shanghai', description: 'Research and Development Centercomprises four departments focusing on future mobility trends.', priority: '10'}
-        ]
-      }
+        ], addModalShow : false}
+
     }
 
+
     render () {
+
+      let addModalClose =() => this.setState({addModalShow: false});
+
         return (
         <div className="page-content">
           <div className="locationTable">
@@ -38,7 +43,11 @@ export default class Location extends Component {
               <img src={Image} alt="website logo" height={200} width={'auto'}/>
             </div>
 
+            <Button variant='primary' onClick={()=> this.setState({addModalShow: true})}> Add location </Button>
 
+              <LocationFormModal
+                show={this.state.addModalShow}
+                onHide = {addModalClose} />
           </div>
         </div>
         )
