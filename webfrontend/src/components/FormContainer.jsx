@@ -145,7 +145,7 @@ class FormContainer extends Component {
         />{" "}
         {/* Name of the user */}
         <Input
-          inputType={"number"}
+          inputType={"text"}
           name={"address"}
           title={"Address"}
           value={this.state.newLocation.address}

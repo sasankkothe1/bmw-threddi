@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 
-import FilterableLocationTable from './FilterableLocationTable.jsx';
+import FilterableLocationTable from './FilterableLocationTable';
 import Image from "./pictures/graph_events_locationView.png";
 import LocationFormModal from "./locationFormModalComponent/LocationFormModal";
 

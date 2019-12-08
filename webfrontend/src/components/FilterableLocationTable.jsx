@@ -20,17 +20,19 @@ export default class FilterableLocationTable extends Component {
 
     return (
       <div className ="FilterableLocationTableDiv">
-        <div className="searchbar">
-          <div>
+        <div className="wrapper-search-bar">
+          <div className="search-bar">
                 <SearchBar id="filterText"/>
           </div>
-          <div>
-          <Button variant='primary' onClick={()=> this.setState({addModalShow: true})}> Add location </Button>
+
+          <div className="add-location-button">
+          <Button variant='success' onClick={()=> this.setState({addModalShow: true})}> Add location </Button>
             <LocationFormModal
               show={this.state.addModalShow}
               onHide = {addModalClose} />
           </div>
         </div>
+
         <LocationTable locations={this.props.locations} />
       </div>)
   }
