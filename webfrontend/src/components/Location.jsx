@@ -23,31 +23,21 @@ export default class Location extends Component {
              type: 'Internal IT Service', description: 'Shared servicec center for SAP services', priority: '10'},
           { id: '00005', name: 'BMW Group Research Center Shanghai', lat: '26.513', long: '100.251',
                 type: 'R&D Center Shanghai', description: 'Research and Development Centercomprises four departments focusing on future mobility trends.', priority: '10'}
-        ], addModalShow : false}
+        ]}
 
     }
 
 
     render () {
-
-      let addModalClose =() => this.setState({addModalShow: false});
-
         return (
         <div className="page-content">
           <div className="locationTable">
             <FilterableLocationTable locations = {this.state.locations} />
           </div>
-
           <div className="picture-container">
             <div className="picture">
               <img src={Image} alt="website logo" height={200} width={'auto'}/>
             </div>
-
-            <Button variant='primary' onClick={()=> this.setState({addModalShow: true})}> Add location </Button>
-
-              <LocationFormModal
-                show={this.state.addModalShow}
-                onHide = {addModalClose} />
           </div>
         </div>
         )
