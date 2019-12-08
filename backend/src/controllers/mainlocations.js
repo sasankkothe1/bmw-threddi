@@ -31,14 +31,11 @@ function handleError(response) {
                 client.indices.create({
                         index: "main_locations"
                     }
-                ).then(res => {response.status(404).send([])}, handleError(response))
+                ).then(res => {response.status(200).send([])}, handleError(response))
             }
             else{
-                return response.status(404).json([]);
+                return response.status(404).json();
             }
-        }
-        if(err.statusCode === 400){
-
         }
         return response.status(500).json(err);
 
