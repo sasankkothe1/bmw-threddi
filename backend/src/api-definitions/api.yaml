@@ -206,17 +206,6 @@ paths:
         500:
           description: internal error happened by elasticsearch database
 
-# Added by API Auto Mocking Plugin
-servers:
-# Added by API Auto Mocking Plugin
-# Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/ElHong/Supply_Chain_Threat_Analysis_Dashboard_API/1.0.0
-  - description: Dev Server
-    url: https://de.foo.com/v1
-  - description: Prod Server
-    url: https://de.foo.com/v2
-
 components:
   schemas:
     events:

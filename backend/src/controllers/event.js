@@ -31,10 +31,10 @@ function handleError(response) {
                 client.indices.create({
                         index: "events"
                     }
-                ).then(response.status(200).send([]), handleError(response))
+                ).then(res => {response.status(404).send([])}, handleError(response))
             }
             else{
-                response.status(200).send([]);
+                response.status(404).send([]);
             }
         }else{
             response.status(500).send(err);
@@ -69,9 +69,9 @@ const getEventById = async (req, res) => {
     }).then(response =>{
         if(response.found) {
             console.log(response);
-            return res.status(200).send(response._source);
+            res.status(200).send(response);
         }else {
-            return res.status(404).send();
+            res.status(404).send();
         }
     }, handleError(res));
 };
@@ -88,10 +88,10 @@ const deleteEventById = async (req, res) => {
         console.log(response);
         if (response.result === 'deleted') {
             console.log(response);
-            return res.status(200).send(response);
+            res.status(200).send(response);
         } else {
             console.log(response);
-            return res.status(500).send('internal error happens');
+            res.status(500).send('internal error happens');
         }
     }, handleError(res));
 };
