@@ -14,8 +14,7 @@ class FormContainer extends Component {
     this.state = {
       newLocation: {
         name: "",
-        long:"",
-        lat:"",
+        address:"",
         locationType: "",
         description: "",
         priority: ""
@@ -28,8 +27,7 @@ class FormContainer extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.handleLat = this.handleLat.bind(this);
-    this.handleLong = this.handleLong.bind(this);
+    this.handleAddress = this.handleAddress.bind(this);
     this.handlePriority = this.handlePriority.bind(this)
   }
 
@@ -48,26 +46,13 @@ class FormContainer extends Component {
     );
   }
 
-  handleLong(e) {
+  handleAddress(e) {
     let value = e.target.value;
     this.setState(
       prevState => ({
         newLocation: {
           ...prevState.newLocation,
-          long: value
-        }
-      }),
-      () => console.log(this.state.newLocation)
-    );
-  }
-
-  handleLat(e) {
-    let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newLocation: {
-          ...prevState.newLocation,
-          lat: value
+          address: value
         }
       }),
       () => console.log(this.state.newLocation)
@@ -138,8 +123,7 @@ class FormContainer extends Component {
     this.setState({
       newLocation: {
         name: "",
-        long:"",
-        lat:"",
+        address:"",
         locationType: "",
         description: "",
         priority: ""
@@ -162,22 +146,13 @@ class FormContainer extends Component {
         {/* Name of the user */}
         <Input
           inputType={"number"}
-          name={"long"}
-          title={"Longitude"}
-          value={this.state.newLocation.long}
-          placeholder={"Enter the longitude information of the location"}
-          handleChange={this.handleLong}
+          name={"address"}
+          title={"Address"}
+          value={this.state.newLocation.address}
+          placeholder={"Enter the address information of the location"}
+          handleChange={this.handleAddress}
         />{" "}
-        {/* Longitude information */}
-        <Input
-          inputType={"number"}
-          name={"lat"}
-          title={"Latitude"}
-          value={this.state.newLocation.lat}
-          placeholder={"Enter the latitude information of the location"}
-          handleChange={this.handleLat}
-        />{" "}
-        {/* Latitude information */}
+        {/* Address information */}
         <Select
           title={"Location Type"}
           name={"locationType"}
@@ -195,7 +170,7 @@ class FormContainer extends Component {
           placeholder={"Enter the priority for given location"}
           handleChange={this.handlePriority}
         />{" "}
-        {/* Latitude information */}
+        {/* Priority information */}
         <TextArea
           title={"Description"}
           rows={10}
