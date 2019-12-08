@@ -5,8 +5,8 @@ const mainlocationsController = require('../controllers/mainlocations');
 
 router.get('/', mainlocationsController.getAllLocations);
 router.post('/', mainlocationsController.createLocation);
-router.put('/:location_id', mainlocationsController.updateLocationById);
-router.delete('/:location_id', mainlocationsController.deleteLocationById);
+router.put('/:locationId', mainlocationsController.updateLocationById);
+router.delete('/:locationId', mainlocationsController.deleteLocationById);
 
 
 module.exports = router;
