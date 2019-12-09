@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Button, Row, Col, Form} from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import './LocationFormModal.css';
 import FormContainer from '../locationFormComponent/FormContainer'
 
