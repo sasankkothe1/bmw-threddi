@@ -76,7 +76,6 @@ export default class Home extends Component {
     }
 
     onRemoveActiveEvent() {
-        console.log("REMOVE IT");
         this.setState({
             activeEvent: null
         })

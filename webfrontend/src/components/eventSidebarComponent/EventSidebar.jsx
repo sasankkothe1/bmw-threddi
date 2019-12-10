@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import moment from "moment";
 
 import UIActions from "../../actions/ui.actions";
+import ShortEventList from "../shortEventListComponent/ShortEventList";
 
 export default class EventSidebar extends Component {
 
@@ -69,7 +70,11 @@ export default class EventSidebar extends Component {
                             }}>Additional Information</Button>
                         </div>
 
-                    </div>) : ""}
+                    </div>) :
+
+                    <ShortEventList/>
+
+                }
             </div>
         )
     }
