@@ -8,13 +8,12 @@ import SideBar from './components/SideBar';
 import './components/Nav.css';
 import './components/SideBar.css';
 import './views/home/home.css';
-import './views/location/location.css';
-
 import './components/main.css';
 import './components/IncidentEventDetails.css'
 import './components/IncidentEventTable.css'
 import './components/incident.css';
-import './components/locationTableComponent/LocationRow.css';
+import './components/LocationRow.css';
+import './components/location.css';
 
 
 class App extends Component {
