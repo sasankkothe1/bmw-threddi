@@ -30,7 +30,6 @@ class GDELTExtractor(Extractor):
         logging.debug("Starting querying GDELT")
 
         results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'))
-        print(len(results))
         return results
 
     # Field Mappings
@@ -57,7 +56,6 @@ class GDELTExtractor(Extractor):
 
     def add_actors(self, source_df):
         _actors = source_df.apply(self.get_actor_from_row, axis=1)
-        print(_actors)
         return _actors
 
     def add_description(self, source_df):
