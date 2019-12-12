@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import config from '../../config';
+import GoogleMapReact from 'google-map-react'
+import MapMarker from "../mapMarkerComponent/mapMarker";
+import EventAction from "../../actions/event.actions";
+import EventStore from "../../stores/event.store";
 
 class MapComponent extends Component {
     constructor(props) {
@@ -8,55 +11,86 @@ class MapComponent extends Component {
 
         this.state = {
             center: {},
+            zoom:1,
             initialCenter: {
-                lat: 48.148640,
-                lng: 11.574844
-            }
+                lat: 0,
+                lng: 0
+            },
+            show: false,
+            activeMarker: null,
+            hoveredEvent: null
         };
 
         this.map = React.createRef();
+
         this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
 
     }
 
     onMarkerClick(props, marker, e) {
-        this.props.onChangeActiveRequest(props.event._source)
+        this.setState(
+            {
+                activeMarker: marker,
+                show: true,
+                zoom: 3
+            });
+        this.props.onChangeActiveEvent(props.event._source);
+
     }
 
+    isActive(event){
+        if(event && this.props.activeElement) {
+            return event._source.id === this.props.activeElement.id
+        }
+        return false
+    }
 
+    isHovered(event){
+        if(event && this.state.hoveredEvent) {
+            return event._source.id === this.state.hoveredEvent.id
+        }
+        return false
+    }
+    componentWillMount() {
+        EventStore.addChangeListener("UPDATE_HOVERED_EVENT", this.onNewHoveredEvent);
+    }
+    onNewHoveredEvent(){
+        this.setState({ hoveredEvent: EventStore.getHoveredEvent()})
+    }
     render() {
         return (
-            <Map google={this.props.google}
-                // TODO ADD HEIGHT OF HEADER
-                 containerStyle={{width: '100%', height: 'calc(100vh - 120px)', position: 'relative'}}
-                 zoom={3}
-                 initialCenter={this.state.initialCenter}
-                 ref={this.map}
-                 center={
-                     this.state.center
-                 }
-            >
-                {this.props.events ? (
-                    this.props.events.map((event, i) => {
-                            return (
-                                <Marker
-                                    key={i}
-                                    event={event}
-                                    position={{
-                                        lat: event._source.lat,
-                                        lng: event._source.long
-                                    }}
-                                    onClick={this.onMarkerClick}
-                                />)
-                        }
-                    )) : ""}
-
-            </Map>
+            <div style={{height: '100%', width: '100%'}} id="mapBox">
+                <GoogleMapReact
+                    bootstrapURLKeys={{key: config.GOOGLE_MAPS_API_KEY}}
+                    zoom={this.state.zoom}
+                    center={this.state.initialCenter}
+                    onClick={()=>{
+                        EventAction.updateActiveEvent(null);
+                        EventAction.updateHoveredEvent(null);
+                    }}
+                    ref={this.map}
+                >
+                    {this.props.events ? (
+                        this.props.events.map((event, i) => {
+                            if (event._source.lat) {
+                                return (
+                                    <MapMarker lat={event._source.lat}
+                                               lng={event._source.long}
+                                               event={event}
+                                               isHovered={this.isHovered(event)}
+                                               isActive={this.isActive(event)}
+                                               key={i}/>)
+                            }
+                            return ""
+                        })) : ""
+                    }
+                </GoogleMapReact>
+            </div>
         )
     }
 }
 
-export default GoogleApiWrapper({
-    apiKey: (config.GOOGLE_MAPS_API_KEY)
-})(MapComponent)
+export default MapComponent
+
 
