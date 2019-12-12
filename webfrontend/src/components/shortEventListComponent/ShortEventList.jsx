@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import './ShortEventList.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import EventStore from "../../stores/event.store";
+import EventAction from "../../actions/event.actions";
 import moment from "moment";
-import * as flat from "flat";
+
 
 export default class ShortEventList extends Component {
 
@@ -28,14 +29,12 @@ export default class ShortEventList extends Component {
 
     render() {
 
-        console.log(this.state.data);
         let data = this.state.data
             .map((value)=>value._source)
             .map((value)=>{return {
                 "id": value.id,
                 "importance": value.importance,
                 "sentiment_group": value.sentiment_group,
-                "description": value.description,
                 "occured": moment(value.timestamp, "YYYYMMDDHHmmSS" ).fromNow(),
             }});
 
@@ -44,7 +43,13 @@ export default class ShortEventList extends Component {
 
         const rowEvents={
             onClick: (e, row, rowIndex) => {
-                alert(row)
+                EventAction.updateActiveEvent(this.state.data.filter(event=>event._source?event._source.id===row.id:null)[0]._source)
+            },
+            onMouseEnter: (e, row, rowIndex) =>{
+                EventAction.updateHoveredEvent(this.state.data.filter(event=>event._source?event._source.id===row.id:null)[0]._source)
+            },
+            onMouseLeave:(e, row, rowIndex) =>{
+                EventAction.updateHoveredEvent(null)
             }
         };
 
@@ -56,6 +61,7 @@ export default class ShortEventList extends Component {
                         columns={columns}
                         data={data}
                         rowEvents={rowEvents}
+                        hover
                         style={{
                             height: "100%"
                         }}>

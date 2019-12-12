@@ -13,8 +13,7 @@ export default class Home extends Component {
             <div className="wrap">
                 <div className="fleft">
                     <MapComponent events={this.state.events}
-                                  onChangeActiveRequest={(event)=>this.onChangeActiveRequest(event)}
-                                  onRemoveActiveEvent={()=>this.onRemoveActiveEvent()}/>
+                                  activeElement={this.state.activeEvent}/>
                 </div>
                 <div className="fright">
                     <EventSidebar activeEvent={this.state.activeEvent}
@@ -32,13 +31,12 @@ export default class Home extends Component {
         this.state = {
             number: 0,
             events: [],
-            activeEvent: null
+            activeEvent: EventStore.getActiveEvent()
         };
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onFetchEvents = this.onFetchEvents.bind(this);
-        this.setActiveEvent = this.setActiveEvent.bind(this);
-
+        this.onNewActiveEvent = this.onNewActiveEvent.bind(this);
 
         EventAction.fetchEvents()
     }
@@ -46,26 +44,21 @@ export default class Home extends Component {
     componentDidMount() {
         EventStore.addChangeListener("UPDATE_NUMBER", this.onSubmit);
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
+        EventStore.addChangeListener("UPDATE_ACTIVE_EVENT", this.onNewActiveEvent);
+
     }
 
     updateNumber(){
         EventAction.updateNumber(1)
     }
 
-    onChangeActiveRequest(event){
-        this.setActiveEvent(event)
+    onChangeActiveEvent(event){
+        EventAction.updateActiveEvent(event);
     }
 
     onSubmit() {
         this.setState({
             number: EventStore.getNumber()
-        });
-    }
-
-    setActiveEvent(event){
-        console.log(event)
-        this.setState({
-            activeEvent: event
         });
     }
 
@@ -76,8 +69,12 @@ export default class Home extends Component {
     }
 
     onRemoveActiveEvent() {
+        EventAction.updateActiveEvent(null)
+    }
+
+    onNewActiveEvent() {
         this.setState({
-            activeEvent: null
+            activeEvent: EventStore.getActiveEvent()
         })
     }
 }

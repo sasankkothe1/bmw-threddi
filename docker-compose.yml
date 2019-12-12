@@ -76,23 +76,23 @@ services:
       - rabbit
 
 # UNCOMMENT for PROD
-#  extractor-gdelt:
-#    build:
-#      context: ./extractor-gdelt
-#    depends_on:
-#      - rabbit
-#    volumes:
-#      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
-#    environment:
-#      - MQ_HOST=192.168.99.100
-#      - MQ_PORT=5672
-#      - MQ_USER=rabbitmq
-#      - MQ_PASSWORD=rabbitmq
-#      - LOG_LEVEL=10
-#      - OUTPUT_EXCHANGE=ex_extractors
-#
-#      # GOOGLE BIGTABLE LICENCE FILE
-#      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
+  extractor-gdelt:
+    build:
+      context: ./extractor-gdelt
+    depends_on:
+      - rabbit
+    volumes:
+      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
+    environment:
+      - MQ_HOST=192.168.99.100
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+
+      # GOOGLE BIGTABLE LICENCE FILE
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
 
 # MOCK EXTRACTOR FOR MORE EASY TESTING AND DEVELOPMENT
   extractor-mock:

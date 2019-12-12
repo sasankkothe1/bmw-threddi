@@ -4,10 +4,12 @@ import EventService from "../services/events.service";
 
 let _store = {
     number: 0,
-    events: []
+    events: [],
+    activeEvent: null,
+    hovered_event: null
 };
 
-class EventStore extends EventEmitter{
+class EventStore extends EventEmitter {
 
     constructor() {
         super();
@@ -15,22 +17,39 @@ class EventStore extends EventEmitter{
 
     }
 
-    emitChange(eventName){
+    emitChange(eventName) {
         this.emit(eventName)
     }
 
-    updateNumber(value){
-        _store.number +=value;
+    updateNumber(value) {
+        _store.number += value;
     }
 
+    updateActiveEvent(event) {
+        _store.activeEvent = event
+    }
+
+    updateHoveredEvent(event) {
+        _store.hovered_event = event
+    }
+
+
+
     async dispatcherCallback(action) {
-        switch(action.actionType) {
+        switch (action.actionType) {
             case 'UPDATE_NUMBER':
                 this.updateNumber(action.value);
                 break;
 
             case 'FETCH_EVENTS':
                 await this.fetchEvents(action.value);
+                break;
+            case 'UPDATE_ACTIVE_EVENT':
+                await this.updateActiveEvent(action.value);
+                break;
+
+            case 'UPDATE_HOVERED_EVENT':
+                await this.updateHoveredEvent(action.value);
                 break;
         }
 
@@ -52,12 +71,20 @@ class EventStore extends EventEmitter{
         return _store.number;
     }
 
+    getActiveEvent() {
+        return _store.activeEvent;
+    }
+
     getEvents() {
         return _store.events;
+    }
+    getHoveredEvent(){
+        return _store.hovered_event;
     }
 
     async fetchEvents(value) {
         _store.events = await EventService.getEvents()
     }
 }
+
 export default new EventStore()

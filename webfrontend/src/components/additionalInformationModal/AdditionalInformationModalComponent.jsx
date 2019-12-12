@@ -7,6 +7,8 @@ import BatchComponent from "../actorBatchComponent/BatchComponent";
 
 import UIStore from "../../stores/ui.store";
 import UIActions from "../../actions/ui.actions";
+import MetricBatchComponent from "../metricBatchComponent/MetricBatchComponent";
+import moment from "../eventSidebarComponent/EventSidebar";
 
 
 export default class AdditionalInformationModalComponent extends Component {
@@ -17,7 +19,7 @@ export default class AdditionalInformationModalComponent extends Component {
 
         this.state = {
             show: UIStore.getShowAdditionalInformationModal()
-        }
+        };
 
         this.setShow = this.setShow.bind(this);
     }
@@ -44,15 +46,20 @@ export default class AdditionalInformationModalComponent extends Component {
                         <Modal.Title>Additional Information</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <div className={"additional-information-batches-container"}>
                         {this.props.activeEvent?this.props.activeEvent.source_dependent_information.map((information, i) => {
                             {
                                 let element = {};
                                 element[information.displayname] = information.value;
                                 return (
-                                    <BatchComponent key={i} element={element}/>
+                                    <MetricBatchComponent size="medium"
+                                                          key={i}
+                                                          value={Object.values(element)[0]}
+                                                          field={Object.keys(element)[0]}/>
                                 )
                             }
                         }):""}
+                        </div>
                     </Modal.Body>
 
                     <Modal.Footer>
