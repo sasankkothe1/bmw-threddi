@@ -18,7 +18,9 @@ tags:
     description: Find out more
     url: https://www.gdeltproject.org/data.html#documentation
 - name: location
-  description: Access to object locations
+  description: Access to location objects
+- name: configuration
+  description: Access to configuration objects
 
 
 paths:
@@ -205,7 +207,123 @@ paths:
           content: {}
         500:
           description: internal error happened by elasticsearch database
-
+  /configurations:
+    summary: Configuration object type
+    description: This resource represents an individual configuration in the system. Each configuration is identified by an unique configuration_id.
+    get:
+      tags:
+      - event
+      summary: Return array with configuration information.
+      description: Obtain information about ongoing configurtations.
+      operationId: getEvent
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/configurations'
+        400:
+          description: Invalid request
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+    post:
+      tags:
+      - configuration
+      summary: Add a new configuration to the database
+      operationId: postConfigurations
+      requestBody:
+        description: Configuration object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configurations'
+        required: true
+      responses:
+        201:
+          description: New resource created
+        405:
+          description: Invalid input
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+  /configurations/{configurationId}:
+    summary: Tbd
+    description: Tbd
+    get:
+      tags:
+      - event
+      summary: Return configuration by configuration_id.
+      description: Obtain information about a specific event by stating the event_id.
+      operationId: getEventById
+      parameters:
+      - name: configurationId
+        in: path
+        description: ID of configuration that needs to be fetched
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configurations'
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: ID not found
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+    delete:
+      tags:
+      - configuration
+      summary: Delete configuration by ID
+      operationId: deleteConfigurationByID
+      parameters:
+      - name: configurationId
+        in: path
+        description: ID of configuration that needs to be deleted
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: ID not found
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+    post:
+      tags:
+      - configuration
+      summary: Add a new configuration to the database
+      operationId: postConfigurationns
+      requestBody:
+        description: configuration object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configurations'
+        required: true
+      responses:
+        201:
+          description: New resource created
+        405:
+          description: Invalid input
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
 components:
   schemas:
     events:
@@ -245,11 +363,18 @@ components:
               actor_type: #//[police, military, rebels, etc]
                 type: array
                 items:
-                    type: string
+                  type: string
         source_dependent_information:
           type: array
           items:
             type: object
+            properties:
+              displayname:
+                type: string
+              id:
+                type: string
+              description:
+                type: string
     mainlocations:
       type: object
       $ref: '#/components/schemas/mainlocations'
@@ -286,3 +411,47 @@ components:
         event_count: # Amount of events at a particular day
           type: integer
           format: int64
+
+    configurations:
+      type: object
+      $ref: '#/components/schemas/configurations'
+      properties:
+        name:
+          type: string
+        configuration_id:
+          type: string
+        description:
+          type: string
+        processing:
+          type: array
+          items:
+            type: string
+        default_properties:
+          type: object
+          properties:
+            polling:
+              type: integer
+            field_mappiong:
+              type: object
+            filter_options:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  method:
+                    type: string
+                  threshhold:
+                    type: integer
+            source_dependent_information:
+              type: array
+              items:
+                type: object
+                properties:
+                  displayname:
+                    type: string
+                  id:
+                    type: string
+                  description:
+                    type: string
