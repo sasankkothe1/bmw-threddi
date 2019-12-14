@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const configurationsController = require('../controllers/mainlocations');
+const configurationsController = require('../controllers/configurations');
 
 router.get('/', configurationsController.getAllConfigurations);
 router.post('/', configurationsController.createConfiguration);
-router.put('/:locationId', configurationsController.updateLocationById);
-router.delete('/:locationId', configurationsController.deleteLocationById);
+router.get('/:configurationId', configurationsController.getConfigurationById);
+router.put('/:configurationId', configurationsController.updateConfigurationById);
+router.delete('/:configurationId', configurationsController.deleteConfigurationById);
 
 
 module.exports = router;

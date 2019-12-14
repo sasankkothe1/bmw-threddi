@@ -12,7 +12,8 @@ const helmet = require('helmet');
 const middlewares = require('./middlewares');
 
 const events = require('./routes/events');
-const mainlocations = require('./routes/mainlocations');
+const mainLocations = require('./routes/mainLocations');
+const configurations = require('./routes/configurations');
 const api = express();
 
 
@@ -32,7 +33,8 @@ api.get('/', (req, res) => {
 
 // API routes
 api.use('/events', events);
-api.use('/mainlocations', mainlocations);
+api.use('/mainlocations', mainLocations);
+api.use('/configurations', configurations);
 api.use('/api-docs', swaggerUi.serve);
 api.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
