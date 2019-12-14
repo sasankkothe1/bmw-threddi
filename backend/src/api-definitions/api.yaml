@@ -212,7 +212,7 @@ paths:
     description: This resource represents an individual configuration in the system. Each configuration is identified by an unique configuration_id.
     get:
       tags:
-      - event
+      - configuration
       summary: Return array with configuration information.
       description: Obtain information about ongoing configurtations.
       operationId: getEvent
@@ -255,7 +255,7 @@ paths:
     description: Tbd
     get:
       tags:
-      - event
+      - configuration
       summary: Return configuration by configuration_id.
       description: Obtain information about a specific event by stating the event_id.
       operationId: getEventById
