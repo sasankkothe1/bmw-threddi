@@ -1,0 +1,32 @@
+
+.active_element{
+    color: #770000;
+}
+.mapmarker{
+    cursor: pointer;
+}
+.mapmarker:hover{
+    color: #220000;
+    cursor: pointer;
+}
+
+.marker-batches{
+    display: flex;
+    justify-content: space-around;
+    width:100%;
+}
+
+.horizontal-line{
+    color: #AAAAAA;
+    margin: 3px
+}
+
+.info-window{
+    width: 18rem;
+    z-index: 10000;
+    margin: 10px;
+}
+
+.hovered-marker{
+    color: #FF0000;
+}

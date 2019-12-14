@@ -1,0 +1,4 @@
+.location-table{
+  display:flex;
+  justify-content: space-between;
+}

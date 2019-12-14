@@ -1,0 +1,37 @@
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.cardBodyButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.typeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.typeRowHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.typeRowContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-left: 2.5%;
+  flex-grow: 1;
+}
+
+.priorityRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

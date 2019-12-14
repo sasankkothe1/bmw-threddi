@@ -16,6 +16,18 @@ class EventActions{
             value: data
         });
     }
+    updateActiveEvent(data){
+        EventDispatcher.dispatch({
+            actionType: 'UPDATE_ACTIVE_EVENT',
+            value: data
+        });
+    }
+    updateHoveredEvent(data){
+        EventDispatcher.dispatch({
+            actionType: 'UPDATE_HOVERED_EVENT',
+            value: data
+        });
+    }
 }
 
 export default new EventActions()

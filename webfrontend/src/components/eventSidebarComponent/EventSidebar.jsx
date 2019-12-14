@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import moment from "moment";
 
 import UIActions from "../../actions/ui.actions";
+import ShortEventList from "../shortEventListComponent/ShortEventList";
 
 export default class EventSidebar extends Component {
 
@@ -53,12 +54,11 @@ export default class EventSidebar extends Component {
                         </div>
                         <div className={"ev-actors"}>
                             <div className={"ev-sub-header"}> Actors</div>
-                            {this.props.activeEvent.actors.map((actor, index) =>
+                            {this.props.activeEvent.actors?this.props.activeEvent.actors.map((actor, index) =>
                                 <BatchComponent element={actor} key={index}/>
-                                )
+                                ):"No Actors specified"
                             }
 
-                            {/*<BatchComponent element={{"name": "Republic of Kyrgyztan", "type": "Police"}}/>*/}
                         </div>
 
 
@@ -69,7 +69,11 @@ export default class EventSidebar extends Component {
                             }}>Additional Information</Button>
                         </div>
 
-                    </div>) : ""}
+                    </div>) :
+
+                    <ShortEventList/>
+
+                }
             </div>
         )
     }
