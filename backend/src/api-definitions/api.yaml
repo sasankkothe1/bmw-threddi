@@ -207,10 +207,13 @@ paths:
           content: {}
         500:
           description: internal error happened by elasticsearch database
+
   /configurations:
     summary: Configuration object type
     description: This resource represents an individual configuration in the system. Each configuration is identified by an unique configuration_id.
     get:
+      parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - configuration
       summary: Return array with configuration information.
@@ -228,9 +231,13 @@ paths:
         400:
           description: Invalid request
           content: {}
+        401:
+          description: Unauthorized
         500:
           description: internal error happened by elasticsearch database
     post:
+      parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - configuration
       summary: Add a new configuration to the database
@@ -245,6 +252,8 @@ paths:
       responses:
         201:
           description: New resource created
+        401:
+          description: Unauthorized
         405:
           description: Invalid input
           content: {}
@@ -260,6 +269,7 @@ paths:
       description: Obtain information about a specific event by stating the event_id.
       operationId: getEventById
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       - name: configurationId
         in: path
         description: ID of configuration that needs to be fetched
@@ -276,6 +286,8 @@ paths:
         400:
           description: Invalid request
           content: {}
+        401:
+          description: Unauthorized
         404:
           description: ID not found
           content: {}
@@ -287,6 +299,7 @@ paths:
       summary: Delete configuration by ID
       operationId: deleteConfigurationByID
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       - name: configurationId
         in: path
         description: ID of configuration that needs to be deleted
@@ -299,6 +312,8 @@ paths:
         400:
           description: Invalid request
           content: {}
+        401:
+          description: Unauthorized
         404:
           description: ID not found
           content: {}
@@ -309,6 +324,14 @@ paths:
       - configuration
       summary: Add a new configuration to the database
       operationId: postConfigurationns
+      parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
+      - name: configurationId
+        in: path
+        description: ID of configuration that needs to be deleted
+        required: true
+        schema:
+          type: string
       requestBody:
         description: configuration object that needs to be added to the database
         content:
@@ -319,6 +342,8 @@ paths:
       responses:
         201:
           description: New resource created
+        401:
+          description: Unauthorized
         405:
           description: Invalid input
           content: {}
@@ -411,7 +436,6 @@ components:
         event_count: # Amount of events at a particular day
           type: integer
           format: int64
-
     configurations:
       type: object
       $ref: '#/components/schemas/configurations'
@@ -455,3 +479,10 @@ components:
                     type: string
                   description:
                     type: string
+  securitySchemes:
+    authenticationHeader:
+      type: apiKey
+      $ref: '#/components/securitySchemes/authenticationHeader'
+      in: header
+      name: Authentication
+      description: Enter your token in the format **Bearer clientCredential &lt;clientId:clientSecret and encoded in Base64>**
