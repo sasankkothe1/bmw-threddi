@@ -43,7 +43,7 @@
 
 .ReactTable .rt-tbody .rt-td {
     font: caption;
-    font-family: montserrat;
+    font-family: montserrat, sans-serif;
     font-size: medium;
     border: hidden;
 }
