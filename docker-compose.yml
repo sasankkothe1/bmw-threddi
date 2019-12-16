@@ -56,16 +56,16 @@ services:
 #      - elasticsearch
 #    external_links:
 #      - elasticsearch
-  write-in-service:
+  write-in-elasticsearch-service:
     build: ./write-in-elasticsearch
     environment:
       ## adjust the routing key!!
-      - RABBITMQ_HOST=192.168.99.100
+      - RABBITMQ_HOST=rabbit
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=rabbitmq
       - RABBITMQ_PASSWORD=rabbitmq
       - ROUTING_KEY=#
-      - ELASTIC_SEARCH_IP=192.168.99.100:9200
+      - ELASTIC_SEARCH_IP=elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
       - TOPIC_EXCHANGE_NAME=ex_extractors
@@ -76,23 +76,23 @@ services:
       - rabbit
 
 # UNCOMMENT for PROD
-  extractor-gdelt:
-    build:
-      context: ./extractor-gdelt
-    depends_on:
-      - rabbit
-    volumes:
-      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
-    environment:
-      - MQ_HOST=192.168.99.100
-      - MQ_PORT=5672
-      - MQ_USER=rabbitmq
-      - MQ_PASSWORD=rabbitmq
-      - LOG_LEVEL=10
-      - OUTPUT_EXCHANGE=ex_extractors
-
-      # GOOGLE BIGTABLE LICENCE FILE
-      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
+#  extractor-gdelt:
+#    build:
+#      context: ./extractor-gdelt
+#    depends_on:
+#      - rabbit
+#    volumes:
+#      - ./extractor-gdelt/WeblabThreatAnalysis-56a74c861c77.json:/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
+#    environment:
+#      - MQ_HOST=rabbit
+#      - MQ_PORT=5672
+#      - MQ_USER=rabbitmq
+#      - MQ_PASSWORD=rabbitmq
+#      - LOG_LEVEL=10
+#      - OUTPUT_EXCHANGE=ex_extractors
+#
+#      # GOOGLE BIGTABLE LICENCE FILE
+#      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
 
 # MOCK EXTRACTOR FOR MORE EASY TESTING AND DEVELOPMENT
   extractor-mock:
@@ -101,7 +101,7 @@ services:
     depends_on:
       - rabbit
     environment:
-      - MQ_HOST=192.168.99.100
+      - MQ_HOST=rabbit
       - MQ_PORT=5672
       - MQ_USER=rabbitmq
       - MQ_PASSWORD=rabbitmq
@@ -114,7 +114,7 @@ services:
     ports:
     - "4200:4200"
     environment:
-      - ELASTICSEARCH_HOST=192.168.99.100:9200
+      - ELASTICSEARCH_HOST=elasticsearch:9200
       - ELASTICSEARCH_VERSION=7.4
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
