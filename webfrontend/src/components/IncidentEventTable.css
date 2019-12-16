@@ -7,6 +7,11 @@
     text-align: left;
 }
 
+.ReactTable {
+    flex: 2;
+}
+
+
 .ReactTable .rt-tbody .rt-td {
     font: caption;
     font-family: montserrat;
