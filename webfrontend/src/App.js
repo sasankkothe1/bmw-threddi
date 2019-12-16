@@ -12,8 +12,8 @@ import './components/main.css';
 import './components/IncidentEventDetails.css'
 import './components/IncidentEventTable.css'
 import './components/incident.css';
-import './components/LocationRow.css';
-import './components/location.css';
+import './components/locationTableComponent/LocationRow.css';
+import './views/location/location.css';
 
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
   constructor(props){
       super(props);
       this.state={
-          title:"BWM Thread Analysis"
+          title:"BWM Threat Analysis"
       }
   }
 /* we use handler in the name as we are not calling it particularly but we
