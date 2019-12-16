@@ -76,8 +76,8 @@ class Extractor:
                 self._logger.error(
                     "One accessed Key is not available. when adding additional information.....{}".format(e))
 
-            # with open("sample_events.txt", "w") as outputfile:
-            #     json.dump(self._output_json, outputfile, default=self.convert)
+            with open("sample_events.txt", "w") as outputfile:
+                json.dump(self._output_json, outputfile, default=self.convert)
 
             message = json.dumps(self._output_json, default=self.convert)
             self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)

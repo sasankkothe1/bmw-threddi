@@ -18,13 +18,29 @@ class MapComponent extends Component {
             },
             show: false,
             activeMarker: null,
-            hoveredEvent: null
+            hoveredEvent: null,
+            events:[]
         };
 
         this.map = React.createRef();
 
         this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
+
+    }
+
+    recursiveLoad(){
+        console.log(this.props.events);
+        setTimeout(()=>{
+            console.log(this.state.events.length + 1,  this.props.events.length);
+            let hasMore = this.state.events.length + 1 < this.state.events.length;
+            this.setState( (prev, props) => ({
+                events: this.props.events.slice(0, prev.events.length + 4)
+            }));
+            console.log("test_map");
+            if (hasMore) this.recursiveLoad();
+        }, 0);
 
     }
 
@@ -59,6 +75,7 @@ class MapComponent extends Component {
         this.setState({ hoveredEvent: EventStore.getHoveredEvent()})
     }
     render() {
+        this.recursiveLoad()
         return (
             <div style={{height: '100%', width: '100%'}} id="mapBox">
                 <GoogleMapReact
@@ -71,8 +88,8 @@ class MapComponent extends Component {
                     }}
                     ref={this.map}
                 >
-                    {this.props.events ? (
-                        this.props.events.map((event, i) => {
+                    {this.state.events ? (
+                        this.state.events.map((event, i) => {
                             if (event._source.lat) {
                                 return (
                                     <MapMarker lat={event._source.lat}

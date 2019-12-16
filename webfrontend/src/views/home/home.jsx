@@ -12,7 +12,7 @@ export default class Home extends Component {
         return (
             <div className="wrap">
                 <div className="fleft">
-                    <MapComponent events={this.state.events}
+                    <MapComponent events={this.state.events.slice(0,100)}
                                   activeElement={this.state.activeEvent}/>
                 </div>
                 <div className="fright">
@@ -34,32 +34,33 @@ export default class Home extends Component {
             activeEvent: EventStore.getActiveEvent()
         };
 
-        this.onSubmit = this.onSubmit.bind(this);
         this.onFetchEvents = this.onFetchEvents.bind(this);
         this.onNewActiveEvent = this.onNewActiveEvent.bind(this);
+        this.recursiveLoad = this.recursiveLoad.bind(this);
 
         EventAction.fetchEvents()
     }
 
     componentDidMount() {
-        EventStore.addChangeListener("UPDATE_NUMBER", this.onSubmit);
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
         EventStore.addChangeListener("UPDATE_ACTIVE_EVENT", this.onNewActiveEvent);
 
-    }
-
-    updateNumber(){
-        EventAction.updateNumber(1)
     }
 
     onChangeActiveEvent(event){
         EventAction.updateActiveEvent(event);
     }
 
-    onSubmit() {
-        this.setState({
-            number: EventStore.getNumber()
-        });
+    recursiveLoad(){
+        setTimeout(()=>{
+            let events = EventStore.getEvents();
+            let hasMore = this.state.events.length + 1 < EventStore.getNumberOfEvents();
+            this.setState( (prev, props) => ({
+                items: events.slice(0, prev.events.length + 1)
+            }));
+            if (hasMore) this.recursiveLoad();
+        }, 0);
+
     }
 
     onFetchEvents(){

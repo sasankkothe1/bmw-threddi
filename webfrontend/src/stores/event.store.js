@@ -34,7 +34,6 @@ class EventStore extends EventEmitter {
     }
 
 
-
     async dispatcherCallback(action) {
         switch (action.actionType) {
             case 'UPDATE_NUMBER':
@@ -77,6 +76,9 @@ class EventStore extends EventEmitter {
 
     getEvents() {
         return _store.events;
+    }
+    getNumberOfEvents() {
+        return _store.events.length;
     }
     getHoveredEvent(){
         return _store.hovered_event;
