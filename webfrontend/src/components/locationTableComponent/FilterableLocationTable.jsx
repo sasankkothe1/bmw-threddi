@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LocationTable from './LocationTable.jsx';
-import SearchBar from '../SearchBar';
+import SearchBar from './SearchBar';
 import Button from 'react-bootstrap/Button';
 import LocationFormModal from "../locationFormModalComponent/LocationFormModal";
 
