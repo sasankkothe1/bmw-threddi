@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 const Select = (props) => {
     return(
-        <div className="form-group">
-            <label htmlFor={props.name}> {props.title} </label>
+        <div className="form-group-select">
+
+            <div className="form-group-select-label"> <label htmlFor={props.name}> {props.title} </label> </div>
+            <div className="form-group-select-dropdown">
             <select
               name={props.name}
               value={props.value}
@@ -20,6 +22,7 @@ const Select = (props) => {
                 );
               })}
             </select>
+            </div>
       </div>)
 }
 

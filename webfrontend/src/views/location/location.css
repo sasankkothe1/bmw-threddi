@@ -4,9 +4,11 @@
   padding: 2.5%;
 }
 
-.locationTable {
+.location-table-wrapper {
   display: flex;
   flex-grow: 1;
+  font-family: montserrat, sans-serif;
+  font-weight: lighter;
 }
 
 .location-table {

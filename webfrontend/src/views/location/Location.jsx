@@ -29,7 +29,7 @@ export default class Location extends Component {
     render () {
         return (
         <div className="page-content">
-          <div className="locationTable">
+          <div className="location-table-wrapper">
             <FilterableLocationTable locations = {this.state.locations} />
           </div>
           <div className="picture-container">
