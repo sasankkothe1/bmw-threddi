@@ -17,6 +17,11 @@
     box-shadow: none;
 }
 
+.ReactTable .rt-thead .rt-th.-cursor-pointer{
+    cursor: pointer;
+    border-right: none;
+}
+
 .ReactTable .rt-thead .rt-tr {
     text-align: left;
 }
