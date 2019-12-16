@@ -126,9 +126,6 @@ class Extractor:
     def fetch_current_data(self):
         pass
 
-    def fetch_data(self):
-        pass
-
     def start_polling(self):
         pass
 
