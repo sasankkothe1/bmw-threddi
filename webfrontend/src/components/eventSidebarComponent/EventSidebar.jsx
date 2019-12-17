@@ -18,7 +18,7 @@ export default class EventSidebar extends Component {
                     <Button variant="link" onClick={() => this.props.onRemoveActiveEvent()}>
                         <i className="fas fa-times close-icon"/>
                     </Button>
-                ) : ""}
+                ) :  ""}
                 {this.props.activeEvent ? (
                     <DetailedEventView activeEvent={this.props.activeEvent}/>) :
                     (this.props.mode==="list"?

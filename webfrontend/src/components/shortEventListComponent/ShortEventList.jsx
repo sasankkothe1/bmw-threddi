@@ -16,7 +16,7 @@ export default class ShortEventList extends Component {
         super(props);
 
         this.state = {
-            data: EventStore.getEvents()
+            data: []
         };
 
         this.onFetchEvents = this.onFetchEvents.bind(this)
@@ -25,6 +25,9 @@ export default class ShortEventList extends Component {
 
     componentWillMount() {
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
+    }
+    componentDidMount() {
+        this.recursiveLoad()
     }
 
     onFetchEvents() {
@@ -40,18 +43,19 @@ export default class ShortEventList extends Component {
             let event_length = EventStore.getNumberOfEvents();
             let hasMore = this.state.data.length + 1 < event_length;
             this.setState((prev, props) => {
-                let data = EventStore.getEvents().slice(0, prev.data.length + 1)
+                let data = EventStore.getEvents().slice(0, prev.data.length + 5)
                     .map((value) => value._source)
                     .map((value) => {
                         return {
+                            "id": value.id,
                             "description": value.description,
                             "importance": value.importance,
                             "sentiment_group": value.sentiment_group,
-                            "occured": moment(value.timestamp, "YYYYMMDDHHmmSS").fromNow(),
-                            "id": value.id
+                            "occured": moment(value.timestamp, "YYYYMMDDHHmmSS").fromNow()
+
                         }
                     });
-                return {data: data}
+                return {data}
             });
 
             if (hasMore) this.recursiveLoad();
@@ -80,24 +84,23 @@ export default class ShortEventList extends Component {
             }
         };
 
+        console.log(this.state.data);
+
         return (
             <div className="short-event-list-wrapper">
-                {/*{this.state.data[0] ?*/}
-                {/*    (<BootstrapTable*/}
-                {/*        keyField={"id"}*/}
-                {/*        columns={columns}*/}
-                {/*        data={this.state.data}*/}
-                {/*        rowEvents={rowEvents}*/}
-                {/*        hover*/}
-                {/*        >*/}
-
-                {/*    </BootstrapTable>)*/}
-                {/*    :*/}
-                {/*    <div className={"central_spinner"}>*/}
-                {/*        <Spinner animation="border"/>*/}
-                {/*    </div>*/}
-                {/*}*/}
-            </div>
-        )
+                {this.state.data[0]?
+                    (<BootstrapTable
+                        keyField={"id"}
+                        columns={columns}
+                        data={this.state.data}
+                        rowEvents={rowEvents}
+                        hover
+                        />)
+                    :
+                    (<div className={"central_spinner"}>
+                        <Spinner animation="border"/>
+                    </div>)
+                }
+            </div>)
     }
 }
