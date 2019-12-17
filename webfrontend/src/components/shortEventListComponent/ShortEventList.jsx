@@ -84,8 +84,6 @@ export default class ShortEventList extends Component {
             }
         };
 
-        console.log(this.state.data);
-
         return (
             <div className="short-event-list-wrapper">
                 {this.state.data[0]?
