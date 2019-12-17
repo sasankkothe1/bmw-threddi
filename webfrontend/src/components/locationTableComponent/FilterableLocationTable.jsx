@@ -16,11 +16,13 @@ export default class FilterableLocationTable extends Component {
         super(props);
         this.state = {
             addModalShow: false,
-            locations: []
+            locations: [],
+            filter:""
         };
 
         LocationActions.getLocation();
 
+        this.inputRef = React.createRef();
         this.updateLocations = this.updateLocations.bind(this)
     }
 
@@ -29,12 +31,14 @@ export default class FilterableLocationTable extends Component {
     }
 
     updateLocations() {
-        console.log("Update it");
         this.setState({
             locations: LocationStore.getLocations()
         })
     }
 
+    handleFilterChange(){
+        this.setState({filter: this.inputRef.current.value})
+    }
     render() {
         let addModalClose = () => this.setState({addModalShow: false});
 
@@ -44,9 +48,11 @@ export default class FilterableLocationTable extends Component {
                     <div className="search-bar">
                         <InputGroup className="mb-3">
                             <InputGroup.Prepend>
-                                <InputGroup.Text id="filter-field">Filter</InputGroup.Text>
+                                <InputGroup.Text id="filter-field" value={"hallo"}>Filter</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl
+                                ref={this.inputRef}
+                                onChange={()=>this.handleFilterChange()}
                                 placeholder="Filter Locations"
                                 aria-label="Filter Locations"
                                 aria-describedby="filter-field"
@@ -57,7 +63,7 @@ export default class FilterableLocationTable extends Component {
                         Add location </Button>
                 </div>
 
-                <LocationTable locations={this.props.locations}/>
+                <LocationTable locations={this.state.locations.filter((location)=>this.state.filter?location._source.mainLocation.location_id.includes(this.state.filter):true)}/>
                 <LocationFormModal
                     show={this.state.addModalShow}
                     onHide={addModalClose}/>

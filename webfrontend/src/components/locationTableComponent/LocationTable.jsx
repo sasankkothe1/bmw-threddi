@@ -10,8 +10,8 @@ export default class LocationTable extends Component {
       return (
         <div className="location-table">
           {
-            this.props.locations.map(location => (
-              <LocationRow key={location.id} location={location}/>))
+            this.props.locations.map((location,idx) => (
+              <LocationRow key={idx} location={location._source.mainLocation}/>))
           }
         </div>
       );
