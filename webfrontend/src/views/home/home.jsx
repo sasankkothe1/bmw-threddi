@@ -9,15 +9,17 @@ import AdditionalInformationModalComponent
 
 export default class Home extends Component {
     render() {
+        console.log("render");
         return (
             <div className="wrap">
                 <div className="fleft">
-                    <MapComponent events={this.state.events.slice(0,100)}
+                    <MapComponent events={this.state.events.slice(0, 100)}
                                   activeElement={this.state.activeEvent}/>
                 </div>
                 <div className="fright">
                     <EventSidebar activeEvent={this.state.activeEvent}
-                                  onRemoveActiveEvent={()=>this.onRemoveActiveEvent()}/>
+                                  mode={"list"}
+                                  onRemoveActiveEvent={() => this.onRemoveActiveEvent()}/>
                 </div>
                 <div>
                     <AdditionalInformationModalComponent activeEvent={this.state.activeEvent}/>
@@ -31,7 +33,8 @@ export default class Home extends Component {
         this.state = {
             number: 0,
             events: [],
-            activeEvent: EventStore.getActiveEvent()
+            activeEvent: EventStore.getActiveEvent(),
+            shouldLoad: true
         };
 
         this.onFetchEvents = this.onFetchEvents.bind(this);
@@ -47,23 +50,35 @@ export default class Home extends Component {
 
     }
 
-    onChangeActiveEvent(event){
+    componentWillMount() {
+        this.setState({shouldLoad: true})
+    }
+
+    componentWillUnmount() {
+        EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
+        EventStore.removeChangeListener("UPDATE_ACTIVE_EVENT", this.onNewActiveEvent);
+        this.setState({shouldLoad: false})
+    }
+
+    onChangeActiveEvent(event) {
         EventAction.updateActiveEvent(event);
     }
 
-    recursiveLoad(){
-        setTimeout(()=>{
-            let events = EventStore.getEvents();
-            let hasMore = this.state.events.length + 1 < EventStore.getNumberOfEvents();
-            this.setState( (prev, props) => ({
-                items: events.slice(0, prev.events.length + 1)
-            }));
-            if (hasMore) this.recursiveLoad();
-        }, 0);
+    recursiveLoad() {
+        if (this.state.shouldLoad) {
+            setTimeout(() => {
+                let events = EventStore.getEvents();
+                let hasMore = this.state.events.length + 1 < EventStore.getNumberOfEvents();
+                this.setState((prev, props) => ({
+                    items: events.slice(0, prev.events.length + 1)
+                }));
+                if (hasMore && this.state.shouldLoad) this.recursiveLoad();
+            }, 0);
+        }
 
     }
 
-    onFetchEvents(){
+    onFetchEvents() {
         this.setState({
             events: EventStore.getEvents()
         })

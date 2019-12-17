@@ -5,4 +5,10 @@
     background: #FFFFFF;
     order: 2;
     flex: 3 0px;
+    top: 70px;
+    left: 70px;
+    position: absolute;
+    width: calc(100vw - 70px);
+    height: calc(100vh - 70px);
+
   }

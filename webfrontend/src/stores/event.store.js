@@ -75,10 +75,10 @@ class EventStore extends EventEmitter {
     }
 
     getEvents() {
-        return _store.events;
+        return _store.events.slice(0,100);
     }
     getNumberOfEvents() {
-        return _store.events.length;
+        return _store.events.slice(0,100).length;
     }
     getHoveredEvent(){
         return _store.hovered_event;
@@ -87,6 +87,11 @@ class EventStore extends EventEmitter {
     async fetchEvents(value) {
         _store.events = await EventService.getEvents()
     }
+
+    getFirstEvent(){
+        return _store.events[0]
+    }
+
 }
 
 export default new EventStore()
