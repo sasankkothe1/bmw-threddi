@@ -37,8 +37,9 @@ function handleError(response) {
                 return response.status(404).json();
             }
         }
-        return response.status(500).json(err);
-
+        else {
+            return response.status(500).json(err);
+        }
     }
 }
 

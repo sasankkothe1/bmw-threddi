@@ -76,8 +76,8 @@ class Extractor:
                 self._logger.error(
                     "One accessed Key is not available. when adding additional information.....{}".format(e))
 
-            # with open("sample_events.txt", "w") as outputfile:
-            #     json.dump(self._output_json, outputfile, default=self.convert)
+            with open("sample_events.txt", "w") as outputfile:
+                json.dump(self._output_json, outputfile, default=self.convert)
 
             message = json.dumps(self._output_json, default=self.convert)
             self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)
@@ -124,9 +124,6 @@ class Extractor:
             self._output_frame[key] = value if len(value) > 0 else default_value
 
     def fetch_current_data(self):
-        pass
-
-    def fetch_data(self):
         pass
 
     def start_polling(self):

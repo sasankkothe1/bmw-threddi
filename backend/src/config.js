@@ -6,10 +6,17 @@ const elasticsearchHost = process.env.ELASTICSEARCH_HOST || '192.168.99.100:9200
 const elasticsearchVersion = process.env.ELASTICSEARCH_Version || '7.4';
 const elasticsearchUsername = process.env.ELASTICSEARCH_USERNAME || 'elastic';
 const elasticsearchPassword = process.env.ELASTICSEARCH_PASSWORD || 'changeme';
+const jwtSecret = "Secret";
+const clientId= 'clientId123456';
+const clientSecret= 'clientSecret';
+
 module.exports = {
     port,
     elasticsearchHost,
     elasticsearchVersion,
     elasticsearchUsername,
-    elasticsearchPassword
+    elasticsearchPassword,
+    jwtSecret,
+    clientId,
+    clientSecret
 };

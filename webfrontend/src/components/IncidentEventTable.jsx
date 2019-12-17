@@ -38,6 +38,10 @@ export default class Incident extends Component {
 
     }
 
+    componentWillUnmount() {
+        EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
+    }
+
     onFetchEvents() {
         this.setState({
             events: EventStore.getEvents()

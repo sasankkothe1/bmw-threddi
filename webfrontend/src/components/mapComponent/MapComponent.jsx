@@ -18,13 +18,28 @@ class MapComponent extends Component {
             },
             show: false,
             activeMarker: null,
-            hoveredEvent: null
+            hoveredEvent: null,
+            events:[]
         };
 
         this.map = React.createRef();
 
         this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
+
+    }
+
+    recursiveLoad(){
+        setTimeout(()=>{
+            let event_length = EventStore.getNumberOfEvents();
+            console.log(event_length);
+            let hasMore = this.state.events.length + 1 < event_length;
+            this.setState( (prev, props) => ({
+                events: EventStore.getEvents().slice(0, prev.events.length + 4)
+            }));
+            if (hasMore) this.recursiveLoad();
+        }, 0);
 
     }
 
@@ -52,13 +67,31 @@ class MapComponent extends Component {
         }
         return false
     }
+
     componentWillMount() {
         EventStore.addChangeListener("UPDATE_HOVERED_EVENT", this.onNewHoveredEvent);
+        EventStore.addChangeListener("FETCH_EVENT", this.getFetchedEvent);
+        this.recursiveLoad();
+    }
+
+    componentWillUnmount() {
+        EventStore.removeChangeListener("UPDATE_HOVERED_EVENT", this.onNewHoveredEvent);
+        EventStore.removeChangeListener("FETCH_EVENT",  this.getFetchedEvent);
     }
     onNewHoveredEvent(){
         this.setState({ hoveredEvent: EventStore.getHoveredEvent()})
     }
+    componentDidMount() {
+    }
+
+    getFetchedEvent() {
+        this.recursiveLoad()
+    }
+
     render() {
+        if(this.state.events.length===0)
+            this.recursiveLoad();
+
         return (
             <div style={{height: '100%', width: '100%'}} id="mapBox">
                 <GoogleMapReact
@@ -71,8 +104,8 @@ class MapComponent extends Component {
                     }}
                     ref={this.map}
                 >
-                    {this.props.events ? (
-                        this.props.events.map((event, i) => {
+                    {this.state.events ? (
+                        this.state.events.map((event, i) => {
                             if (event._source.lat) {
                                 return (
                                     <MapMarker lat={event._source.lat}
@@ -89,6 +122,7 @@ class MapComponent extends Component {
             </div>
         )
     }
+
 }
 
 export default MapComponent

@@ -64,13 +64,16 @@ class GDELTExtractor(Extractor):
 
     @staticmethod
     def get_title_of_page_by_row(row):
+        logging.warning("Get description of " + row['EventCode'])
         try:
             t = lxml.html.parse(urlopen(row['SOURCEURL']))
         except OSError as e:
-            print("NOOoO", e)
             return "no description accessible {}".format(e)
+        try:
+            title = t.find(".//title").text
 
-        title = t.find(".//title").text
+        except AttributeError as e:
+            return "No description accessible because source website does not have a title meta tag."
 
         return title
 
