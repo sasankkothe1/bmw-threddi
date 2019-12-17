@@ -75,10 +75,11 @@ class EventStore extends EventEmitter {
     }
 
     getEvents() {
-        return _store.events.slice(0,100);
+        //TODO Add the slice !
+        return _store.events.slice(0,500);
     }
     getNumberOfEvents() {
-        return _store.events.slice(0,100).length;
+        return _store.events.slice(0,500).length;
     }
     getHoveredEvent(){
         return _store.hovered_event;
