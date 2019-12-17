@@ -47,11 +47,11 @@ export default class ShortEventList extends Component {
                     .map((value) => value._source)
                     .map((value) => {
                         return {
-                            "id": value.id,
                             "description": value.description,
                             "importance": value.importance,
                             "sentiment_group": value.sentiment_group,
-                            "occured": moment(value.timestamp, "YYYYMMDDHHmmSS").fromNow()
+                            "occured": moment(value.timestamp, "YYYYMMDDHHmmSS").fromNow(),
+                            "id": value.id
 
                         }
                     });
