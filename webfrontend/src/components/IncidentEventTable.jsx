@@ -111,9 +111,6 @@ export default class Incident extends Component {
                     <ReactTable
                         columns={columns}
                         data={this.state.events.map((event)=>{return event._source})}
-                        style={{
-                            height: "570px"
-                        }}
                         defaultPageSize={20}
                         showPagination={false}
                         getTrProps={this.getTrProps}
