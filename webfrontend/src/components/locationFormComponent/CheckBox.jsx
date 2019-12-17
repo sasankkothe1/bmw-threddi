@@ -13,7 +13,7 @@ const CheckBox = props => {
               <input
                 id={props.name}
                 name={props.name}
-                onChange={props.handleChange}
+                onChange={props.succesfullyCreatedLocation}
                 value={option}
                 checked={props.selectedOptions.indexOf(option) > -1}
                 type="checkbox"

@@ -2,7 +2,8 @@ import {EventEmitter} from 'events';
 import LocationsDispatcher from '../dispatchers/locations.dispatcher';
 
 let _store = {
-
+    locations: [],
+    locations_error: {}
 };
 
 class EventStore extends EventEmitter {
@@ -10,7 +11,6 @@ class EventStore extends EventEmitter {
     constructor() {
         super();
         this.dispatchToken = LocationsDispatcher.register(this.dispatcherCallback.bind(this))
-
     }
 
     emitChange(eventName) {
@@ -23,13 +23,23 @@ class EventStore extends EventEmitter {
 
     async dispatcherCallback(action) {
         switch (action.actionType) {
-            case 'UPDATE_NUMBER':
-                this.updateNumber(action.value);
+            case 'GET_LOCATIONS':
+                _store.locations = action.value;
+                break;
+
+            case 'POST_LOCATION_SUCCESSFUL':
+                break;
+
+            case 'POST_LOCATION_ERROR':
+                _store.locations_error = action.value;
+                break;
+
+            case 'GET_LOCATION_ERROR':
+                _store.locations_error = action.value;
                 break;
         }
 
         this.emitChange(action.actionType);
-
         return true;
     }
 
@@ -42,9 +52,14 @@ class EventStore extends EventEmitter {
         this.removeListener(eventName, callback);
     }
 
-    getNumber() {
-        return _store.number;
+    getLocationError(){
+        return _store.locations_error
     }
+    getLocations() {
+        return _store.locations;
+    }
+
+
 }
 
 export default new EventStore()

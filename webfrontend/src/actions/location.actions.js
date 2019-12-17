@@ -1,14 +1,59 @@
+import LocationDispatcher from '../dispatchers/locations.dispatcher'
+import LocationService from "../services/locations.service";
 
-import EventDispatcher from '../dispatchers/locations.dispatcher'
+class LocationActions {
 
-class EventActions{
 
-    updateNumber(data){
-        EventDispatcher.dispatch({
-            actionType: 'UPDATE_NUMBER',
-            value: data
-        });
+    getLocation() {
+        LocationService.getMainLocations()
+            .then((locations) => {
+                LocationDispatcher.dispatch({
+                    actionType: 'GET_LOCATIONS',
+                    value: locations
+                });
+            })
+            .catch((error)=>{
+                LocationDispatcher.dispatch({
+                    actionType: 'GET_LOCATIONS_ERROR',
+                    value: error
+                });
+            }
+        )
     }
+
+    createLocation(data) {
+        LocationService.createMainLocations(data)
+            .then((locations) => {
+                LocationDispatcher.dispatch({
+                    actionType: 'POST_LOCATION_SUCCESSFUL',
+                    value: locations
+                });
+            })
+            .catch((error)=>{
+                    LocationDispatcher.dispatch({
+                        actionType: 'POST_LOCATION_ERROR',
+                        value: error
+                    });
+                }
+            );
+    }
+    deleteLocation(data) {
+        LocationService.deleteMainLocations(data)
+            .then((locations) => {
+                LocationDispatcher.dispatch({
+                    actionType: 'DELETE_LOCATION_SUCCESSFUL',
+                    value: locations
+                });
+            })
+            .catch((error)=>{
+                    LocationDispatcher.dispatch({
+                        actionType: 'DELETE_LOCATION_ERROR',
+                        value: error
+                    });
+                }
+            );
+    }
+
 }
 
-export default new EventActions()
+export default new LocationActions()
