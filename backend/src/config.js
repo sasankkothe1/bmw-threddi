@@ -10,6 +10,10 @@ const jwtSecret = "Secret";
 const clientId= 'clientId123456';
 const clientSecret= 'clientSecret';
 
+const hereMaps_AppCode = process.env.HERE_APP_CODE || 'Gyhqa53c7Nk4KbMtIsSs5A';
+const hereMaps_AppID = process.env.HERE_APP_ID || 'xideIeuhyW0kOQR2u34D';
+
+
 module.exports = {
     port,
     elasticsearchHost,
@@ -18,5 +22,7 @@ module.exports = {
     elasticsearchPassword,
     jwtSecret,
     clientId,
-    clientSecret
+    clientSecret,
+    hereMaps_AppID,
+    hereMaps_AppCode
 };
