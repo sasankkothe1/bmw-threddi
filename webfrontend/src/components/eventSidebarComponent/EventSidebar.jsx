@@ -23,7 +23,7 @@ export default class EventSidebar extends Component {
                     <DetailedEventView activeEvent={this.props.activeEvent}/>) :
                     (this.props.mode==="list"?
                         <ShortEventList />
-                        :"")
+                        : "Please chose an event to get more information")
                 }
             </div>
         )

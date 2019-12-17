@@ -9,7 +9,6 @@ import AdditionalInformationModalComponent
 
 export default class Home extends Component {
     render() {
-        console.log("render");
         return (
             <div className="wrap">
                 <div className="fleft">

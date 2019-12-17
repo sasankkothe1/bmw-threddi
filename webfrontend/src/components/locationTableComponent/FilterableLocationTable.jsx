@@ -63,7 +63,7 @@ export default class FilterableLocationTable extends Component {
                         Add location </Button>
                 </div>
 
-                <LocationTable locations={this.state.locations.filter((location)=>this.state.filter?location._source.mainLocation.location_id.includes(this.state.filter):true)}/>
+                <LocationTable locations={this.state.locations.filter((location)=>this.state.filter?location._source.mainLocation.location_id.toLowerCase().replace("_"," ").includes(this.state.filter.toLowerCase()):true)}/>
                 <LocationFormModal
                     show={this.state.addModalShow}
                     onHide={addModalClose}/>

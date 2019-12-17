@@ -33,7 +33,6 @@ class MapComponent extends Component {
     recursiveLoad(){
         setTimeout(()=>{
             let event_length = EventStore.getNumberOfEvents();
-            console.log(event_length);
             let hasMore = this.state.events.length + 1 < event_length;
             this.setState( (prev, props) => ({
                 events: EventStore.getEvents().slice(0, prev.events.length + 4)
