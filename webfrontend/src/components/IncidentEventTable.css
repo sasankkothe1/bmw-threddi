@@ -1,6 +1,6 @@
 .eventTable {
     float: left;
-   
+   flex: 2;
 }
 
 .ReactTable {
