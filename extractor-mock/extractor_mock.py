@@ -1,4 +1,6 @@
 import json
+import time
+
 import numpy as np
 import os
 
@@ -11,6 +13,8 @@ def convert(o):
 
 
 if __name__ == '__main__':
+
+    time.sleep(15)
     with open("sample_events.txt", "r") as outputfile:
         _output_json = json.load(outputfile)
 
