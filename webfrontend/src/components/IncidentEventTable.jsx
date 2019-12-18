@@ -75,7 +75,7 @@ export default class Incident extends Component {
             {
                 Header: "Importance",
                 accessor: "importance",
-                width: 50,
+                width: 110,
                 sortable: true
             },
             {
@@ -86,17 +86,20 @@ export default class Incident extends Component {
             {
                 Header:"ID",
                 accessor: "id",
-                filterable: true
+                filterable: true,
+                width: 190
             },
             {
                 Header:"Sentiment Group",
                 accessor: "sentiment_group",
-                filterable: true
+                filterable: true,
+                width:160
             },    
             {
                 Header:"Date Occured",
                 accessor: 'timestamp',
-                filterable: true
+                filterable: true,
+                width:125
             },    
             // {
             //     Header: "Country",
