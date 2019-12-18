@@ -87,20 +87,30 @@ export default class Incident extends Component {
                 Header:"ID",
                 accessor: "id",
                 filterable: true,
+                sortable: true,
                 width: 190
             },
             {
                 Header:"Sentiment Group",
                 accessor: "sentiment_group",
                 filterable: true,
+                sortable: true,
                 width:160
             },    
             {
                 Header:"Date Occured",
                 accessor: 'timestamp',
                 filterable: true,
+                sortable: true,
                 width:125
-            },    
+            },  
+            {
+                Header: "Time",
+                accessor: "time",
+                filterable: true,
+                width: 60,
+                sortable: true
+            },  
             // {
             //     Header: "Country",
             //     accessor: "body",
@@ -133,6 +143,7 @@ export default class Incident extends Component {
                         data={this.state.events
                             .map((event)=> event._source)
                             .map((event)=> ({...event, 'timestamp':moment(event.timestamp, "YYYYMMDDHHmmSS" ).format("DD/MM/YYYY")}))
+                            .map((event)=> ({...event, 'time':moment(event.timestamp, "YYYYHHDDHHmmSS").format("hh:mm")}))
                     }
                         defaultPageSize={-1}
                         showPagination={false}
