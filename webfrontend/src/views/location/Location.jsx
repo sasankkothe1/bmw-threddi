@@ -12,17 +12,23 @@ export default class Location extends Component {
         super(props);
 
         this.state = {
-            postInfo: true
-        }
+            postInfo: false
+        };
 
+        this.showPostInfo = this.showPostInfo.bind(this);
+        this.successfullyCreatedLocation = this.successfullyCreatedLocation.bind(this);
     }
 
     componentWillMount() {
         LocationStore.addChangeListener("POST_LOCATION_SUCCESSFUL", this.successfullyCreatedLocation)
     }
+    componentWillUnmount() {
+        LocationStore.removeChangeListener("POST_LOCATION_SUCCESSFUL", this.successfullyCreatedLocation)
+    }
 
     successfullyCreatedLocation() {
-        this.showPostInfo(true)
+        console.log("Created successfully");
+        this.showPostInfo(true);
     }
 
     showPostInfo(show) {
@@ -39,7 +45,7 @@ export default class Location extends Component {
                 borderColor: 'rgb(50,85,255)',
                 data: [100, 150, 125, 650, 30, 230, 500],
             }]
-        }
+        };
 
         return (
             <>

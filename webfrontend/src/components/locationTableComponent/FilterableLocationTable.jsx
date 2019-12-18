@@ -23,11 +23,18 @@ export default class FilterableLocationTable extends Component {
         LocationActions.getLocation();
 
         this.inputRef = React.createRef();
-        this.updateLocations = this.updateLocations.bind(this)
+        this.updateLocations = this.updateLocations.bind(this);
+        this.addModalClose= this.addModalClose.bind(this)
     }
 
     componentWillMount() {
-        LocationStore.addChangeListener("GET_LOCATIONS", this.updateLocations)
+        LocationStore.addChangeListener("GET_LOCATIONS", this.updateLocations);
+        LocationStore.addChangeListener("POST_LOCATION_SUCCESSFUL", this.addModalClose)
+    }
+
+    componentWillUnount() {
+        LocationStore.removeChangeListener("GET_LOCATIONS", this.updateLocations);
+        LocationStore.removeChangeListener("POST_LOCATION_SUCCESSFUL", this.addModalClose)
     }
 
     updateLocations() {
@@ -39,8 +46,12 @@ export default class FilterableLocationTable extends Component {
     handleFilterChange(){
         this.setState({filter: this.inputRef.current.value})
     }
+    addModalClose(){
+        this.updateLocations();
+        this.setState({addModalShow: false});
+    }
     render() {
-        let addModalClose = () => this.setState({addModalShow: false});
+
 
         return (
             <div className="FilterableLocationTableDiv">
@@ -66,7 +77,7 @@ export default class FilterableLocationTable extends Component {
                 <LocationTable locations={this.state.locations.filter((location)=>this.state.filter?location._source.mainLocation.location_id.toLowerCase().replace("_"," ").includes(this.state.filter.toLowerCase()):true)}/>
                 <LocationFormModal
                     show={this.state.addModalShow}
-                    onHide={addModalClose}/>
+                    onHide={this.addModalClose}/>
             </div>)
     }
 
