@@ -5,6 +5,8 @@
 
 .ReactTable {
     flex: 2;
+    font-family: Montserrat sans-serif;
+    font-weight: bolder;
 }
 
 
@@ -54,4 +56,8 @@
 
 .ReactTable .rt-tbody .rt-td:nth-of-type(4n+1) {
     font-weight: bold;
+}
+
+.ReactTable .-pagination .-center {
+    justify-content: center;
 }

@@ -82,6 +82,16 @@ export default class Incident extends Component {
                 accessor: "description",
                 filterable: true
             },
+            {
+                Header:"ID",
+                accessor: "id",
+                filterable: true
+            },
+            {
+                Header:"Sentiment Group",
+                accessor: "sentiment_group",
+                filterable: true
+            },        
             // {
             //     Header: "Country",
             //     accessor: "body",
@@ -103,15 +113,16 @@ export default class Incident extends Component {
 
         return (
 
-            <div className="eventTable">
+            <div className="none">
                 {/*{console.log(this.state.events?this.state.events[0]._source : " ")}*/}
                 {
                     this.state.events[0] ? (
 
                     <ReactTable
+                    className="-striped -highlight"
                         columns={columns}
                         data={this.state.events.map((event)=>{return event._source})}
-                        defaultPageSize={20}
+                        defaultPageSize={-1}
                         showPagination={false}
                         getTrProps={this.getTrProps}
                         filterable

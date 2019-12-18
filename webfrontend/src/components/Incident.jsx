@@ -35,15 +35,18 @@ export default class Incident extends Component {
 
     render () {
         return (
-        <div className="incidentClassMain">
+            <div className="wrap">
+        <div className="fleft">
             <IncidentEventTable onChangeActiveEvent={(event)=>this.setState({activeEvent:event})} />
+            </div>
+            <div className="fright">
             <EventSideBar activeEvent={this.state.activeEvent}
                           onRemoveActiveEvent={() => this.onRemoveActiveEvent()}/>
+                          </div>
             <div>
                 <AdditionalInformationModalComponent activeEvent={this.state.activeEvent}/>
             </div>
         </div>
-
         )
     }
 }
