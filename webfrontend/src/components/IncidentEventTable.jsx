@@ -5,6 +5,7 @@ import "react-table/react-table.css";
 import EventStore from "../stores/event.store";
 import EventAction from "../actions/event.actions";
 import eventStore from '../stores/event.store';
+import moment from "moment";
 
 export default class Incident extends Component {
 
@@ -91,7 +92,12 @@ export default class Incident extends Component {
                 Header:"Sentiment Group",
                 accessor: "sentiment_group",
                 filterable: true
-            },        
+            },    
+            {
+                Header:"Date Occured",
+                accessor: 'timestamp',
+                filterable: true
+            },    
             // {
             //     Header: "Country",
             //     accessor: "body",
@@ -121,7 +127,10 @@ export default class Incident extends Component {
                     <ReactTable
                     className="-striped -highlight"
                         columns={columns}
-                        data={this.state.events.map((event)=>{return event._source})}
+                        data={this.state.events
+                            .map((event)=> event._source)
+                            .map((event)=> ({...event, 'timestamp':moment(event.timestamp, "YYYYMMDDHHmmSS" ).format("DD/MM/YYYY")}))
+                    }
                         defaultPageSize={-1}
                         showPagination={false}
                         getTrProps={this.getTrProps}
