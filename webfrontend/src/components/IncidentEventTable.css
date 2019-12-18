@@ -55,3 +55,7 @@
 .ReactTable .rt-tbody .rt-td:nth-of-type(4n+1) {
     font-weight: bold;
 }
+
+.ReactTable .-pagination .-center {
+    justify-content: center;
+}
