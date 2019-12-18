@@ -82,6 +82,16 @@ export default class Incident extends Component {
                 accessor: "description",
                 filterable: true
             },
+            {
+                Header:"ID",
+                accessor: "id",
+                filterable: true
+            },
+            {
+                Header:"Sentiment Group",
+                accessor: "sentiment_group",
+                filterable: true
+            },        
             // {
             //     Header: "Country",
             //     accessor: "body",
