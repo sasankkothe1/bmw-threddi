@@ -112,7 +112,7 @@ export default class Incident extends Component {
                         columns={columns}
                         data={this.state.events.map((event)=>{return event._source})}
                         defaultPageSize={20}
-                        showPagination={false}
+                        showPagination={true}
                         getTrProps={this.getTrProps}
                         filterable
                     >

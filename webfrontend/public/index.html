@@ -22,6 +22,10 @@
     <title>React App</title>
   </head>
   <body>
+    <script>
+      var bodyTag = document.getElementsByTagName("body")[0];
+      bodyTag.innerHTML = bodyTag.innerHTML.replace(/&nbsp;/g,'');
+    </script>
     <div id="root" class="wrapper">
     </div>
   </body>
