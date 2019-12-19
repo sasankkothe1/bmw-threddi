@@ -34,7 +34,6 @@ class EventStore extends EventEmitter {
     }
 
 
-
     async dispatcherCallback(action) {
         switch (action.actionType) {
             case 'UPDATE_NUMBER':
@@ -76,7 +75,11 @@ class EventStore extends EventEmitter {
     }
 
     getEvents() {
-        return _store.events;
+        //TODO Add the slice !
+        return _store.events.slice(0,500);
+    }
+    getNumberOfEvents() {
+        return _store.events.slice(0,500).length;
     }
     getHoveredEvent(){
         return _store.hovered_event;
@@ -85,6 +88,11 @@ class EventStore extends EventEmitter {
     async fetchEvents(value) {
         _store.events = await EventService.getEvents()
     }
+
+    getFirstEvent(){
+        return _store.events[0]
+    }
+
 }
 
 export default new EventStore()

@@ -9,7 +9,7 @@ const Select = (props) => {
             <select
               name={props.name}
               value={props.value}
-              onChange={props.handleChange}
+              onChange={props.onChange}
               >
               <option value="" disabled>{props.placeholder}</option>
               {props.options.map(option => {
@@ -24,6 +24,6 @@ const Select = (props) => {
             </select>
             </div>
       </div>)
-}
+};
 
 export default Select;

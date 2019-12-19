@@ -1,4 +1,34 @@
 const client = require('../connections/elasticsearchClient').client;
+const config = require('../config');
+const axios = require('axios');
+
+
+/**
+ * Gets the Coordinates by Address
+ * @param address
+ * @returns {Promise<*>}
+ * @private
+ */
+const _getCoordinatesFromAddress = async (address)=>{
+    let coordinates = null;
+    try {
+        let results = await axios.get('http://geocoder.api.here.com/search/6.2/geocode.json', {
+            params: {
+                app_code: config.hereMaps_AppCode,
+                app_id: config.hereMaps_AppID,
+                searchtext: address
+            }
+        });
+
+        coordinates = results.data.Response.View[0].Result[0].Location.DisplayPosition;
+
+    }catch(e){
+        throw {msg: "No such address"};
+    }
+
+    return coordinates?{lat: coordinates.Latitude, long: coordinates.Longitude}:{lat:undefined, long: undefined}
+};
+
 
 function handleScrollSuccess(response){
     return async function(resp){
@@ -67,15 +97,11 @@ const createLocation = async (req, res) => {
             message: 'The request body must contain a location_id property'
         });
 
-        if (!Object.prototype.hasOwnProperty.call(req.body, 'lat')) return res.status(400).json({
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'address')) return res.status(400).json({
             error: 'Bad Request',
-            message: 'The request body must contain a lat property'
+            message: 'The request body must contain a address property'
         });
 
-        if (!Object.prototype.hasOwnProperty.call(req.body, 'long')) return res.status(400).json({
-            error: 'Bad Request',
-            message: 'The request body must contain a long property'
-        });
 
         if (!Object.prototype.hasOwnProperty.call(req.body, 'description')) return res.status(400).json({
             error: 'Bad Request',
@@ -84,13 +110,28 @@ const createLocation = async (req, res) => {
 
         if (!Object.prototype.hasOwnProperty.call(req.body, 'location_type')) return res.status(400).json({
             error: 'Bad Request',
-            message: 'The request body must contain a city property'
+            message: 'The request body must contain a location_type property'
         });
 
         if (!Object.prototype.hasOwnProperty.call(req.body, 'priority')) return res.status(400).json({
             error: 'Bad Request',
             message: 'The request body must contain a priority property'
         });
+
+        // Get coordinates for address
+        try {
+            let coords = await _getCoordinatesFromAddress(req.body.address);
+
+            req.body.lat = coords.lat;
+            req.body.long = coords.long;
+
+        }catch(error){
+            return res.status(400).json({
+                error: 'No such Address',
+                message: error.message
+            });
+        }
+
         if (await getById(req.body.location_id)) {
             return res.status(400).json({
                 error: 'Bad Request',
@@ -109,6 +150,7 @@ const createLocation = async (req, res) => {
         return res.status(400).json("No Request Body");
     }
 };
+
 
 const updateLocationById = async (req, res) => {
     const {

@@ -13,7 +13,7 @@ export default class LocationRow extends Component {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              {this.props.location.name}
+              {this.props.location.location_id.replace("_"," ")}
             </Accordion.Toggle>
           </Card.Header>
 
@@ -22,7 +22,7 @@ export default class LocationRow extends Component {
 
                 <div className="typeRow">
                   <div className="typeRowHeader">Type:</div>
-                  <div className="typeRowContent">{this.props.location.type}</div>
+                  <div className="typeRowContent">{this.props.location.location_type}</div>
                 </div>
 
                 <div className="descriptionHeader">Description:</div>
@@ -34,8 +34,8 @@ export default class LocationRow extends Component {
                 </div>
 
                 <div className="cardBodyButtons">
-                  <Button variant="secondary"> Edit location </Button>
-                  <Button variant="danger"> Delete location </Button>
+                  <Button variant="secondary"> Edit Location </Button>
+                  <Button variant="danger" > Delete Location </Button>
                 </div>
               </Card.Body>
           </Accordion.Collapse>

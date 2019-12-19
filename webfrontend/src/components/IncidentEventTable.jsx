@@ -5,6 +5,7 @@ import "react-table/react-table.css";
 import EventStore from "../stores/event.store";
 import EventAction from "../actions/event.actions";
 import eventStore from '../stores/event.store';
+import moment from "moment";
 
 export default class Incident extends Component {
 
@@ -36,6 +37,10 @@ export default class Incident extends Component {
             EventAction.fetchEvents();
         }
 
+    }
+
+    componentWillUnmount() {
+        EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
     }
 
     onFetchEvents() {
@@ -70,7 +75,7 @@ export default class Incident extends Component {
             {
                 Header: "Importance",
                 accessor: "importance",
-                width: 50,
+                width: 110,
                 sortable: true
             },
             {
@@ -78,6 +83,24 @@ export default class Incident extends Component {
                 accessor: "description",
                 filterable: true
             },
+            {
+                Header:"ID",
+                accessor: "id",
+                filterable: true,
+                width: 190
+            },
+            {
+                Header:"Sentiment Group",
+                accessor: "sentiment_group",
+                filterable: true,
+                width:160
+            },    
+            {
+                Header:"Date Occured",
+                accessor: 'timestamp',
+                filterable: true,
+                width:125
+            },    
             // {
             //     Header: "Country",
             //     accessor: "body",
@@ -99,18 +122,19 @@ export default class Incident extends Component {
 
         return (
 
-            <div className="eventTable">
+            <div className="none">
                 {/*{console.log(this.state.events?this.state.events[0]._source : " ")}*/}
                 {
                     this.state.events[0] ? (
 
                     <ReactTable
+                    className="-striped -highlight"
                         columns={columns}
-                        data={this.state.events.map((event)=>{return event._source})}
-                        style={{
-                            height: "570px"
-                        }}
-                        defaultPageSize={20}
+                        data={this.state.events
+                            .map((event)=> event._source)
+                            .map((event)=> ({...event, 'timestamp':moment(event.timestamp, "YYYYMMDDHHmmSS" ).format("DD/MM/YYYY")}))
+                    }
+                        defaultPageSize={-1}
                         showPagination={false}
                         getTrProps={this.getTrProps}
                         filterable

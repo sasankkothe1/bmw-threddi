@@ -21,7 +21,6 @@ export default class MapMarker extends Component {
 
     render() {
 
-        console.log(this.props.isHovered);
         let size = this.props.isActive ? "fa-2x" : "fa-2x";
         let isHovered = this.props.isHovered? " hovered-marker " :"";
         let isActive = this.props.isActive ? "active_element" : "";

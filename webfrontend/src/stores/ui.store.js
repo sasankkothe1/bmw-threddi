@@ -19,7 +19,6 @@ class UIStore extends EventEmitter{
 
 
     async dispatcherCallback(action) {
-        console.log("hdjkfshjlghdfsljkghsd flghö");
         switch(action.actionType) {
             case 'SHOW_ADDITIONAL_INFORMATION_MODAL':
                 this.showAdditionalInformationModal(action.value);
@@ -36,7 +35,6 @@ class UIStore extends EventEmitter{
     }
 
     showAdditionalInformationModal(val){
-        console.log("Show it");
         _store.showAdditionalInformationModal = true;
     }
 
