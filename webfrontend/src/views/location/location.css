@@ -2,23 +2,19 @@
   display: flex;
   flex-direction: row;
   padding: 2.5%;
+  height: 100%;
 }
 
-.locationTable {
+.location-table-wrapper {
   display: flex;
-  flex-grow: 1;
+  width: 60%;
 }
 
-.location-table {
-  padding-top: 2.5%;
-}
-
-.picture-container {
+.picture-container-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 2.5%;
-  flex-grow: 0.65%;
 }
 
 .picture{

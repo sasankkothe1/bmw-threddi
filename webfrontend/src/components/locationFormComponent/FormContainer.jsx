@@ -5,6 +5,8 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import Select from "./Select";
 import Button from "./Button";
+import './Select.css';
+
 
 import LocationStore from "../../stores/location.store";
 
@@ -35,12 +37,15 @@ class FormContainer extends Component {
         this.handleClearForm = this.handleClearForm.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleAddress = this.handleAddress.bind(this);
-        this.handlePriority = this.handlePriority.bind(this)
-        this.handleError = this.handleError.bind(this)
+        this.handlePriority = this.handlePriority.bind(this);
+        this.handleError = this.handleError.bind(this);
+    }
+
+    componentWillMount() {
+        LocationStore.addChangeListener("POST_LOCATION_ERROR", this.handleError)
     }
 
     /* This lifecycle hook gets executed when the component mounts */
-
     handleName(e) {
         let value = e.target.value;
         this.setState(
@@ -102,7 +107,6 @@ class FormContainer extends Component {
     }
 
     handleTextArea(e) {
-        console.log("Inside handleTextArea");
         let value = e.target.value;
         this.setState(
             prevState => ({
@@ -118,28 +122,20 @@ class FormContainer extends Component {
     handleFormSubmit(e) {
         e.preventDefault();
         let userData = this.state.newLocation;
-
-        fetch("http://example.com", {
-            method: "POST",
-            body: JSON.stringify(userData),
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            response.json().then(data => {
-                console.log("Successful" + data);
-            });
-        });
+        console.log(userData);
+        if (userData.location_id) {
+            userData['location_id'] = userData.location_id.replace(" ", "_");
+            LocationActions.createLocation(userData);
+        }
     }
 
     handleClearForm(e) {
         e.preventDefault();
         this.setState({
             newLocation: {
-                name: "",
+                location_id: "",
                 address: "",
-                locationType: "",
+                location_type: "",
                 description: "",
                 priority: ""
             }
@@ -154,8 +150,8 @@ class FormContainer extends Component {
                 <Input
                     inputtype={"text"}
                     title={"Location name"}
-                    name={"name"}
-                    value={this.state.newLocation.name}
+                    name={"location_id"}
+                    value={this.state.newLocation.location_id}
                     placeholder={"Enter the location name"}
                     onChange={this.handleInput}
                 />{" "}
@@ -171,9 +167,9 @@ class FormContainer extends Component {
                 {/* Address information */}
                 <Select
                     title={"Location Type"}
-                    name={"locationType"}
+                    name={"location_type"}
                     options={this.state.locationTypeOptions}
-                    value={this.state.newLocation.locationType}
+                    value={this.state.newLocation.location_type}
                     placeholder={"Select Location Type"}
                     onChange={this.handleInput}
                 />{" "}
@@ -190,7 +186,7 @@ class FormContainer extends Component {
                 <TextArea
                     title={"Description"}
                     rows={10}
-                    value={this.state.newLocation.about}
+                    value={this.state.newLocation.description}
                     name={"currentLocationInfo"}
                     onChange={this.handleTextArea}
                     placeholder={"Description of the new location."}
@@ -210,7 +206,7 @@ class FormContainer extends Component {
                 />{" "}
                 {this.state.showError ?
                     <Alert variant={"danger"}>
-                        {this.state.error_msg.toString()}
+                        {Object.values(this.state.error_msg).toString()}
                     </Alert> : ""}
             </form>
         );
