@@ -56,7 +56,7 @@ export default class Location extends Component {
                     <Toast.Body>The location was created successful</Toast.Body>
                 </Toast>
                 <div className="page-content">
-                    <div className="locationTable">
+                    <div className="location-table-wrapper">
                         <FilterableLocationTable/>
                     </div>
                     <div className="picture-container-wrapper">
