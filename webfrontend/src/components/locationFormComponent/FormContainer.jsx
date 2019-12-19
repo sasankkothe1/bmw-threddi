@@ -20,9 +20,9 @@ class FormContainer extends Component {
 
         this.state = {
             newLocation: {
-                name: "",
+                location_id: "",
                 address: "",
-                locationType: "",
+                location_type: "",
                 description: "",
                 priority: ""
             },
