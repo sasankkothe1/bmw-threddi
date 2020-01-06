@@ -12,11 +12,6 @@ info:
     name: BMW License
     url: http://foo.com/dashboard
 tags:
-- name: event
-  description: Access to event objects
-  externalDocs:
-    description: Find out more
-    url: https://www.gdeltproject.org/data.html#documentation
 - name: location
   description: Access to location objects
 - name: configuration
@@ -24,85 +19,52 @@ tags:
 
 
 paths:
-  /events:
-    summary: Event object type
-    description: This resource represents an individual event in the system. Each event is identified by an unique event_id.
-    get:
+  /administrators/register:
+    summary: For user registration
+    description: Each administrator is identified by an unique username
+    post:
       tags:
-      - event
-      summary: Return array with event information.
-      description: Obtain information about ongoing events.
-      operationId: getEvent
+        - administrator
+      requestBody:
+        description: administrator object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/administrators'
+        required: true
       responses:
         200:
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/events'
+          description: New administrator created
         400:
           description: Invalid request
           content: {}
         500:
           description: internal error happened by elasticsearch database
 
-  /events/{eventId}:
-    summary: Tbd
-    description: Tbd
-    get:
-      tags:
-      - event
-      summary: Return event by event_id.
-      description: Obtain information about a specific event by stating the event_id.
-      operationId: getEventById
-      parameters:
-      - name: eventId
-        in: path
-        description: ID of event that needs to be fetched
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/events'
-        400:
-          description: Invalid request
-          content: {}
-        404:
-          description: ID not found
-          content: {}
-        500:
-          description: internal error happened by elasticsearch database
-    delete:
-      tags:
-      - event
-      summary: Delete event by ID
-      operationId: deleteEventByID
-      parameters:
-      - name: eventId
-        in: path
-        description: Event_id of the location that need to be updated
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: successful operation
-        400:
-          description: Invalid request
-          content: {}
-        404:
-          description: ID not found
-          content: {}
-        500:
-          description: internal error happened by elasticsearch database
 
+  /administrators/login:
+    summary: For user login.
+    description: Only valid administrators can use this backend service
+    post:
+      tags:
+      - administrator
+      requestBody:
+        description: administrator object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/administrators'
+        required: true
+      responses:
+        200:
+          description: New administrator created
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: No Administrator with the username has been found, invalid request.
+        500:
+          description: internal error happened by elasticsearch database
   /mainlocations:
     summary: Main location object type
     description: This resource represents an individual location object in the system. Each location is identified by an unique location_id.
@@ -351,55 +313,14 @@ paths:
           description: internal error happened by elasticsearch database
 components:
   schemas:
-    events:
+    administrators:
       type: object
-      $ref: '#/components/schemas/events'
+      $ref: '#/components/schemas/administrators'
       properties:
-        event_id:
+        username:
           type: string
-        sentiment_group: # 2 highly positive and -2 highly negative
-          type: integer
-          minimum: -2
-          maximum: 2
-        lat:
+        password: # length must greater than 8
           type: string
-        long:
-          type: string
-        url: #Source of the Incident
-          type: string
-        description: #Short description of the event
-          type: string
-        importance: # Importance of the Event 0 -> not -> 1 yes
-          type: number
-          format: float
-        timestamp:
-          type: integer
-        Actor:
-          type: object
-          properties:
-              actor_id:
-                type: string
-              actor_name:
-                type: string
-              actor_origin:
-                type: string
-              actor_group:
-                type: string
-              actor_type: #//[police, military, rebels, etc]
-                type: array
-                items:
-                  type: string
-        source_dependent_information:
-          type: array
-          items:
-            type: object
-            properties:
-              displayname:
-                type: string
-              id:
-                type: string
-              description:
-                type: string
     mainlocations:
       type: object
       $ref: '#/components/schemas/mainlocations'

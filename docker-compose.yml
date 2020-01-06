@@ -108,11 +108,21 @@ services:
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
 
-  backend:
-    build: ./backend
+  event-backend:
+    build: ./eventBackend
     container_name: WebApplicationBMWBackend
     ports:
     - "4200:4200"
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch:9200
+      - ELASTICSEARCH_VERSION=7.4
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+  administrator-backend:
+    build: ./administratorBackend
+    container_name: WebApplicationBMWBackend
+    ports:
+    - "4300:4300"
     environment:
       - ELASTICSEARCH_HOST=elasticsearch:9200
       - ELASTICSEARCH_VERSION=7.4

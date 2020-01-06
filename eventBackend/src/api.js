@@ -9,11 +9,8 @@ const swaggerDocument = YAML.load('./src/api-definitions/api.yaml');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
-const middlewares = require('./middlewares');
-
 const events = require('./routes/events');
-const mainLocations = require('./routes/mainLocations');
-const configurations = require('./routes/configurations');
+const middlewares = require('./middlewares');
 const api = express();
 
 
@@ -33,8 +30,6 @@ api.get('/', (req, res) => {
 
 // API routes
 api.use('/events', events);
-api.use('/mainlocations', mainLocations);
-api.use('/configurations', configurations);
 api.use('/api-docs', swaggerUi.serve);
 api.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
