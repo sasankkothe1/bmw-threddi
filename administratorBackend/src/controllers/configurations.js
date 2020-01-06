@@ -10,7 +10,7 @@ function handleScrollSuccess(response){
             body.hits.hits.forEach(function (hit) {
                 responseSet.push(hit)
             });
-            //if more mainLocations
+            //if more configurations
             if (responseSet.length !== resp.hits.total.value) {
                 responseQueue.push(
                     await client.scroll({
@@ -183,7 +183,7 @@ const getById = async (configurationId) => {
         if (err.statusCode === 404) {
             if(err.message.includes('index_not_found_exception')){
                 client.indices.create({
-                        index: "main_locations"
+                        index: "configurations"
                     }
                 ).then(null)
             }
@@ -210,7 +210,7 @@ const deleteConfigurationById = async (req, res) => {
 };
 
 module.exports = {
-    getAllConfigurations,// List all locations
+    getAllConfigurations,// List all configurations
     createConfiguration,
     getConfigurationById,
     updateConfigurationById,

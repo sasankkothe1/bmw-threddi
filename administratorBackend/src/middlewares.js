@@ -1,6 +1,7 @@
 "use strict";
 
 const config = require ('./config');
+const jwt    = require('jsonwebtoken');
 
 const allowCrossDomain = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -37,18 +38,17 @@ const checkAuthentication = (req, res, next) => {
                     message: 'Invalid client credentials'
                 })
     }
-    // todo logic for login and jwtToken
-    // // verifies secret and checks exp
-    // jwt.verify(token, config.jwtSecret, (err, decoded) => {
-    //     if (err) return res.status(401).send({
-    //         error: 'Unauthorized',
-    //         message: 'Failed to authenticate token.'
-    //     });
-    //
-    //     // if everything is good, save to request for use in other routes
-    //     req.userId = decoded.id;
-    //     next();
-    // });
+    // verifies secret and checks exp
+    jwt.verify(token, config.jwtSecret, (err, decoded) => {
+        if (err) return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'Failed to authenticate token.'
+        });
+
+        // if everything is good, save to request for use in other routes
+        req.userId = decoded.id;
+        next();
+    });
 
 
 };
