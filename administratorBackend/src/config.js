@@ -19,8 +19,6 @@ module.exports = {
     elasticsearchUsername,
     elasticsearchPassword,
     jwtSecret,
-    clientId,
-    clientSecret,
     hereMaps_AppID,
     hereMaps_AppCode
 };

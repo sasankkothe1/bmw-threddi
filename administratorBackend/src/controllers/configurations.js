@@ -40,7 +40,6 @@ function handleError(response) {
         else {
             return response.status(500).json(err);
         }
-
     }
 }
 
@@ -102,7 +101,26 @@ const createConfiguration = async (req, res) => {
         }).then(response => {
             console.log(response);
             return res.status(200).send()
-        }, handleError(res));
+        }, (err => {
+            if(err.statusCode === 404){
+                if(err.message.includes('index_not_found_exception')){
+                    client.indices.create({
+                            index: "configurations"
+                        }
+                    ).then(res => {client.index({
+                        index: 'configurations',
+                        id: req.body.configuration_id,
+                        body: {mainLocation: Object.assign(req.body)},
+                    }).then(response => {
+                        console.log(response);
+                        return res.status(200).send()
+                    }, handleError(res))
+                })}
+                else{
+                    return res.status(404).json();
+                }
+            }
+        }));
     }else {
         return res.status(400).json("No Request Body");
     }

@@ -103,50 +103,6 @@ paths:
         500:
           description: internal error happened by elasticsearch database
 
-  /mainlocations:
-    summary: Main location object type
-    description: This resource represents an individual location object in the system. Each location is identified by an unique location_id.
-    get:
-      tags:
-      - location
-      summary: Return array with all location information.
-      description: Obtain information about all location objects stored in the database.
-      operationId: getLocations
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/mainlocations'
-        400:
-          description: Invalid request
-          content: {}
-        500:
-          description: internal error happened by elasticsearch database
-    post:
-      tags:
-      - location
-      summary: Add a new location to the database
-      operationId: postLocations
-      requestBody:
-        description: Location object that needs to be added to the database
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/mainlocations'
-        required: true
-      responses:
-        201:
-          description: New resource created
-        405:
-          description: Invalid input
-          content: {}
-        500:
-          description: internal error happened by elasticsearch database
-
 components:
   schemas:
     events:

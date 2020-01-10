@@ -145,7 +145,26 @@ const createLocation = async (req, res) => {
         }).then(response => {
             console.log(response);
             return res.status(200).send()
-        }, handleError(res));
+        }, (err => {
+            if(err.statusCode === 404){
+                if(err.message.includes('index_not_found_exception')){
+                    client.indices.create({
+                            index: "main_locations"
+                        }
+                    ).then(res => {client.index({
+                        index: 'main_locations',
+                        id: req.body.location_id,
+                        body: {mainLocation: Object.assign(req.body)},
+                    }).then(response => {
+                        console.log(response);
+                        return res.status(200).send()
+                    }, handleError(res))
+                    })}
+                else{
+                    return res.status(404).json();
+                }
+            }
+        }));
     }else {
         return res.status(400).json("No Request Body");
     }

@@ -1,6 +1,7 @@
 package com.globalsupplychainthreatanalysis.writein.configuration;
 
 
+import com.globalsupplychainthreatanalysis.writein.LocationRepository.LocationRepository;
 import com.globalsupplychainthreatanalysis.writein.elasticsearch.ElasticSearchRepository;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -16,10 +17,21 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.*;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
+import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EnableAutoConfiguration
 @Configuration
@@ -102,5 +114,36 @@ public class ElasticsearchRestClientConfig {
         } else {
             return null;
         }
+    }
+    @Bean
+    public HttpComponentsClientHttpRequestFactory buildHttpComponentsClientHttpRequestFactory() {
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(3000);
+        return factory;
+    }
+
+    @Bean @Qualifier("restTemplate")
+    public RestTemplate buildRestTemplate(@Autowired HttpComponentsClientHttpRequestFactory factory) {
+        RestTemplate template = new RestTemplate();
+        template.setRequestFactory(factory);
+
+        List<HttpMessageConverter<?>> convs = new ArrayList<>();
+        convs.add(new MappingJackson2HttpMessageConverter());
+        convs.add(new FormHttpMessageConverter());
+        convs.add(new ByteArrayHttpMessageConverter());
+        convs.add(new Jaxb2RootElementHttpMessageConverter());
+        convs.add(new StringHttpMessageConverter());
+        convs.add(new ResourceHttpMessageConverter());
+        convs.add(new SourceHttpMessageConverter());
+        convs.add(new AllEncompassingFormHttpMessageConverter());
+        template.setMessageConverters(convs);
+
+        return template;
+    }
+
+    @Bean
+    public LocationRepository buildLocationRepository(){
+        return new LocationRepository();
     }
 }
