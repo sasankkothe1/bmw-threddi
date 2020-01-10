@@ -23,6 +23,7 @@ public class Event implements Serializable {
     private String origin;
     private Set<Dependency> source_dependent_information;
     private String timestamp;
+    private LocationInfo locationInfo;
 
     public void getTimeStamp(String timestamp){
         this.timestamp = timestamp;
@@ -41,8 +42,8 @@ public class Event implements Serializable {
     }
 
     @JsonSetter(value = "long")
-    public void setLong(String aLong) {
-        Long = aLong;
+    public void setLong(String Long) {
+        this.Long = Long;
     }
 
     public void setSentiment_group(int sentiment_group) {
@@ -108,6 +109,26 @@ public class Event implements Serializable {
 
     public void setSource_dependent_information(Set<Dependency>  source_dependent_information) {
         this.source_dependent_information = source_dependent_information;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
+    public void setLocationInfo(LocationInfo locationInfo) {
+        this.locationInfo = locationInfo;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public LocationInfo getLocationInfo() {
+        return locationInfo;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public Set<Dependency> getSource_dependent_information() {

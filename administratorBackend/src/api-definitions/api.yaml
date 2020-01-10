@@ -57,7 +57,7 @@ paths:
         required: true
       responses:
         200:
-          description: New administrator created
+          description: token created
         400:
           description: Invalid request
           content: {}
@@ -69,6 +69,8 @@ paths:
     summary: Main location object type
     description: This resource represents an individual location object in the system. Each location is identified by an unique location_id.
     get:
+      parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - location
       summary: Return array with all location information.
@@ -89,6 +91,8 @@ paths:
         500:
           description: internal error happened by elasticsearch database
     post:
+      parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - location
       summary: Add a new location to the database
@@ -117,6 +121,7 @@ paths:
       description: This can only be done by the logged in user.
       operationId: updateLocationByID
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       - name: location_id
         in: path
         description: Location_id that need to be updated
@@ -152,6 +157,7 @@ paths:
       summary: Delete location by ID
       operationId: deleteLocationByID
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationHeader'
       - name: location_id
         in: path
         description: Location_id of the location that need to be updated
@@ -327,6 +333,8 @@ components:
       properties:
         location_id:
           type: string
+        address:
+          type: string
         lat:
           type: string
         long:
@@ -406,4 +414,4 @@ components:
       $ref: '#/components/securitySchemes/authenticationHeader'
       in: header
       name: Authentication
-      description: Enter your token in the format **Bearer clientCredential &lt;clientId:clientSecret and encoded in Base64>**
+      description: Enter your token in the format **Bearer token**

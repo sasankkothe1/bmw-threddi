@@ -39,15 +39,45 @@ const register = async (req, res) => {
                 message: 'Administrator already exists'
             })
         }
-        console.log(1234);
         client.index({
             index: 'administrators',
             id: req.body.username,
             body: {administrator: Object.assign(req.body)},
         }).then(response => {
             console.log(response);
-            return res.status(200).send()
-        }, handleError(res));
+            const token = jwt.sign({
+                username: req.body.username,
+            }, config.jwtSecret, {
+                expiresIn: 100000,
+            });
+            console.log(token);
+            return res.status(200).send(token)
+        }, (err => {
+            if(err.statusCode === 404){
+                if(err.message.includes('index_not_found_exception')){
+                    client.indices.create({
+                            index: "main_locations"
+                        }
+                    ).then(res => {client.index({
+                        index: 'administrators',
+                        id: req.body.username,
+                        body: {administrator: Object.assign(req.body)},
+                    }).then(response => {
+                        console.log(response);
+                        const token = jwt.sign({
+                            username: req.body.username,
+                        }, config.jwtSecret, {
+                            expiresIn: 100000,
+                        });
+                        console.log(token);
+                        return res.status(200).send(token)
+                    }, handleError(res))
+                    })}
+                else{
+                    return res.status(404).json();
+                }
+            }
+        }));
     }else {
         return res.status(400).json("No Request Body");
     }
