@@ -12,7 +12,6 @@ export default class Main extends Component {
                 <Route exact path="/"          component={Home} />
                 <Route exact path="/incidents" component={Incident} />
                 <Route exact path="/locations" component={Location} />
-                <Route exact path="/locations/form" component={LocationForm} />
             </div>
         )
     }
