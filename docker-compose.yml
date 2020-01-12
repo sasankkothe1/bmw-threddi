@@ -69,8 +69,8 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
       - TOPIC_EXCHANGE_NAME=ex_extractors
-      - BACKEND_ADMINISTRATOR_ENDPOINT=http://192.168.99.100:4300/administrators/
-      - BACKEND_LOCATION_ENDPOINT=http://192.168.99.100:4300/mainlocations/
+      - BACKEND_ADMINISTRATOR_ENDPOINT=http://administrator-backend:4300/administrators/
+      - BACKEND_LOCATION_ENDPOINT=http://administrator-backend:4300/mainlocations/
     ports:
       - 8900:8900
     depends_on:
