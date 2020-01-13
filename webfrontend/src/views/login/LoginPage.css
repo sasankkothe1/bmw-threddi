@@ -1,0 +1,42 @@
+.login-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header-container{
+  display: flex;
+  justify-content: center;
+}
+
+.email-address-elem-container{
+  display: flex;
+  justify-content: center;
+}
+
+.password-elem-container{
+  display: flex;
+  justify-content: center;
+}
+
+.login-button-container{
+  display: flex;
+  justify-content: center;
+}
+
+.help-tool-bar-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.create-account-button-container{
+  display: flex;
+}
+
+.recover-account-button-container{
+  display: flex;
+}
+
+.help-button-container{
+  display: flex;
+}
