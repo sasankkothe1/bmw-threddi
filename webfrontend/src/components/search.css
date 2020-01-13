@@ -7,11 +7,13 @@
 
 .searchInput {
     width: inherit;
+    font-size: 20px;
 }
 
 .searchInputField {
     width: 100%;
     border: none;
+    font-size: 20px;
 }
 
 .searchInputField:focus {
@@ -22,6 +24,7 @@
     word-wrap: normal;
     border: none;
     background: white;
+    font-size: 20px;
 }
 
 .selectDropdown:focus {
@@ -29,5 +32,7 @@
 }
 
 .labelFrom {
-    padding-top: 2px;
+    padding-right: 20px;
+    font-size: 20px;
+    
 }
