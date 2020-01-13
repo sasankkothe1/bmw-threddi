@@ -86,7 +86,6 @@ public class LocationRepository {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        logger.info("encypt the short term key");
         body.put("username", USERNAME);
         body.put("password", PASSWORD);
         HttpEntity<JSONObject> request = new HttpEntity<>(body, headers);

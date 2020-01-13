@@ -47,7 +47,37 @@ paths:
           content: {}
         500:
           description: internal error happened by elasticsearch database
-
+  /events/{eventId}/location:
+    summary: Tbd
+    description: Tbd
+    get:
+      tags:
+        - event
+      summary: Return event by event_id.
+      description: Obtain information about a specific event by stating the event_id.
+      operationId: getEventById
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event that needs to be fetched
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/events'
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: ID not found
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
   /events/{eventId}:
     summary: Tbd
     description: Tbd

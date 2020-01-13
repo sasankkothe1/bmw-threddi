@@ -69,8 +69,8 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
       - TOPIC_EXCHANGE_NAME=ex_extractors
-      - BACKEND_ADMINISTRATOR_ENDPOINT=http://192.168.99.100:4300/administrators/
-      - BACKEND_LOCATION_ENDPOINT=http://192.168.99.100:4300/mainlocations/
+      - BACKEND_ADMINISTRATOR_ENDPOINT=http://administrator-backend:4300/administrators/
+      - BACKEND_LOCATION_ENDPOINT=http://administrator-backend:4300/mainlocations/
     ports:
       - 8900:8900
     depends_on:
@@ -112,7 +112,7 @@ services:
 
   event-backend:
     build: ./eventBackend
-    container_name: WebApplicationBMWBackend
+    container_name: WebApplicationBMWEventBackend
     ports:
     - "4200:4200"
     environment:
@@ -122,7 +122,7 @@ services:
       - ELASTICSEARCH_PASSWORD=changeme
   administrator-backend:
     build: ./administratorBackend
-    container_name: WebApplicationBMWBackend
+    container_name: WebApplicationBMWAdministratorBackend
     ports:
     - "4300:4300"
     environment:

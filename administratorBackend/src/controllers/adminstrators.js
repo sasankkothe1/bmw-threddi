@@ -56,7 +56,7 @@ const register = async (req, res) => {
             if(err.statusCode === 404){
                 if(err.message.includes('index_not_found_exception')){
                     client.indices.create({
-                            index: "main_locations"
+                            index: "administrators"
                         }
                     ).then(res => {client.index({
                         index: 'administrators',
