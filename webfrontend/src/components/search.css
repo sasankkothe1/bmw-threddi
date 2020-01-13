@@ -1,0 +1,33 @@
+.wholeSearchFunctionality {
+    display: flex;
+    width: -webkit-fill-available;
+
+    border-bottom: 1px solid black;
+}
+
+.searchInput {
+    width: inherit;
+}
+
+.searchInputField {
+    width: 100%;
+    border: none;
+}
+
+.searchInputField:focus {
+    outline-width: 0;
+}
+
+.selectDropdown{
+    word-wrap: normal;
+    border: none;
+    background: white;
+}
+
+.selectDropdown:focus {
+    outline-width: 0;
+}
+
+.labelFrom {
+    padding-top: 2px;
+}

@@ -14,6 +14,7 @@ import './components/IncidentEventTable.css'
 import './components/incident.css';
 import './components/locationTableComponent/LocationRow.css';
 import './views/location/location.css';
+import './components/search.css';
 
 
 class App extends Component {
