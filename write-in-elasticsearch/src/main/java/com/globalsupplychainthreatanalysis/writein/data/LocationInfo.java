@@ -8,6 +8,7 @@ import lombok.Data;
 public class LocationInfo {
     private String distance;
     private String location_id;
+    private String address;
 
     public LocationInfo(){
 
@@ -21,11 +22,19 @@ public class LocationInfo {
         this.distance = distance;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getLocation_id() {
         return location_id;
     }
 
     public String getDistance() {
         return distance;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }
