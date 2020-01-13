@@ -13,14 +13,14 @@ public class MainLocation implements Serializable {
     private String location_id;
     private String lat;
     private String Long;
-    private String address;
+    private String name;
 
     public MainLocation () {
 
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
     public String getLat() {
@@ -41,8 +41,8 @@ public class MainLocation implements Serializable {
         this.Long = Long;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setLat(String lat) {

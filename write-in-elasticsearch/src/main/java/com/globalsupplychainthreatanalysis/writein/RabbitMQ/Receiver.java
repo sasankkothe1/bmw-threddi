@@ -91,7 +91,7 @@ public class Receiver {
             if(locationInfo.getDistance() == null || Double.valueOf(locationInfo.getDistance()) > distance){
                 locationInfo.setDistance("" + distance);
                 locationInfo.setLocation_id(mainLocation.getLocation_id());
-                locationInfo.setAddress(mainLocation.getAddress());
+                locationInfo.setName(mainLocation.getName());
             }
         }
         return locationInfo;
