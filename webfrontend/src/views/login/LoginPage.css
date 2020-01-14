@@ -1,42 +1,60 @@
-.login-container{
+.login-page-container{
+  background-color: black;
+  height: 100%
+}
+
+.form-label{
+  color: white;
+  width: 100%;
+  text-align: center;
+  font-size: 42px;
+  padding-top: 150px;
+  padding-bottom: 100px;
+}
+
+.email-input-line{
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.5px solid white;
+  border-radius: 0px;
+  text-align: center;
+}
+
+.password-input-line{
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.5px solid white;
+  border-radius: 0px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.text-muted{
+  width: 100%;
+  text-align: center;
+}
+
+.login-form{
   display: flex;
   flex-direction: column;
 }
 
-.login-header-container{
+.login-form-container{
   display: flex;
   justify-content: center;
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 110px;
 }
 
-.email-address-elem-container{
-  display: flex;
-  justify-content: center;
-}
-
-.password-elem-container{
-  display: flex;
-  justify-content: center;
-}
-
-.login-button-container{
-  display: flex;
-  justify-content: center;
+::-webkit-input-placeholder {
+   text-align: center;
+   font-family: Montserrat, sans-serif;
 }
 
 .help-tool-bar-container{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-}
-
-.create-account-button-container{
-  display: flex;
-}
-
-.recover-account-button-container{
-  display: flex;
-}
-
-.help-button-container{
-  display: flex;
+  font-family: Montserrat, sans-serif;
+  padding-top: 30px;
 }
