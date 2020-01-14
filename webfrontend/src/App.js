@@ -15,6 +15,7 @@ import './components/incident.css';
 import './components/locationTableComponent/LocationRow.css';
 import './views/location/location.css';
 import './views/login/LoginPage.css';
+import LoginPage from '../src/views/login/LoginPage';
 
 
 class App extends Component {
