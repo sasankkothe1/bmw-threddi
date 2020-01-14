@@ -9,8 +9,17 @@ export default class LoginPage extends Component {
     super(props);
 
     this.state = {
-      email: '',
+            username: '',
+            password: '',
+            submitted: false,
+            loading: false,
+            error: ''
     };
+  }
+
+  handleChange(e) {
+          const { name, value } = e.target;
+          this.setState({ [name]: value });
   }
 
   updateEmail(value) {
@@ -18,6 +27,7 @@ export default class LoginPage extends Component {
       email: value,
     });
   }
+
 
     render () {
       return (
