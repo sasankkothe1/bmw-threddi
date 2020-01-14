@@ -23,7 +23,7 @@ public class LocationRepository {
 
     Logger logger = LoggerFactory.getLogger(LocationRepository.class);
 
-    private static String USERNAME = "write_in_service";
+    private static String USERNAME = "write_in_service@test.com";
     private static String PASSWORD = "password1234";
 
     @Value(value = "${backend.administrator.endpoint}")
