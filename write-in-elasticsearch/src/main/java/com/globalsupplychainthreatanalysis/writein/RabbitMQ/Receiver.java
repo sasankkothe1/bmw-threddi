@@ -39,29 +39,47 @@ public class Receiver {
         List<MainLocation> locations;
         try {
             locations = locationRepository.requestLocations();
-        } catch(Exception e){
+        } catch (Exception e) {
             logger.error("Failed to read locations from backend");
             throw new RuntimeException("");
         }
 
-        if(locations.size() == 0 ) {
+        if (locations.size() == 0) {
             logger.error("No locations saved in backend");
         }
 
         try {
             List<Event> events = objectMapper.readValue(eventsInByte, objectMapper.getTypeFactory().constructCollectionType(List.class, Event.class));
             logger.info("received events + number" + events.size());
-            for(Event event : events) {
+            for (Event event : events) {
                 if (event.getId() == null) {
                     UUID uuid = UUID.randomUUID();
                     event.setId(uuid.toString());
                 }
 
-
-                if(!elasticSearchRepository.find("events", event.getId())){
-                    LocationInfo locationInfo = getNearestFacility(locations, event);
-                    event.setLocationInfo(locationInfo);
+                LocationInfo locationInfo = getNearestFacility(locations, event);
+                event.setLocationInfo(locationInfo);
+                Event oldEvent = elasticSearchRepository.find("events", event.getId());
+                if (oldEvent == null) {
                     elasticSearchRepository.add("events", event);
+                } else {
+                    if (!oldEvent.equals(event)) {
+                        if (oldEvent.getLocationInfo().getDistance() != null) {
+                            if (event.getLocationInfo().getDistance() == null) {
+                                event.setLocationInfo(oldEvent.getLocationInfo());
+                            } else {
+                                if(event.getLocationInfo().getDistance() != null && Double.valueOf(oldEvent.getLocationInfo().getDistance()) < Double.valueOf(event.getLocationInfo().getDistance())){
+                                    event.setLocationInfo(oldEvent.getLocationInfo());
+                                }
+                            }
+                        }
+                        elasticSearchRepository.add("events", event);
+                    } else {
+                        if (oldEvent.getLocationInfo().getDistance() == null && event.getLocationInfo().getDistance() != null || (oldEvent.getLocationInfo().getDistance() != null && event.getLocationInfo().getDistance() != null &&
+                                Double.valueOf(oldEvent.getLocationInfo().getDistance()) < Double.valueOf(event.getLocationInfo().getDistance()))){
+                            elasticSearchRepository.add("events", event);
+                        }
+                    }
                 }
 
 

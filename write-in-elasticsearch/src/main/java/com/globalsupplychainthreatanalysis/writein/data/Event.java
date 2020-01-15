@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -134,4 +135,28 @@ public class Event implements Serializable {
     public Set<Dependency> getSource_dependent_information() {
         return source_dependent_information;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Event)) {
+            return false;
+        }
+        Event that = (Event) o;
+        return  Objects.equals(lat, that.lat) &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(Long, that.Long) &&
+                Objects.equals(sentiment_group, that.sentiment_group) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(importance, that.importance) &&
+                Objects.equals(origin, that.origin) &&
+                Objects.equals(timestamp, that.timestamp)
+                ;
+    }
+
+
 }
