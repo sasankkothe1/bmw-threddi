@@ -14,11 +14,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.stream.Location;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -94,6 +91,7 @@ public class Receiver {
             if(locationInfo.getDistance() == null || Double.valueOf(locationInfo.getDistance()) > distance){
                 locationInfo.setDistance("" + distance);
                 locationInfo.setLocation_id(mainLocation.getLocation_id());
+                locationInfo.setName(mainLocation.getName());
             }
         }
         return locationInfo;

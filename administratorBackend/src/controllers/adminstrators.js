@@ -1,7 +1,7 @@
 const client = require('../connections/elasticsearchClient').client;
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-
+const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 function handleError(response) {
     return function(err){
         console.log(err);
@@ -25,9 +25,9 @@ function handleError(response) {
 
 const register = async (req, res) => {
     if (req._body) {
-        if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || req.body.username.length < 10) return res.status(400).json({
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || ! emailPattern.test(req.body.username)) return res.status(400).json({
             error: 'Bad Request',
-            message: 'The request body must contain a username property'
+            message: 'The request body must contain a valid username property'
         });
         if (!Object.prototype.hasOwnProperty.call(req.body, 'password') || req.body.password.length < 8) return res.status(400).json({
             error: 'Bad Request',
@@ -85,7 +85,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     if (req._body) {
-        if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || req.body.username.length < 10) return res.status(400).json({
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'username') || ! emailPattern.test(req.body.username)) return res.status(400).json({
             error: 'Bad Request',
             message: 'The request body must contain a username property'
         });
