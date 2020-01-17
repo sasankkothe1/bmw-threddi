@@ -4,6 +4,7 @@ import Incident from './Incident';
 import Home from '../views/home/home';
 import Location from '../views/location/Location';
 import LoginPage from '../views/login/LoginPage';
+import Register from '../views/registration/registration-page';
 
 export default class Main extends Component {
     render () {
@@ -13,6 +14,7 @@ export default class Main extends Component {
                 <Route exact path="/incidents" component={Incident} />
                 <Route exact path="/locations" component={Location} />
                 <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/register" component={Register} />
             </div>
         )
     }

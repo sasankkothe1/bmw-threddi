@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import Auth from '../../services/auth.service';
 import UserLoginActions from '../../actions/userLogin.actions';
 import UserStore from '../../stores/user.store';
+import {withRouter} from "react-router";
 
 
 export default class LoginPage extends Component {
@@ -42,7 +43,7 @@ export default class LoginPage extends Component {
   redirectLoginUser(){
     this.setState({redirect : true});
   }
-  
+
   handleUsernameLogin = e => {
     let username = e.target.value;
     this.setState({ username : username });
@@ -93,7 +94,7 @@ export default class LoginPage extends Component {
     UserLoginActions.loginCheck(userLoginData);
   }
 
-  
+
 
   // handleChange(e) {
   //         const { name, value } = e.target;
@@ -134,12 +135,23 @@ export default class LoginPage extends Component {
             </div>
 
             <div className="help-tool-bar-container">
-              <Button variant="outline-light">Create account</Button>
-              <Button variant="outline-light">Recover account</Button>
-              <Button variant="outline-light">Help</Button>
+              <Button className="button-create-account" variant="outline-light" onClick={()=>this.forwardTo('/register')}>Create account</Button>
+
+
+
+              <Button className="button-recover-account" variant="outline-light">Recover account</Button>
+              <Button className="button-help" variant="outline-light">Help</Button>
             </div>
 
           </div>
       )
+    }
+
+    getActiveRouteElement(path){
+        return path===this.props.location.pathname?"active-route":""
+    }
+
+    forwardTo(route){
+        this.props.history.push(route)
     }
   }

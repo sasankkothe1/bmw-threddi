@@ -1,4 +1,4 @@
-.login-page-container{
+.registration-page-container{
   background-color: black;
   height: 100vh;
   width: 100vw;
@@ -41,12 +41,12 @@
   text-align: center;
 }
 
-.login-form{
+.registration-form{
   display: flex;
   flex-direction: column;
 }
 
-.login-form-container{
+.registration-form-container{
   display: flex;
   justify-content: center;
   font-family: Montserrat, sans-serif;
@@ -56,24 +56,4 @@
 ::-webkit-input-placeholder {
    text-align: center;
    font-family: Montserrat, sans-serif;
-}
-
-.help-tool-bar-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  font-family: Montserrat, sans-serif;
-  padding-top: 30px;
-}
-
-.button-create-account{
-  border: none;
-}
-
-.button-recover-account{
-  border:none;
-}
-
-.button-help{
-  border:none;
 }

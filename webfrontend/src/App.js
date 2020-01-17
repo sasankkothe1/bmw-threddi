@@ -16,6 +16,7 @@ import './components/locationTableComponent/LocationRow.css';
 import './views/location/location.css';
 import './views/login/LoginPage.css';
 import LoginPage from '../src/views/login/LoginPage';
+import './views/registration/registration-page.css';
 
 
 class App extends Component {
