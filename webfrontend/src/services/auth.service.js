@@ -10,8 +10,8 @@ export default class AuthService {
         return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/administrators`
     }
 
-    static async login(username, password){
-        let loginRequest = await axios.post(AuthService.baseURL(), username, password );
+    static async login(userLoginData){
+        let loginRequest = await axios.post(AuthService.baseURL() + "/login", userLoginData);
         if (loginRequest.status===200){
             console.log("status is 200");
             return loginRequest.data;

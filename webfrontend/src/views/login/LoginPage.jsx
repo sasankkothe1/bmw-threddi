@@ -3,7 +3,8 @@ import { Button} from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
 import { Redirect } from 'react-router';
 import Auth from '../../services/auth.service';
-
+import UserLoginActions from '../../actions/userLogin.actions';
+import UserStore from '../../stores/user.store';
 
 
 export default class LoginPage extends Component {
@@ -12,33 +13,62 @@ export default class LoginPage extends Component {
     super(props);
 
     this.state = {
+      redirect : false,
             username: '',
             password: '',
             submitted: false,
             loading: false,
             error: '',
-            redirect: false
+            redirect: false,
+            userData: {
+              username : "",
+              password : "",
+            }
     };
 
     this.handleUsernameLogin = this.handleUsernameLogin.bind(this);
     this.handlePasswordLogin = this.handlePasswordLogin.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.redirectLoginUser = this.redirectLoginUser.bind(this);
+    UserStore.addChangeListener("LOGIN_SUCCESSFUL", this.redirectLoginUser);
 
 
     // componentWillMount(){
 
     // }
   }
+
+  redirectLoginUser(){
+    this.setState({redirect : true});
+  }
   
   handleUsernameLogin = e => {
     let username = e.target.value;
     this.setState({ username : username });
+        this.setState(
+            prevState => ({
+              userData: {
+                    ...prevState.userData,
+                    username: username
+                }
+            }),
+            () => console.log(this.state.newLocation)
+        );
   };
 
   handlePasswordLogin = e => {
     let password = e.target.value;
     this.setState({ password : password });
+    this.setState(
+      prevState => ({
+        userData: {
+              ...prevState.userData,
+              password: password
+          }
+      }),
+      () => console.log(this.state.newLocation)
+  );
   };
 
   handleFormSubmit(e) {
@@ -51,11 +81,19 @@ export default class LoginPage extends Component {
     }
   }
 
-  handleLogin(e) {
-    Auth.login(this.state.username, this.state.password).catch(function(err){
-      console.log("error during login " + err)
-    });
+  // handleLogin(e) {
+  //   Auth.login(this.state.username, this.state.password).catch(function(err){
+  //     console.log("error during login " + err);
+  //   });
+  // }
+
+  handleLogin(e){
+    e.preventDefault();
+    let userLoginData = this.state.userData;
+    UserLoginActions.loginCheck(userLoginData);
   }
+
+  
 
   // handleChange(e) {
   //         const { name, value } = e.target;
@@ -104,4 +142,4 @@ export default class LoginPage extends Component {
           </div>
       )
     }
-}
+  }
