@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Button} from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
 import { Redirect } from 'react-router';
+import Auth from '../../services/auth.service';
+
 
 
 export default class LoginPage extends Component {
@@ -21,6 +23,7 @@ export default class LoginPage extends Component {
     this.handleUsernameLogin = this.handleUsernameLogin.bind(this);
     this.handlePasswordLogin = this.handlePasswordLogin.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
 
 
     // componentWillMount(){
@@ -46,6 +49,12 @@ export default class LoginPage extends Component {
     } else {
       this.setState({redirect: true});
     }
+  }
+
+  handleLogin(e) {
+    Auth.login(this.state.username, this.state.password).catch(function(err){
+      console.log("error during login " + err)
+    });
   }
 
   // handleChange(e) {
@@ -80,7 +89,7 @@ export default class LoginPage extends Component {
                   <Form.Control className="password-input-line" type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordLogin}/>
                 </Form.Group>
 
-                  <Button className="login-button" variant="outline-light" type="submit" onClick={this.handleFormSubmit}>
+                  <Button className="login-button" variant="outline-light" type="submit" onClick={this.handleLogin}>
                     Login
                   </Button>
                 </Form>
