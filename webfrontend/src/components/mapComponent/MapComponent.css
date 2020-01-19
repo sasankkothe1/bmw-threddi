@@ -7,4 +7,9 @@
     fill: #00FF00;
 }
 
+.toolbar{
+    position: absolute;
+    z-index: 100;
+}
+
 #mapBox > * { position: relative !important; height: 100% !important; }

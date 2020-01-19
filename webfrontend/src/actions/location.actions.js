@@ -54,6 +54,12 @@ class LocationActions {
                 }
             );
     }
+    updateActiveLocation(data){
+        LocationDispatcher.dispatch({
+            actionType: 'UPDATE_ACTIVE_LOCATION',
+            value: data
+        });
+    }
 
 }
 
