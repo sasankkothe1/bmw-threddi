@@ -11,7 +11,7 @@ export default class LocationTable extends Component {
         <div className="location-table">
           {this.props.locations.length>0?
             this.props.locations.map((location,idx) => (
-              <LocationRow key={idx} location={location._source.mainLocation}/>)): "No Locations found :("
+              <LocationRow key={idx} location={location._source}/>)): "No Locations found :("
           }
         </div>
       );

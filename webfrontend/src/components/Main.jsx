@@ -9,7 +9,8 @@ export default class Main extends Component {
     render () {
         return (
             <div className="main">
-                <Route exact path="/"          component={Home} />
+                <Route exact path="/" component={Home} />
+                <Route exact path="/home/:activeLocation" component={Home} />
                 <Route exact path="/incidents" component={Incident} />
                 <Route exact path="/locations" component={Location} />
                 <Route exact path="/locations/form" component={LocationForm} />
