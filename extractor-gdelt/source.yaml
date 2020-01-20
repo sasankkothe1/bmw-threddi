@@ -4,8 +4,12 @@ id: gdelt_01
 description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done
-
 processing:
+  # Not allowed to have a point in the name
+  - enricher_title
+  - enricher_nextlocation
+  - nlp_translator
+  - nlp_sentiment
   - Datastore
 
 # Properties which will be copied to the configuration database and then managed from there
@@ -22,6 +26,11 @@ default_properties:
     lat: ActionGeo_Lat
     url: SOURCEURL
     timestamp: DATEADDED
+
+  general_filter_options:
+    - field: 'GoldsteinScale'
+      method: 'GreaterThanAbs'
+      threshold: 3
 
   # Minimum of impact which an event need to be added. On the absolute Goldstein-Scale
   filter_options:
@@ -74,3 +83,18 @@ default_properties:
     - displayName: Average Tone
       id: AvgTone
       description: Sentiment Analyses on the event by GDELT
+
+processing_service:
+   enricher_title_to_description:
+      input_field: SOURCE
+   enricher_article:
+     # OUTPUT FIELDS IN SOURCE_DEPENDENT INFORMATION OR NORMAL FIELDS
+      output_field: article_body
+   nlp_translator:
+      fields:
+        - descriptions
+        - content
+      output_language: "EN"
+   nlp_sentiment:
+      fields:
+        - article_body
