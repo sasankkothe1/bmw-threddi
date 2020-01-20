@@ -52,7 +52,8 @@ export default class IncidentEventTable extends Component {
     }
     onRowClick (rowInfo){
         console.log('It was in this row:', rowInfo.row._original);
-        this.props.onChangeActiveEvent(rowInfo.row._original)
+        this.props.onChangeActiveEvent(rowInfo.row._original);
+        console.log(this.state.events?this.state.events[0]._source : " ")
     }
 
     handleSetData = data => {
@@ -118,6 +119,11 @@ export default class IncidentEventTable extends Component {
                 Header: "Source URL",
                 accessor: "url",
                 width: 200
+            },
+            {
+                Header:"LAT",
+                accessor: "lat",
+                show:false
             }
             // {
             //     Header: "Source Origin",
