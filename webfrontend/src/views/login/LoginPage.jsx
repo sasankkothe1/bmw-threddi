@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import { Button} from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
 import { Redirect } from 'react-router';
-import Auth from '../../services/auth.service';
 import UserLoginActions from '../../actions/userLogin.actions';
 import UserStore from '../../stores/user.store';
-import {withRouter} from "react-router";
 
 
 export default class LoginPage extends Component {
