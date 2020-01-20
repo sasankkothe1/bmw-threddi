@@ -3,6 +3,8 @@ package com.globalsupplychainthreatanalysis.writein.data;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class LocationInfo {
@@ -36,5 +38,20 @@ public class LocationInfo {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof LocationInfo)) {
+            return false;
+        }
+        LocationInfo that = (LocationInfo) o;
+        return Objects.equals(location_id, that.location_id) &&
+                Objects.equals(distance, that.distance) &&
+                Objects.equals(name, that.name);
     }
 }

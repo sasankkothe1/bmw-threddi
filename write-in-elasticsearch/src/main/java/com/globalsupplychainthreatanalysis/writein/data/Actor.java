@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -46,5 +47,21 @@ public class Actor implements Serializable {
 
     public String[] getActor_type() {
         return actor_type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Actor)) {
+            return false;
+        }
+        Actor that = (Actor) o;
+        return Objects.equals(actor_name, that.actor_name) &&
+                Objects.equals(actor_origin, that.actor_origin) &&
+                Objects.equals(actor_group, that.actor_group) &&
+                Objects.equals(actor_type, that.actor_type);
     }
 }
