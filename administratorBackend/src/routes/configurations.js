@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const checkAuthentication = require('../middlewares').checkAuthentication;
+const checkAuthenticationForGetEndpoints = require('../middlewares').checkAuthenticationForGetEndpoints;
 const configurationsController = require('../controllers/configurations');
 
 
-router.get('/', checkAuthentication, configurationsController.getAllConfigurations);
+router.get('/', checkAuthenticationForGetEndpoints, configurationsController.getAllConfigurations);
 router.post('/', checkAuthentication, configurationsController.createConfiguration);
-router.get('/:configurationId', checkAuthentication, configurationsController.getConfigurationById);
+router.get('/:configurationId', checkAuthenticationForGetEndpoints, configurationsController.getConfigurationById);
 router.put('/:configurationId', checkAuthentication, configurationsController.updateConfigurationById);
 router.delete('/:configurationId', checkAuthentication, configurationsController.deleteConfigurationById);
 

@@ -7,6 +7,7 @@ const elasticsearchVersion = process.env.ELASTICSEARCH_Version || '7.4';
 const elasticsearchUsername = process.env.ELASTICSEARCH_USERNAME || 'elastic';
 const elasticsearchPassword = process.env.ELASTICSEARCH_PASSWORD || 'changeme';
 const jwtSecret = "Secret";
+const serviceAuthenticationCode = "VerySecretSecret";
 
 const hereMaps_AppCode = process.env.HERE_APP_CODE || 'Gyhqa53c7Nk4KbMtIsSs5A';
 const hereMaps_AppID = process.env.HERE_APP_ID || 'xideIeuhyW0kOQR2u34D';
@@ -19,6 +20,7 @@ module.exports = {
     elasticsearchUsername,
     elasticsearchPassword,
     jwtSecret,
+    serviceAuthenticationCode,
     hereMaps_AppID,
     hereMaps_AppCode
 };
