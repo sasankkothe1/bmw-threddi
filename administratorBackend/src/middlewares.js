@@ -45,7 +45,6 @@ const checkAuthentication = (req, res, next) => {
 const checkAuthenticationForGetEndpoints = (req, res, next) => {
 
     const authenticationType = req.headers['authentication_type'];
-    console.log(req.headers);
     const authentication = req.headers['authentication'];
     if (authenticationType && authenticationType === 'service') {
         if (authentication === config.serviceAuthenticationCode) {
