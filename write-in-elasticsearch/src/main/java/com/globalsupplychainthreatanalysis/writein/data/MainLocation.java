@@ -13,9 +13,14 @@ public class MainLocation implements Serializable {
     private String location_id;
     private String lat;
     private String Long;
+    private String name;
 
     public MainLocation () {
 
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getLat() {
@@ -34,6 +39,10 @@ public class MainLocation implements Serializable {
     @JsonSetter(value = "long")
     public void setLong(String Long) {
         this.Long = Long;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setLat(String lat) {

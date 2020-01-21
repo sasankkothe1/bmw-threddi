@@ -25,7 +25,6 @@ function handleScrollSuccess(response){
 
 function handleError(response) {
     return function(err){
-        console.log(err);
         if(err.statusCode === 404){
             if(err.message.includes('index_not_found_exception')){
                 client.indices.create({
@@ -59,6 +58,22 @@ const getAllEvents = async (req, res) => {
 
 };
 
+const getEventLocation = async (req, res) => {
+    const {
+        eventId
+    } = req.params;
+    client.get({
+        index: 'events',
+        id: eventId,
+    }).then(response =>{
+        if(response.found) {
+            res.status(200).send(response._source.locationInfo);
+        }else {
+            res.status(404).send();
+        }
+    }, handleError(res));
+};
+
 const getEventById = async (req, res) => {
     const {
         eventId
@@ -68,7 +83,6 @@ const getEventById = async (req, res) => {
         id: eventId,
     }).then(response =>{
         if(response.found) {
-            console.log(response);
             res.status(200).send(response);
         }else {
             res.status(404).send();
@@ -85,12 +99,9 @@ const deleteEventById = async (req, res) => {
         id: eventId,
         refresh: true,
     }).then(response => {
-        console.log(response);
         if (response.result === 'deleted') {
-            console.log(response);
             res.status(200).send(response);
         } else {
-            console.log(response);
             res.status(500).send('internal error happens');
         }
     }, handleError(res));
@@ -101,5 +112,6 @@ const deleteEventById = async (req, res) => {
 module.exports = {
     getAllEvents,
     getEventById,
-    deleteEventById
+    deleteEventById,
+    getEventLocation
 };
