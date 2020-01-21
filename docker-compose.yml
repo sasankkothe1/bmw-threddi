@@ -59,23 +59,42 @@ services:
   write-in-elasticsearch-service:
     build: ./write-in-elasticsearch
     environment:
-      ## adjust the routing key!!
-      - RABBITMQ_HOST=rabbit
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_USERNAME=rabbitmq
-      - RABBITMQ_PASSWORD=rabbitmq
-      - ROUTING_KEY=#
-      - ELASTIC_SEARCH_IP=elasticsearch:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=changeme
-      - TOPIC_EXCHANGE_NAME=ex_extractors
-      - BACKEND_ADMINISTRATOR_ENDPOINT=http://administrator-backend:4300/administrators/
-      - BACKEND_LOCATION_ENDPOINT=http://administrator-backend:4300/mainlocations/
+    ## adjust the routing key!!
+    - RABBITMQ_HOST=rabbit
+    - RABBITMQ_PORT=5672
+    - RABBITMQ_USERNAME=rabbitmq
+    - RABBITMQ_PASSWORD=rabbitmq
+    - ROUTING_KEY=datastore
+    - ELASTIC_SEARCH_IP=elasticsearch:9200
+    - ELASTICSEARCH_USERNAME=elastic
+    - ELASTICSEARCH_PASSWORD=changeme
+    - TOPIC_EXCHANGE_NAME=ex_extractors
+    - BACKEND_ADMINISTRATOR_ENDPOINT=http://administrator-backend:4300/administrators/
+    - BACKEND_LOCATION_ENDPOINT=http://administrator-backend:4300/mainlocations/
+    - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
     ports:
-      - 8900:8900
+    - 8900:8900
     depends_on:
-      - elasticsearch
-      - rabbit
+    - elasticsearch
+    - rabbit
+
+  distance-service:
+    build: ./distance-component
+    environment:
+    ## adjust the routing key!!
+    - RABBITMQ_HOST=rabbit
+    - RABBITMQ_PORT=5672
+    - RABBITMQ_USERNAME=rabbitmq
+    - RABBITMQ_PASSWORD=rabbitmq
+    - ROUTING_KEY=distance.#
+    - TOPIC_EXCHANGE_NAME=ex_extractors
+    - BACKEND_ADMINISTRATOR_ENDPOINT=http://administrator-backend:4300/administrators/
+    - BACKEND_LOCATION_ENDPOINT=http://administrator-backend:4300/mainlocations/
+    - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+    ports:
+    - 8901:8901
+    depends_on:
+    - rabbit
 
 # UNCOMMENT for PROD
 #  extractor-gdelt:
@@ -130,6 +149,7 @@ services:
       - ELASTICSEARCH_VERSION=7.4
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
 #networks:
 #  docker-elk:
 #    driver: bridge
