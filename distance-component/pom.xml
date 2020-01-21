@@ -6,19 +6,19 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
+
 	<groupId>com.global-supply-chain-threat-analysis</groupId>
-	<artifactId>write-in-service</artifactId>
+	<artifactId>distance-calculation-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>data-processing</name>
-	<description>messaging processing against RabbitMQ and elasticsearch</description>
+	<name>distance-calculation-service</name>
+	<description>this component calculate the distance between the event and the nearest facility</description>
 
 	<properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
-        <elasticsearch.version>7.4.1</elasticsearch.version>
         <docker.image.prefix>springboot</docker.image.prefix>
         <spring.boot.version>2.1.3.RELEASE</spring.boot.version>
 	</properties>
@@ -44,23 +44,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- elasticsearch client -->
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>${elasticsearch.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId>
-            <version>${elasticsearch.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>${elasticsearch.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -68,18 +51,11 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- elasticsearch test -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.lucene</groupId>-->
-<!--            <artifactId>lucene-test-framework</artifactId>-->
-<!--            <version>${lucene.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--It is really confusing, that we need to add this dependency manually-->
         <dependency>
-            <groupId>org.elasticsearch.test</groupId>
-            <artifactId>framework</artifactId>
-            <version>${elasticsearch.version}</version>
-            <scope>test</scope>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.10</version>
         </dependency>
 
         <dependency>
@@ -104,25 +80,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>3.3.0</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.twitter4j</groupId>
-            <artifactId>twitter4j-core</artifactId>
-            <version>4.0.7</version>
-        </dependency>
     </dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -139,8 +105,7 @@
                     </resources>
                 </configuration>
             </plugin>
-		</plugins>
-
-	</build>
+        </plugins>
+    </build>
 
 </project>
