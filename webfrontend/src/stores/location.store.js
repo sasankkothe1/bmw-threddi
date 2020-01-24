@@ -3,13 +3,15 @@ import LocationsDispatcher from '../dispatchers/locations.dispatcher';
 
 let _store = {
     locations: [],
-    locations_error: {}
+    locations_error: {},
+    active_location: null
 };
 
 class EventStore extends EventEmitter {
 
     constructor() {
         super();
+        console.log("Construct Store");
         this.dispatchToken = LocationsDispatcher.register(this.dispatcherCallback.bind(this))
     }
 
@@ -26,16 +28,16 @@ class EventStore extends EventEmitter {
             case 'GET_LOCATIONS':
                 _store.locations = action.value;
                 break;
-
             case 'POST_LOCATION_SUCCESSFUL':
                 break;
-
             case 'POST_LOCATION_ERROR':
                 _store.locations_error = action.value;
                 break;
-
             case 'GET_LOCATION_ERROR':
                 _store.locations_error = action.value;
+                break;
+            case 'UPDATE_ACTIVE_LOCATION':
+                _store.active_location = action.value;
                 break;
         }
 
@@ -50,6 +52,10 @@ class EventStore extends EventEmitter {
 
     removeChangeListener(eventName, callback) {
         this.removeListener(eventName, callback);
+    }
+
+    getActiveLocation(){
+        return _store.active_location
     }
 
     getLocationError(){
