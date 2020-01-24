@@ -73,9 +73,7 @@ export default class Location extends Component {
                         {/*</div>*/}
                     </div>
                 </div>
-                <div className="page-container-button-bar-bottom">
-                  <Button variant="primary">Primary</Button>
-                </div>
+                
             </>
         )
     }
