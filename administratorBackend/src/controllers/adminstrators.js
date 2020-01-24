@@ -13,7 +13,7 @@ function handleError(response) {
                 ).then(res => {response.status(200).send([])}, handleError(response))
             }
             else{
-                return response.status(404).json();
+                return response.status(400).json();
             }
         }
         else {
