@@ -4,6 +4,7 @@ id: gdelt_01
 description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done
+
 processing:
   - Datastore
 

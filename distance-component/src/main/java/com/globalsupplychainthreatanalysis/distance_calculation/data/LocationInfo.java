@@ -1,4 +1,4 @@
-package com.globalsupplychainthreatanalysis.writein.data;
+package com.globalsupplychainthreatanalysis.distance_calculation.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

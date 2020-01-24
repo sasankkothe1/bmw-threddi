@@ -1,7 +1,6 @@
 package com.globalsupplychainthreatanalysis.writein.configuration;
 
 
-import com.globalsupplychainthreatanalysis.writein.LocationRepository.LocationRepository;
 import com.globalsupplychainthreatanalysis.writein.elasticsearch.ElasticSearchRepository;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -140,10 +139,5 @@ public class ElasticsearchRestClientConfig {
         template.setMessageConverters(convs);
 
         return template;
-    }
-
-    @Bean
-    public LocationRepository buildLocationRepository(){
-        return new LocationRepository();
     }
 }

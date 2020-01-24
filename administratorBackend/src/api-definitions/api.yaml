@@ -70,6 +70,7 @@ paths:
     description: This resource represents an individual location object in the system. Each location is identified by an unique location_id.
     get:
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationType'
       - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - location
@@ -181,6 +182,7 @@ paths:
     description: This resource represents an individual configuration in the system. Each configuration is identified by an unique configuration_id.
     get:
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationType'
       - $ref: '#/components/securitySchemes/authenticationHeader'
       tags:
       - configuration
@@ -237,6 +239,7 @@ paths:
       description: Obtain information about a specific event by stating the event_id.
       operationId: getEventById
       parameters:
+      - $ref: '#/components/securitySchemes/authenticationType'
       - $ref: '#/components/securitySchemes/authenticationHeader'
       - name: configurationId
         in: path
@@ -414,4 +417,10 @@ components:
       $ref: '#/components/securitySchemes/authenticationHeader'
       in: header
       name: Authentication
-      description: Enter your token in the format **Bearer token**
+      description: Enter your authentication identit
+    authenticationType:
+      type: apiKey
+      $ref: '#/components/securitySchemes/authenticationType'
+      in: header
+      name: authentication_type
+      description: Enter your authentication type (for example: service)
