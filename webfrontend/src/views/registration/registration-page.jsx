@@ -113,12 +113,12 @@ export default class Register extends Component {
     let userRegistrationData = this.state.userData;
     UserRegistrationActions.registrationCheck(userRegistrationData);
     }
-    
-  } 
+
+  }
 
   render() {
     if (this.state.regDone) {
-      return( 
+      return(
         <Redirect push to="/login"></Redirect>
       );
     }
@@ -126,7 +126,7 @@ export default class Register extends Component {
       <div className="registration-page-container">
         <div className="registration-form-container">
           <Form className="registration-form">
-            <Form.Label className="form-label">Register</Form.Label>
+            <Form.Label className="registration-form-label">Register</Form.Label>
             <Form.Group controlId="formBasicEmail">
               <Form.Control
                 className="email-input-line"
