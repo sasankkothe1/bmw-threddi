@@ -97,6 +97,11 @@ const createLocation = async (req, res) => {
             message: 'The request body must contain a location_id property'
         });
 
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'name')) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a name property'
+        });
+
         if (!Object.prototype.hasOwnProperty.call(req.body, 'address')) return res.status(400).json({
             error: 'Bad Request',
             message: 'The request body must contain a address property'

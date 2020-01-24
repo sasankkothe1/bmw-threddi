@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 
 import EventStore from "../../stores/event.store";
+import LocationStore from "../../stores/location.store";
 import EventAction from "../../actions/event.actions";
+import LocationAction from "../../actions/location.actions";
 import MapComponent from "../../components/mapComponent/MapComponent";
 import EventSidebar from "../../components/eventSidebarComponent/EventSidebar";
 import AdditionalInformationModalComponent
@@ -13,7 +15,9 @@ export default class Home extends Component {
             <div className="wrap">
                 <div className="fleft">
                     <MapComponent events={this.state.events.slice(0, 100)}
-                                  activeElement={this.state.activeEvent}/>
+                                  activeElement={this.state.activeEvent}
+                                  activeLocation={this.state.activeLocation}
+                                  locations={this.state.locations}/>
                 </div>
                 <div className="fright">
                     <EventSidebar activeEvent={this.state.activeEvent}
@@ -32,30 +36,52 @@ export default class Home extends Component {
         this.state = {
             number: 0,
             events: [],
+            locations: [],
             activeEvent: EventStore.getActiveEvent(),
+            activeLocation: LocationStore.getActiveLocation(),
             shouldLoad: true
         };
 
+        this.onFetchLocations = this.onFetchLocations.bind(this);
         this.onFetchEvents = this.onFetchEvents.bind(this);
         this.onNewActiveEvent = this.onNewActiveEvent.bind(this);
         this.recursiveLoad = this.recursiveLoad.bind(this);
+        this.onNewActiveLocation = this.onNewActiveLocation.bind(this);
 
-        EventAction.fetchEvents()
+        EventAction.fetchEvents();
+        LocationAction.getLocation();
     }
 
     componentDidMount() {
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
         EventStore.addChangeListener("UPDATE_ACTIVE_EVENT", this.onNewActiveEvent);
+        LocationStore.addChangeListener("GET_LOCATIONS", this.onFetchLocations);
+        LocationStore.addChangeListener("UPDATE_ACTIVE_LOCATION", this.onNewActiveLocation);
 
     }
 
     componentWillMount() {
-        this.setState({shouldLoad: true})
+        LocationAction.getLocation();
+        if(this.props.location.state){
+            console.log(this.props.location.state);
+            this.setState({
+                shouldLoad: true,
+                activeLocation: this.props.location.state.location_id,
+            });
+        }else{
+            this.setState({
+                shouldLoad: true,
+            });
+        }
+
     }
 
     componentWillUnmount() {
         EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
         EventStore.removeChangeListener("UPDATE_ACTIVE_EVENT", this.onNewActiveEvent);
+        LocationStore.addChangeListener("GET_LOCATIONS", this.onFetchLocations);
+        LocationStore.addChangeListener("UPDATE_ACTIVE_LOCATION", this.onNewActiveLocation);
+
         this.setState({shouldLoad: false})
     }
 
@@ -77,6 +103,11 @@ export default class Home extends Component {
 
     }
 
+    onFetchLocations(){
+        this.setState({
+            locations: LocationStore.getLocations()
+        })
+    }
     onFetchEvents() {
         this.setState({
             events: EventStore.getEvents()
@@ -87,9 +118,20 @@ export default class Home extends Component {
         EventAction.updateActiveEvent(null)
     }
 
+    onRemoveActiveLocation() {
+        LocationAction.updateActiveLocation(null)
+    }
+
     onNewActiveEvent() {
         this.setState({
-            activeEvent: EventStore.getActiveEvent()
+            activeEvent: EventStore.getActiveEvent(),
+            activeLocation: null
+        })
+    }
+    onNewActiveLocation() {
+        this.setState({
+            activeEvent: null,
+            activeLocation: LocationStore.getActiveLocation()
         })
     }
 }
