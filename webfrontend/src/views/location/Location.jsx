@@ -5,6 +5,7 @@ import Image from "../../components/pictures/graph_events_locationView.png";
 import LocationStore from "../../stores/location.store";
 import Toast from "react-bootstrap/Toast";
 import {Line} from "react-chartjs-2";
+import { Button } from "react-bootstrap";
 
 export default class Location extends Component {
 
@@ -71,6 +72,9 @@ export default class Location extends Component {
                         {/*    <img src={Image} alt="website logo" height={400} width={'auto'}/>*/}
                         {/*</div>*/}
                     </div>
+                </div>
+                <div className="page-container-button-bar-bottom">
+                  <Button variant="primary">Primary</Button>
                 </div>
             </>
         )
