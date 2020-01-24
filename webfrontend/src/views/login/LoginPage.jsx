@@ -114,7 +114,7 @@ export default class LoginPage extends Component {
         <div className="login-page-container">
             <div className="login-form-container">
               <Form className="login-form">
-                <Form.Label className="form-label">Log into Threddi</Form.Label>
+                <Form.Label className="login-form-label">Log into Threddi</Form.Label>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Control className="email-input-line" type="email" placeholder="Enter email" value={this.state.username} onChange={this.handleUsernameLogin} />
                   <Form.Text className="text-muted">
