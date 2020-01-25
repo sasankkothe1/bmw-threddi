@@ -1,5 +1,6 @@
 import config from "../config";
 import axios from "axios";
+import HTTPService from "./http.service"
 
 export default class AuthService {
     constructor() {
@@ -11,7 +12,7 @@ export default class AuthService {
     }
 
     static async login(userLoginData){
-        let loginRequest = await axios.post(AuthService.baseURL() + "/login", userLoginData);
+        let loginRequest = await HTTPService.post(AuthService.baseURL() + "/login", userLoginData);
         if (loginRequest.status===200){
             console.log("status is 200");
             return loginRequest.data;
