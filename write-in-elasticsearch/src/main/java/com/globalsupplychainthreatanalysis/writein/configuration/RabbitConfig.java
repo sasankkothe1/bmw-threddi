@@ -14,10 +14,10 @@ public class RabbitConfig {
 
     Logger logger = LoggerFactory.getLogger(RabbitConfig.class);
 
-    @Value(value = "${rabbit.mq.topic-exchange-name}")
+    @Value(value = "${rabbit.mq.topic_exchange_name}")
     private String TOPIC_EXCHANGE_NAME;
 
-    @Value(value = "${rabbit.mq.routing-key}")
+    @Value(value = "${rabbit.mq.routing_key}")
     private String routingKey;
 
     public static final String QUEUE = "events";
