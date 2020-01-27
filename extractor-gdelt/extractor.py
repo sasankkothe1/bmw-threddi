@@ -32,9 +32,9 @@ class Extractor:
     _routing_key = None
     _rabbitmq_handler = None
 
-    def __init__(self, configuration_file="source.yaml"):
+    def __init__(self, extractor_id, configuration_file="source.yaml"):
         self._load_config(configuration_file)
-        self.origin_name = self._config.get("id") or "unknown"
+        self.origin_name = extractor_id
 
         self._output_exchange = os.environ.get("OUTPUT_EXCHANGE")
         assert self._output_exchange
@@ -67,6 +67,10 @@ class Extractor:
         logging.info("Start polling...")
         iteration = 0
         while self._is_polling:
+
+            #TODO FETCH Configuration
+            self._fetch_configuration()
+
             iteration += 1
             self._source_df = self.fetch_current_data()
             self._logger.info("Iteration {iteration}".format(iteration=iteration))
@@ -88,13 +92,14 @@ class Extractor:
             with open("sample_events.txt", "w") as outputfile:
                 json.dump(self._output_json, outputfile, default=self.convert)
 
-            message = json.dumps(self._output_json, default=self.convert)
-            self._rabbitmq_handler.send_message(message, routing_key=self._routing_key)
-
-            self._logger.debug("Waiting for {min} minutes".format(min=minutes))
+            for event in self._output_json:
+                _event = json.dumps(event, default=self.convert)
+                self._rabbitmq_handler.send_message(_event, routing_key=self._routing_key)
 
             # Sleep for 60* Minutes seconds
+            self._logger.debug("Waiting for {min} minutes".format(min=minutes))
             time.sleep(minutes*60)
+
             self._clear_data()
 
     def _clear_data(self):
@@ -210,24 +215,54 @@ class Extractor:
             source_key = mapping_config[key]
             self._output_frame[key] = self._source_df[source_key]
 
-    def _load_config(self, configuration_file):
+    def fetch_configuration(self):
+        pass
+
+    def _load_config(self, configuration_file='source.yaml'):
         """
         Loads the configuration file and adds it as private class attribute
         :param configuration_file:
         """
+
+        # Fetch Config from DB
+
+        # 404: - Setup Config by source.yaml
+
+        _config = self._load_configuration_from_file(configuration_file)
+
+
+    @staticmethod
+    def _load_configuration_from_file(configuration_file):
+        _config = None
         try:
             with open(configuration_file, 'r') as stream:
-                self._config = yaml.safe_load(stream)
+                _config = yaml.safe_load(stream)
         except FileNotFoundError as e:
             logging.error("No such configuration file", e)
         except yaml.YAMLError as exc:
             logging.error("Configuration file is wrong", exc)
 
-        assert self._config
+        assert _config
+        return _config
 
     def _convert_to_json(self):
         self._output_json = json.loads(self._output_frame.to_json(orient='index'))
         self._output_frame = None
+
+    @staticmethod
+    def get_configuration_from_endpoint(extractor_id):
+        backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
+        backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
+
+        token = "{}".format(os.environ.get('AUTH_TOKEN'))
+        header = {'Authorization': token,
+                  'authentification_type': 'service'}
+
+        configurations = requests.get("http://{url}:{port}/configuration/{id}"
+                                      .format(url=backend_url, port=backend_port, id=extractor_id),
+                                      header)
+
+        return configurations.json()
 
     @staticmethod
     def get_main_locations():
@@ -235,5 +270,4 @@ class Extractor:
         backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
 
         main_locations = requests.get("http://{url}:{port}/mainlocations".format(url=backend_url, port=backend_port))
-
         return main_locations.json()

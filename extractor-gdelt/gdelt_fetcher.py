@@ -42,7 +42,7 @@ class GDELTFetcher:
         location_query, location_def = self.get_location_conditions(specialized_conditions)
 
         query = (
-            'SELECT *  FROM `gdelt-bq.gdeltv2.events` WHERE DATEADDED>{lastdate} AND (({location_query} {conditions})  ORDER BY DATEADDED DESC'
+            'SELECT *  FROM `gdelt-bq.gdeltv2.events` WHERE DATEADDED>{lastdate} AND ({location_query} {conditions})  ORDER BY DATEADDED DESC'
                 .format(location_def=location_def,
                         lastdate=self._last_fetch,
                         conditions=conditions[4:],
@@ -76,8 +76,9 @@ class GDELTFetcher:
                                                        long=location_val['long'],
                                                        location_id=location_id)
 
-            location_query = "ST_DWITHIN(ST_GeogPoint(ActionGeo_Long, ActionGeo_Lat), ST_GeogPoint({long}, {lat}), " \
-                             "{radius})  {specialized_conditions}) OR".format(
+            location_query += "(ST_DWITHIN(ST_GeogPoint(ActionGeo_Long, ActionGeo_Lat)," \
+                              " ST_GeogPoint({long}, {lat}), " \
+                              "{radius})  {specialized_conditions}) OR".format(
                 location_id=location_id,
                 lat=location_val['lat'],
                 long=location_val['long'],
