@@ -35,7 +35,7 @@ export default class LoginPage extends Component {
     UserStore.addChangeListener("LOGIN_SUCCESSFUL", this.redirectLoginUser);
     UserStore.addChangeListener("LOGIN_ERROR" , this.showLoginError);
 
-  } 
+  }
 
   redirectLoginUser(){
     this.setState({redirect : true});
