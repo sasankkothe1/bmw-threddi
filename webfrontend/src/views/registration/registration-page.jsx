@@ -93,7 +93,7 @@ export default class Register extends Component {
     let repeatedPassword = this.state.repeatedPassword;
     if (!username && !password) {
       alert("Enter Username and Password");
-    } else if (password != repeatedPassword) {
+    } else if (password !== repeatedPassword) {
       alert("Passwords do not match.");
     } else {
       this.setState({ redirect: true });
@@ -106,7 +106,7 @@ export default class Register extends Component {
     let repeatedPassword = this.state.repeatedPassword;
     if (!username && !password) {
       alert("Enter Username and Password");
-    } else if (password != repeatedPassword) {
+    } else if (password !== repeatedPassword) {
       alert("Passwords do not match.");
     } else {
       e.preventDefault();

@@ -27,7 +27,7 @@ class CreateConfigurationForm extends Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.submitConfigurator = this.submitConfigurator.bind(this);
+    //this.submitConfigurator = this.submitConfigurator.bind(this);
   }
 
   addMappingField() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {Navbar, Button} from 'react-bootstrap';
-import Image from "react-bootstrap/Image";
+// import Image from "react-bootstrap/Image";
 import { Redirect } from 'react-router';
 
 

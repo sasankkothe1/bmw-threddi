@@ -32,10 +32,6 @@ export default class LoginPage extends Component {
     this.redirectLoginUser = this.redirectLoginUser.bind(this);
     UserStore.addChangeListener("LOGIN_SUCCESSFUL", this.redirectLoginUser);
 
-
-    // componentWillMount(){
-
-    // }
   }
 
   redirectLoginUser(){
@@ -79,32 +75,11 @@ export default class LoginPage extends Component {
       this.setState({redirect: true});
     }
   }
-
-  // handleLogin(e) {
-  //   Auth.login(this.state.username, this.state.password).catch(function(err){
-  //     console.log("error during login " + err);
-  //   });
-  // }
-
   handleLogin(e){
     e.preventDefault();
     let userLoginData = this.state.userData;
     UserLoginActions.loginCheck(userLoginData);
   }
-
-
-
-  // handleChange(e) {
-  //         const { name, value } = e.target;
-  //         this.setState({ [name]: value });
-  // }
-
-  // updateEmail(value) {
-  //   this.setState({
-  //     email: value,
-  //   });
-  // }
-
 
     render () {
       if (this.state.redirect) {

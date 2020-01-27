@@ -7,7 +7,7 @@ class SideBar extends Component {
     constructor(props){
         super(props);
         this.state = {
-            addModalShow: true,
+            addModalShow: false,
         };
 
         this.getActiveRouteElement = this.getActiveRouteElement.bind(this);
