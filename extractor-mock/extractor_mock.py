@@ -18,7 +18,7 @@ if __name__ == '__main__':
     with open("sample_events.txt", "r") as outputfile:
         _output_json = json.load(outputfile)
 
-    _routing_key = "datastore"
+    _routing_key = "distance.datastore"
     _output_exchange = os.environ.get("OUTPUT_EXCHANGE")
 
     # Send to Queue
