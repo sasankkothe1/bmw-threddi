@@ -95,8 +95,6 @@ const createConfiguration = async (req, res) => {
             })
         }
 
-        test = Object.assign(req.body);
-
         client.index({
             index: 'configurations',
             id: req.body.configuration_id,
