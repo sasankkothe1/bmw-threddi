@@ -64,7 +64,7 @@ services:
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=rabbitmq
       - RABBITMQ_PASSWORD=rabbitmq
-      - ROUTING_KEY=#
+      - ROUTING_KEY=datastore
       - ELASTIC_SEARCH_IP=elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
@@ -130,6 +130,26 @@ services:
       - ELASTICSEARCH_VERSION=7.4
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
+
+  ###########################
+  # Enrichers
+  ###########################
+
+  title_fetcher_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_title_fetcher_enricher
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MQ_HOST=rabbit
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+
 #networks:
 #  docker-elk:
 #    driver: bridge
+
+

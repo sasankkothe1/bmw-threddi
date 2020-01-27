@@ -29,7 +29,8 @@ class GDELTExtractor(Extractor):
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")
 
-        results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'))
+        results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'),
+                                                   self.default_properties.get('general_filter_options'))
         return results
 
     # Field Mappings

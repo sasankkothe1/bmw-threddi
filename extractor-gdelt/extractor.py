@@ -5,11 +5,20 @@ import time
 import uuid
 from threading import Thread
 
+import requests
 import yaml
 import pandas as pd
 import numpy as np
 
 import RabbitMQHandler
+
+RADIUS_MAPPING = {
+    1: 50000,
+    2: 100000,
+    3: 500000,
+    4: 1000000,
+    5: 3000000
+}
 
 
 class Extractor:
@@ -219,3 +228,12 @@ class Extractor:
     def _convert_to_json(self):
         self._output_json = json.loads(self._output_frame.to_json(orient='index'))
         self._output_frame = None
+
+    @staticmethod
+    def get_main_locations():
+        backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
+        backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
+
+        main_locations = requests.get("http://{url}:{port}/mainlocations".format(url=backend_url, port=backend_port))
+
+        return main_locations.json()
