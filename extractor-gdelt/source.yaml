@@ -1,6 +1,6 @@
 
 name: GDELT Database
-configuration_id: gdelt_01
+configuration_id: gdelt_05
 description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done

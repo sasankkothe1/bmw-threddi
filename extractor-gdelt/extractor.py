@@ -69,7 +69,9 @@ class Extractor:
         iteration = 0
         while self._is_polling:
 
-            self._load_configuration_from_endpoint(self._extractor_id)
+            status, _endpoint_config = self._load_configuration_from_endpoint(self._extractor_id)
+            if status == 200:
+                self._config = _endpoint_config
 
             iteration += 1
             self._source_df = self.fetch_current_data()
@@ -225,27 +227,24 @@ class Extractor:
         """
 
         # Fetch Config from Endpoint
-        _config = self._load_configuration_from_endpoint(self._extractor_id)
+        _status, _config = self._load_configuration_from_endpoint(self._extractor_id)
 
-        if _config.status_code == 404:
+        if _status == 404:
             # 404: - Setup Config by source.yaml
             _file_config = self._load_configuration_from_file(configuration_file)
             self._config = _file_config
-            status, result = self._set_remote_configuration(_file_config)
+            _status, result = self._set_remote_configuration(_file_config)
 
-            if status != 200:
+            if _status != 200:
                 print(result)
 
-        elif _config.status_code == 200:
+        elif _status == 200:
             print("Used DB Config")
-            self._config = _config.json().get('source')
+            self._config = _config
         else:
             logging.error("ERROR Could not get DB config")
             _file_config = self._load_configuration_from_file(configuration_file)
             self._config = _file_config
-
-        # TODO UNCOMMENT WHEN XIOLIN FIXED IT
-        self._config = self._load_configuration_from_file(configuration_file)
 
         print(self._config)
 
@@ -279,7 +278,7 @@ class Extractor:
             "http://{url}:{port}/configurations/{id}".format(url=backend_url, port=backend_port, id=extractor_id),
             headers=headers)
 
-        return configurations
+        return configurations.status_code, configurations.json().get('_source')['configuration']
 
     @staticmethod
     def get_main_locations():

@@ -53,7 +53,7 @@ class GDELTFetcher:
 
         # DO THE QUERY
 
-        # query_job = self.client.query(query)  # API request - starts the query
+        query_job = self.client.query(query)  # API request - starts the query
 
         self._last_fetch = int(datetime.now().strftime("%Y%m%d%H%M%S")) - 100
 

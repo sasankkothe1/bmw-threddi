@@ -5,9 +5,7 @@ Therefore the class follows a polling mechanism.
 """
 import logging
 import os
-from urllib.request import urlopen
 
-import lxml.html
 import numpy as np
 
 import gdelt_fetcher
