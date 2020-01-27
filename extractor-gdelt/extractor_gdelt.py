@@ -13,7 +13,7 @@ import numpy as np
 import gdelt_fetcher
 from extractor import Extractor
 
-EXTRACTOR_ID = "GDELT_Extractor" or os.environ.get("EXTRACTOR_ID")
+EXTRACTOR_ID = os.environ.get("EXTRACTOR_ID") or "GDELT_Extractor"
 
 
 def sigmoid(value):
@@ -38,7 +38,7 @@ class GDELTExtractor(Extractor):
 
     # Field Mappings
     def add_id(self, source_df):
-        naming = lambda x: "{}_{}".format(self.origin_name, x)
+        naming = lambda x: "{}_{}".format(self._extractor_id, x)
         vfunc = np.vectorize(naming)
         ids = vfunc(source_df['GLOBALEVENTID'])
         return ids.reshape((len(ids), 1))

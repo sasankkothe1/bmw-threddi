@@ -94,10 +94,13 @@ const createConfiguration = async (req, res) => {
                 message: 'Configuration already exists'
             })
         }
+
+        test = Object.assign(req.body);
+
         client.index({
             index: 'configurations',
             id: req.body.configuration_id,
-            body: {mainLocation: Object.assign(req.body)},
+            body: {configuration: Object.assign(req.body)},
         }).then(response => {
             console.log(response);
             return res.status(200).send()

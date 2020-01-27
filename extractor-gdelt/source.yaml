@@ -1,12 +1,13 @@
 
 name: GDELT Database
-id: gdelt_01
+configuration_id: gdelt_01
 description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done
 processing:
   # Not allowed to have a point in the name
   - enricher_title_to_description
+  - datastore
 
 # Properties which will be copied to the configuration database and then managed from there
 default_properties:

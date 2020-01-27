@@ -31,10 +31,11 @@ class Extractor:
     _output_exchange = None
     _routing_key = None
     _rabbitmq_handler = None
+    _extractor_id = ""
 
     def __init__(self, extractor_id, configuration_file="source.yaml"):
+        self._extractor_id = extractor_id
         self._load_config(configuration_file)
-        self.origin_name = extractor_id
 
         self._output_exchange = os.environ.get("OUTPUT_EXCHANGE")
         assert self._output_exchange
@@ -68,8 +69,7 @@ class Extractor:
         iteration = 0
         while self._is_polling:
 
-            #TODO FETCH Configuration
-            self._fetch_configuration()
+            self._load_configuration_from_endpoint(self._extractor_id)
 
             iteration += 1
             self._source_df = self.fetch_current_data()
@@ -98,7 +98,7 @@ class Extractor:
 
             # Sleep for 60* Minutes seconds
             self._logger.debug("Waiting for {min} minutes".format(min=minutes))
-            time.sleep(minutes*60)
+            time.sleep(minutes * 60)
 
             self._clear_data()
 
@@ -200,7 +200,7 @@ class Extractor:
         pass
 
     def _set_origin(self):
-        self._output_frame['origin'] = self.origin_name
+        self._output_frame['origin'] = self._extractor_id
 
     def _do_mapping(self):
         """
@@ -224,12 +224,30 @@ class Extractor:
         :param configuration_file:
         """
 
-        # Fetch Config from DB
+        # Fetch Config from Endpoint
+        _config = self._load_configuration_from_endpoint(self._extractor_id)
 
-        # 404: - Setup Config by source.yaml
+        if _config.status_code == 404:
+            # 404: - Setup Config by source.yaml
+            _file_config = self._load_configuration_from_file(configuration_file)
+            self._config = _file_config
+            status, result = self._set_remote_configuration(_file_config)
 
-        _config = self._load_configuration_from_file(configuration_file)
+            if status != 200:
+                print(result)
 
+        elif _config.status_code == 200:
+            print("Used DB Config")
+            self._config = _config.json().get('source')
+        else:
+            logging.error("ERROR Could not get DB config")
+            _file_config = self._load_configuration_from_file(configuration_file)
+            self._config = _file_config
+
+        # TODO UNCOMMENT WHEN XIOLIN FIXED IT
+        self._config = self._load_configuration_from_file(configuration_file)
+
+        print(self._config)
 
     @staticmethod
     def _load_configuration_from_file(configuration_file):
@@ -250,19 +268,18 @@ class Extractor:
         self._output_frame = None
 
     @staticmethod
-    def get_configuration_from_endpoint(extractor_id):
+    def _load_configuration_from_endpoint(extractor_id):
         backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
         backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
 
-        token = "{}".format(os.environ.get('AUTH_TOKEN'))
-        header = {'Authorization': token,
-                  'authentification_type': 'service'}
+        token = "{}".format(os.environ.get('SERVICE_AUTHENTICATION_CODE'))
+        headers = {'authentication_type': 'service', 'Authentication': token}
 
-        configurations = requests.get("http://{url}:{port}/configuration/{id}"
-                                      .format(url=backend_url, port=backend_port, id=extractor_id),
-                                      header)
+        configurations = requests.get(
+            "http://{url}:{port}/configurations/{id}".format(url=backend_url, port=backend_port, id=extractor_id),
+            headers=headers)
 
-        return configurations.json()
+        return configurations
 
     @staticmethod
     def get_main_locations():
@@ -271,3 +288,18 @@ class Extractor:
 
         main_locations = requests.get("http://{url}:{port}/mainlocations".format(url=backend_url, port=backend_port))
         return main_locations.json()
+
+    @staticmethod
+    def _set_remote_configuration(_file_config):
+        backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
+        backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
+
+        token = "{}".format(os.environ.get('SERVICE_AUTHENTICATION_CODE'))
+        headers = {'authentication_type': 'service',
+                   'Content-Type': 'application/json',
+                   'Authentication': token}
+
+        post = requests.post("http://{url}:{port}/configurations".format(url=backend_url, port=backend_port),
+                             json.dumps(_file_config),
+                             headers=headers)
+        return post.status_code == 200, post

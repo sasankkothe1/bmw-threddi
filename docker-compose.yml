@@ -115,7 +115,9 @@ services:
 #      # GOOGLE BIGTABLE LICENCE FILE
 #      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
 #      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+#      - EXTRACTOR_ID=gdelt_01
 # MOCK EXTRACTOR FOR MORE EASY TESTING AND DEVELOPMENT
+
   extractor-mock:
     build:
         context: ./extractor-mock
