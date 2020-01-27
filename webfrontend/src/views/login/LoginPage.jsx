@@ -96,7 +96,11 @@ export default class LoginPage extends Component {
         return <Redirect push to="/" />;
       }
       if(this.state.errorMessage) {
-        return <h1>{this.state.errorMessage}</h1>
+        alert("There is a error");
+        this.setState({
+          errorMessage: ""
+        });
+        // return <h1>{this.state.errorMessage}</h1>
       }
       return (
         <div className="login-page-container">
