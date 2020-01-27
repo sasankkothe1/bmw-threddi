@@ -25,6 +25,7 @@ class UserStore extends EventEmitter{
                 break;
             case 'LOGIN_ERROR':
                 console.dir(action.value.toJSON().message);
+                localStorage.setItem("error", action.value.toString());
                 break;
 
         }

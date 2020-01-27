@@ -22,7 +22,8 @@ export default class LoginPage extends Component {
             userData: {
               username : "",
               password : "",
-            }
+            },
+            errorMessage : ""
     };
 
     this.handleUsernameLogin = this.handleUsernameLogin.bind(this);
@@ -30,12 +31,21 @@ export default class LoginPage extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.redirectLoginUser = this.redirectLoginUser.bind(this);
+    this.showLoginError = this.showLoginError.bind(this);
     UserStore.addChangeListener("LOGIN_SUCCESSFUL", this.redirectLoginUser);
+    UserStore.addChangeListener("LOGIN_ERROR" , this.showLoginError);
 
-  }
+  } 
 
   redirectLoginUser(){
     this.setState({redirect : true});
+  }
+
+  showLoginError (){
+    let error = localStorage.getItem("error");
+    this.setState({
+      errorMessage : error
+    });
   }
 
   handleUsernameLogin = e => {
@@ -84,6 +94,9 @@ export default class LoginPage extends Component {
     render () {
       if (this.state.redirect) {
         return <Redirect push to="/" />;
+      }
+      if(this.state.errorMessage) {
+        return <h1>{this.state.errorMessage}</h1>
       }
       return (
         <div className="login-page-container">
