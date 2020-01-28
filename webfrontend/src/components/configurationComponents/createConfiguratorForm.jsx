@@ -7,6 +7,7 @@ class CreateConfiguratorForm extends Component {
 
     this.state = {
       validated: false,
+      setValidated: false,
       newConfiguration: {
         name: "",
         id: "",
@@ -82,8 +83,13 @@ class CreateConfiguratorForm extends Component {
     console.log(this.state.newConfiguration)
   }
 
-  handleSubmit(){
-      
+  handleSubmit(e){
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    this.setState({validated:true})
   }
   addMappingField = () => {
     this.setState(prevState => ({
@@ -299,6 +305,8 @@ class CreateConfiguratorForm extends Component {
         <Button block variant="light" onClick={this.addSDIField}>
           + Source Dependant Information
         </Button>
+        <hr/>
+        <Button block type="submit">Submit form</Button>
       </Form>
     );
   }
