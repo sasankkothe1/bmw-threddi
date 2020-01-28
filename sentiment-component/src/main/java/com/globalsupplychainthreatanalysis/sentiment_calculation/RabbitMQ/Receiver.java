@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -37,19 +36,21 @@ public class Receiver {
         String nextRoutingKey = routingKey.split("\\.", 2)[1];
 
         try {
-            List<Event> events = objectMapper.readValue(message.getBody(), objectMapper.getTypeFactory().constructCollectionType(List.class, Event.class));
-            logger.info("received events + number" + events.size());
-            for (Event event : events) {
-                if (event.getId() == null) {
-                    UUID uuid = UUID.randomUUID();
-                    event.setId(uuid.toString());
-                }
-                //this method return value from 0 - 4
-                int sentiment = sentimentAnalyzerService.analyse(event.getDescription()) - 2;
-
-                event.setSentiment_group(sentiment);
-                sender.send(event, nextRoutingKey);
+            Event event = objectMapper.readValue(message.getBody(), Event.class);
+            if (event.getId() == null) {
+                UUID uuid = UUID.randomUUID();
+                event.setId(uuid.toString());
             }
+            if (event.getId() == null) {
+                UUID uuid = UUID.randomUUID();
+                event.setId(uuid.toString());
+            }
+            //this method return value from 0 - 4
+            int sentiment = sentimentAnalyzerService.analyse(event.getDescription()) - 2;
+
+            event.setSentiment_group(sentiment);
+            sender.send(event, nextRoutingKey);
+
         } catch (IOException e) {
             logger.error("Failed to holds events from processing services" + e.getMessage());
         }
