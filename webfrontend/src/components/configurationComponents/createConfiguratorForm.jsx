@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import ConfigurationActions from '../../actions/configuration.actions';
+import ConfigStore from '../../stores/config.store';
 
 class CreateConfiguratorForm extends Component {
   constructor(props) {
@@ -30,6 +32,12 @@ class CreateConfiguratorForm extends Component {
     this.addSDIField = this.addSDIField.bind(this);
     this.handleSDIMapping = this.handleSDIMapping.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    ConfigStore.addChangeListener("CONFIGURATOR_CREATION_FAILED" , this.configCreationFailError);
+  }
+
+  configCreationFailError (){
+    
+    console.log("creation of a configuration failed");
   }
 
   handleChange = e => {
@@ -90,6 +98,11 @@ class CreateConfiguratorForm extends Component {
       e.stopPropagation();
     }
     this.setState({validated:true})
+
+    if(form.checkValidity() === true) {
+        let createdConfiguration = this.state.newConfiguration;
+        ConfigurationActions.createConfiguration(createdConfiguration);
+    }
   }
   addMappingField = () => {
     this.setState(prevState => ({
