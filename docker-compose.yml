@@ -130,6 +130,9 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
+      - ADMINISTRATOR_BACKEND_PORT=4300
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator_backend
 
   event-backend:
     build: ./eventBackend
