@@ -170,7 +170,24 @@ services:
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
       - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
+      - ADMINISTRATOR_BACKEND_PORT=4300
 
+  translator_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_translator_enricher
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MQ_HOST=rabbit
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
+      - ADMINISTRATOR_BACKEND_PORT=4300
 #networks:
 #  docker-elk:
 #    driver: bridge

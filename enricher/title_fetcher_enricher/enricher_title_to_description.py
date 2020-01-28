@@ -31,8 +31,8 @@ class TitleToDescriptionEnricher(Enricher):
         super(TitleToDescriptionEnricher, self).__init__(SERVICE_NAME)
 
     def enrich_event(self, event):
-
-        _source_fields = self._config.get('source_field')
+        print("Start Enriching")
+        _source_fields = self._config.get('source_fields')
         _delimiter = self._config.get('delimiter') or "|"
 
         assert _source_fields
@@ -40,8 +40,12 @@ class TitleToDescriptionEnricher(Enricher):
         desc = ""
 
         for _f in _source_fields:
-            desc += _get_title_of_source(event.get(_f))
-            desc += " {} ".format(_delimiter)
+            try:
+                desc += _get_title_of_source(event.get(_f))
+                desc += " {} ".format(_delimiter)
+            except:
+                logging.error("Description could not be fetched")
+                continue
 
         event['description'] = desc[:-len(_delimiter)]
         print(event['description'])

@@ -1,0 +1,19 @@
+FROM python:3.6
+
+RUN mkdir title_fetcher_enricher
+
+WORKDIR /usr/src/app/title_fetcher_enricher
+
+COPY requirements.txt ./
+COPY enricher.py ./
+
+RUN mkdir title_fetcher_enricher
+COPY title_fetcher_enricher/enricher_title_to_description.py ./title_fetcher_enricher
+
+ENV MODE=PROD
+ENV PYTHONPATH .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "./title_fetcher_enricher/enricher_title_to_description.py"]
+#CMD tail -f /dev/null

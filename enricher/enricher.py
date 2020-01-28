@@ -4,6 +4,7 @@ import os
 import time
 
 import pika
+import requests
 
 
 class Enricher:
@@ -56,9 +57,8 @@ class Enricher:
 
         print("{} got Event".format(self._service_name))
         # GET Configuration
-        self._config = self._get_configuration()
         _event = json.loads(body)
-
+        self._config = self._get_configuration(_event.get('origin'))
         # Do event processing
         _event = self.enrich_event(event=_event)
 
@@ -74,10 +74,30 @@ class Enricher:
                                     routing_key=routing_key,
                                     body=event)
 
-    def _get_configuration(self):
+    def _get_configuration(self, origin_id):
         # TODO implement Config Fetching
-        _ = self._service_name
+
         config = {"source_field": ["url"]}
+
+        backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
+        backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
+
+        token = "{}".format(os.environ.get('SERVICE_AUTHENTICATION_CODE'))
+        headers = {'authentication_type': 'service', 'Authentication': token}
+
+        configurations = requests.get(
+            "http://{url}:{port}/configurations/{id}".format(url=backend_url, port=backend_port, id=origin_id),
+                headers=headers)
+        print(configurations)
+        try:
+            if configurations.status_code == 200:
+                return configurations.json()['_source']['configuration']['processing_service'].get(self._service_name)
+            else:
+                logging.error(configurations)
+                return None
+        except KeyError as e:
+            logging.error("NO CONFIG FOUND")
+            return {}
 
         return config
 

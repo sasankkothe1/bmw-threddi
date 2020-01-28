@@ -75,6 +75,13 @@ class Extractor:
 
             iteration += 1
             self._source_df = self.fetch_current_data()
+
+            if len(self._source_df) == 0:
+                # Sleep for 60* Minutes seconds
+                self._logger.warning("No EVENTS COULD BE FETCHED: Waiting for {min} minutes".format(min=minutes))
+                time.sleep(minutes * 60)
+                continue
+
             self._logger.info("Iteration {iteration}".format(iteration=iteration))
 
             try:
@@ -92,7 +99,7 @@ class Extractor:
                     "One accessed Key is not available. when adding additional information.....{}".format(e))
 
             with open("sample_events.txt", "w") as outputfile:
-                json.dump(self._output_json, outputfile, default=self.convert)
+                json.dump(self._output_json[:1000], outputfile, default=self.convert)
 
             for event in self._output_json:
                 _event = json.dumps(event, default=self.convert)
@@ -117,15 +124,15 @@ class Extractor:
 
     def _add_fields(self):
         if "id" not in self._output_frame:
-            id = self.add_id(self._source_df)
-            if id is None:
+            _id = self.add_id(self._source_df)
+            if _id is None:
                 ids = []
                 for i in range(0, len(self._source_df)):
                     ids.append(uuid.uuid4())
 
                 self._output_frame['id'] = ids
             else:
-                self._output_frame['id'] = id
+                self._output_frame['id'] = _id
 
         self._get_field("description", self.add_description, "No description")
         self._get_field("importance", self.add_importance, -1)
@@ -246,8 +253,6 @@ class Extractor:
             _file_config = self._load_configuration_from_file(configuration_file)
             self._config = _file_config
 
-        print(self._config)
-
     @staticmethod
     def _load_configuration_from_file(configuration_file):
         _config = None
@@ -277,15 +282,24 @@ class Extractor:
         configurations = requests.get(
             "http://{url}:{port}/configurations/{id}".format(url=backend_url, port=backend_port, id=extractor_id),
             headers=headers)
+        if configurations.status_code != 200:
+            logging.error(configurations)
 
-        return configurations.status_code, configurations.json().get('_source')['configuration']
+        return configurations.status_code, configurations.json().get('_source')['configuration']\
+            if configurations.status_code == 200 else None
 
     @staticmethod
     def get_main_locations():
         backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
         backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
 
-        main_locations = requests.get("http://{url}:{port}/mainlocations".format(url=backend_url, port=backend_port))
+        token = "{}".format(os.environ.get('SERVICE_AUTHENTICATION_CODE'))
+        headers = {'authentication_type': 'service',
+                   'Authentication': token}
+
+        main_locations = requests.get("http://{url}:{port}/mainlocations".format(url=backend_url,
+                                                                                 port=backend_port
+                                                                                 ), headers=headers)
         return main_locations.json()
 
     @staticmethod

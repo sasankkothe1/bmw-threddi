@@ -23,7 +23,8 @@ METHOD_MAPPING = {
 
 class GDELTFetcher:
     client = None
-    _last_fetch = datetime.now().strftime("%Y%m%d000000")
+    # _last_fetch = datetime.now().strftime("%Y%m%d000000")
+    _last_fetch = datetime(2020, 1, 27).strftime("%Y%m%d000000")
 
     def __init__(self):
         self.client = bigquery.Client()

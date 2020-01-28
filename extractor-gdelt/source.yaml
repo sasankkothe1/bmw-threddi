@@ -7,6 +7,7 @@ description: Datasource which fetches data from the GDELT Database
 processing:
   # Not allowed to have a point in the name
   - enricher_title_to_description
+  - enricher_translator
   - datastore
 
 # Properties which will be copied to the configuration database and then managed from there
@@ -83,4 +84,6 @@ default_properties:
 
 processing_service:
    enricher_title_to_description:
-      source_field: SOURCE
+      source_fields: ['url']
+   enricher_translator:
+      source_fields: ['description']
