@@ -85,6 +85,24 @@ const createConfiguration = async (req, res) => {
             error: 'Bad Request',
             message: 'The request body must contain a default_properties property'
         });
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'source_dependent_information')) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a default_properties property'
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'filter_options')) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a default_properties property'
+        });
+
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'general_filter_options')) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a general_filter_options property'
+        });
+
+        if (!Object.prototype.hasOwnProperty.call(req.body, 'processing_services')) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a general_filter_options property'
+        });
 
         //todo add verify logic
 
