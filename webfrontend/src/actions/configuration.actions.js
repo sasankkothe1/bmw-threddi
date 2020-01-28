@@ -1,17 +1,24 @@
-import ConfigurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
-import ConfigCreateService from "../services/configCreate.service";
+import ConfigService from "../services/config.service";
+import configurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
 
 class ConfigurationActions {
 
     createConfiguration(data) {
-        ConfigCreateService.createConfig(data)
+        ConfigService.createConfig(data)
             .catch((error)=>{
-                ConfigurationSendDispatcher.dispatch({
+                configurationSendDispatcher.dispatch({
                     actionType: 'CONFIGURATOR_CREATION_FAILED',
                     value: error
                 });
             }
         );
+    }
+
+    fetchConfigs(data){
+        configurationSendDispatcher.dispatch({
+            actionType: 'FETCH_CONFIGS',
+            value: data
+        });
     }
 
 }

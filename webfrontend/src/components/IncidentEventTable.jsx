@@ -4,7 +4,6 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import EventStore from "../stores/event.store";
 import EventAction from "../actions/event.actions";
-import eventStore from '../stores/event.store';
 import moment from "moment";
 
 export default class Incident extends Component {
