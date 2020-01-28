@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import CreateConfigurationForm from './createConfigurationForm';
+import CreateConfiguratorForm from './createConfiguratorForm';
 
 
 export default class ConfigurationModal extends Component {
@@ -25,7 +25,8 @@ export default class ConfigurationModal extends Component {
                 </Modal.Header>
                 <Modal.Body>
                   <div className="container">
-                    <CreateConfigurationForm />
+                    {/* <CreateConfigurationForm /> */}
+                    <CreateConfiguratorForm />
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
