@@ -36,7 +36,7 @@ public class Receiver {
 
     @RabbitListener(queues = "#{autoDeleteQueue1.name}")
     public void receiveDirectQueue(Message message) {
-
+        console.log("received a message with the routing key" + message.getMessageProperties().getReceivedRoutingKey());
         try {
             Event event = objectMapper.readValue(message.getBody(), Event.class);
             if (event.getId() == null) {
