@@ -96,6 +96,22 @@ services:
     depends_on:
     - rabbit
 
+
+#  sentiment-service:
+#    build: ./sentiment-component
+#    environment:
+#    ## adjust the routing key!!
+#    - RABBITMQ_HOST=rabbit
+#    - RABBITMQ_PORT=5672
+#    - RABBITMQ_USERNAME=rabbitmq
+#    - RABBITMQ_PASSWORD=rabbitmq
+#    - ROUTING_KEY=sentiment.#
+#    - TOPIC_EXCHANGE_NAME=ex_extractors
+#    ports:
+#    - 8902:8902
+#    depends_on:
+#    - rabbit
+
 # UNCOMMENT for PROD
 #  extractor-gdelt:
 #    build:
