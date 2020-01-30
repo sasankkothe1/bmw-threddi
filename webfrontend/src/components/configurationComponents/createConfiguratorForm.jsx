@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Col, Row, Form, Button, InputGroup } from "react-bootstrap";
-import ToastComponenet from "../ToastComponent";
+import ToastComponent from "../ToastComponent";
 import ConfigurationActions from '../../actions/configuration.actions';
 import ConfigStore from '../../stores/config.store';
 import configStore from "../../stores/config.store";
@@ -149,7 +149,7 @@ class CreateConfiguratorForm extends Component {
   };
   render() {
       if(this.state.showToast){
-          return <ToastComponenet show = {this.state.showToast}
+          return <ToastComponent show = {this.state.showToast}
            body = "Extractor Created. It will take time to reflect" />
       }
     return (

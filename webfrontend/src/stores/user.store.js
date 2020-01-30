@@ -21,7 +21,7 @@ class UserStore extends EventEmitter{
     async dispatcherCallback(action) {
         switch(action.actionType) {
             case 'LOGIN_SUCCESSFUL':
-                localStorage.setItem("token", action.value);
+                window.localStorage.setItem("token", action.value);
                 break;
             case 'LOGIN_ERROR':
                 console.dir(action.value.toJSON().message);

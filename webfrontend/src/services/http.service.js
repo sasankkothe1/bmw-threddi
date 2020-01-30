@@ -1,24 +1,30 @@
 "use strict";
 
+import Axios from "axios";
+
 export default class HttpService {
     constructor() {
     }
 
 
     static get(url, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
+        const token = window.localStorage.getItem("token")
+        const config = {
+            headers: { authentication: `Bearer ${token}` }
+        };
+        console.log(url);
 
         let header = new Headers();
         header.append('Content-Type', 'application/json');
         if(token) {
-            header.append('Authorization', `JWT ${token}`);
+            header.append('authentication', `Bearer ${token}`);
         }
 
-        fetch(url, {
-            method: 'GET',
-            headers: header
-        }).then((resp) => {
+        Axios.get(url, 
+            config
+        ).then((resp) => {
             if(this.checkIfUnauthorized(resp)) {
+                console.log("this is line 26")
                 window.location = "/login";
             }
             else {
@@ -26,24 +32,24 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                //onError(resp.error);
+                onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
-                    window.localStorage['jwtToken'] = resp.token;
+                    window.localStorage['token'] = resp.token;
                 }
-                //onSuccess(resp);
+                onSuccess(resp);
             }
         }).catch((e) => {
-            //onError(e.message);
+                onError(e.message);
         });
     }
 
     static put(url, data, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
+        let token = window.localStorage.getItem('token');
         let header = new Headers();
         if(token) {
-            header.append('Authorization', `JWT ${token}`);
+            header.append('authentication', `Bearer ${token}`);
         }
         header.append('Content-Type', 'application/json');
 
@@ -61,24 +67,24 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                //onError(resp.error);
+                onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
-                    window.localStorage['jwtToken'] = resp.token;
+                    window.localStorage['token'] = resp.token;
                 }
-                //onSuccess(resp);
+                onSuccess(resp);
             }
         }).catch((e) => {
-            //onError(e.message);
+            onError(e.message);
         });
     }
 
     static post(url, data, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
+        let token = window.localStorage.getItem('token');
         let header = new Headers();
         if(token) {
-            header.append('Authorization', `JWT ${token}`);
+            header.append('authentication', `Bearer ${token}`);
         }
         header.append('Content-Type', 'application/json');
 
@@ -96,24 +102,24 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                //onError(resp.error);
+                onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
-                    window.localStorage['jwtToken'] = resp.token;
+                    window.localStorage['token'] = resp.token;
                 }
-                //onSuccess(resp);
+                onSuccess(resp);
             }
         }).catch((e) => {
-            //onError(e.message);
+            onError(e.message);
         });
     }
 
     static remove(url, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
+        let token = window.localStorage.getItem('token');
         let header = new Headers();
         if(token) {
-            header.append('Authorization', `JWT ${token}`);
+            header.append('Authentication', `Bearer ${token}`);
         }
 
         fetch(url, {
@@ -129,13 +135,13 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                //onError(resp.error);
+                onError(resp.error);
             }
             else {
                 onSuccess(resp)
             }
         }).catch((e) => {
-            //onError(e.message);
+            onError(e.message);
         });
     }
 

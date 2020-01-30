@@ -13,7 +13,7 @@ export default class ConfigCreateService {
     }
 
     static async createConfig(configData){
-        let createConfigRequest = await HttpService.post(ConfigCreateService.baseURL(), configData);
+        let createConfigRequest = await axios.post(ConfigCreateService.baseURL(), configData);
         if (createConfigRequest.status===200){
             
             return createConfigRequest.data;
@@ -23,7 +23,7 @@ export default class ConfigCreateService {
     }
 
     static async fetchConfigs(){
-        let fetchConfigRequest = await HttpService.get(ConfigCreateService.baseURL());
+        let fetchConfigRequest = await axios.get(ConfigCreateService.baseURL());
         if (fetchConfigRequest.status===200){
             return fetchConfigRequest.data;
         }

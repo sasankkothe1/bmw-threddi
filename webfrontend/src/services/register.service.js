@@ -12,7 +12,7 @@ export default class RegisterService {
     }
 
     static async register(userRegisterData){
-        let registerRequest = await HttpService.post(RegisterService.baseURL() + "/register", userRegisterData);
+        let registerRequest = await axios.post(RegisterService.baseURL() + "/register", userRegisterData);
         if (registerRequest.status===200){
             console.log("status is 200");
             return registerRequest.data;
