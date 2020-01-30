@@ -26,16 +26,16 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                onError(resp.error);
+                //onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
-                onSuccess(resp);
+                //onSuccess(resp);
             }
         }).catch((e) => {
-            onError(e.message);
+            //onError(e.message);
         });
     }
 
@@ -61,16 +61,16 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                onError(resp.error);
+                //onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
-                onSuccess(resp);
+                //onSuccess(resp);
             }
         }).catch((e) => {
-            onError(e.message);
+            //onError(e.message);
         });
     }
 
@@ -96,16 +96,16 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                onError(resp.error);
+                //onError(resp.error);
             }
             else {
                 if(resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
-                onSuccess(resp);
+                //onSuccess(resp);
             }
         }).catch((e) => {
-            onError(e.message);
+            //onError(e.message);
         });
     }
 
@@ -129,13 +129,13 @@ export default class HttpService {
             }
         }).then((resp) => {
             if(resp.error) {
-                onError(resp.error);
+                //onError(resp.error);
             }
             else {
                 onSuccess(resp)
             }
         }).catch((e) => {
-            onError(e.message);
+            //onError(e.message);
         });
     }
 

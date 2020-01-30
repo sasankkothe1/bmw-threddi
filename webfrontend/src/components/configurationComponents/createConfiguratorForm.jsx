@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Form, Button, InputGroup } from "react-bootstrap";
+import ToastComponenet from "../ToastComponent";
 import ConfigurationActions from '../../actions/configuration.actions';
 import ConfigStore from '../../stores/config.store';
+import configStore from "../../stores/config.store";
 
 class CreateConfiguratorForm extends Component {
   constructor(props) {
@@ -21,7 +23,8 @@ class CreateConfiguratorForm extends Component {
       },
 
       showError: false,
-      error_msg: ""
+      error_msg: "",
+      showToast: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,12 +35,20 @@ class CreateConfiguratorForm extends Component {
     this.addSDIField = this.addSDIField.bind(this);
     this.handleSDIMapping = this.handleSDIMapping.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.configCreationFailError = this.configCreationFailError.bind(this);
+    this.configurationCreatedSuccess = this.configurationCreatedSuccess.bind(this);
     ConfigStore.addChangeListener("CONFIGURATOR_CREATION_FAILED" , this.configCreationFailError);
+    configStore.addChangeListener("CONFIGURATION_CREATED_SUCCESS", this.configurationCreatedSuccess)
+  }
+
+  configurationCreatedSuccess(){
+      this.setState({
+          showToast: true
+      })
   }
 
   configCreationFailError (){
-    
-    console.log("creation of a configuration failed");
+      alert("something went wrong");
   }
 
   handleChange = e => {
@@ -137,6 +148,10 @@ class CreateConfiguratorForm extends Component {
     }));
   };
   render() {
+      if(this.state.showToast){
+          return <ToastComponenet show = {this.state.showToast}
+           body = "Extractor Created. It will take time to reflect" />
+      }
     return (
       <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
         <Form.Group as={Row} md="6">
@@ -197,6 +212,7 @@ class CreateConfiguratorForm extends Component {
         let originalId = `${idx}`, mappingId = `${idx}`
           return (
             <Form.Row>
+                
               <Form.Group as={Col} md="6" id="originalFieldColumn">
                 <Form.Control
                   required

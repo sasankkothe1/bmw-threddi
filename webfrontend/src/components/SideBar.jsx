@@ -31,7 +31,7 @@ class SideBar extends Component {
                     <div className={"nav-item " + this.getActiveRouteElement('/locations')} onClick={()=>this.forwardTo('/locations')}>
                         <i className="fas fa-map-marker-alt fa-2x"/>
                     </div>
-                    <div className={"configurationIconClass"} onClick={() => this.setState({addModalShow: true})}>
+                    <div className="nav-item" onClick={() => this.setState({addModalShow: true})}>
                         <i className="fas fa-cog fa-2x"/>
                     </div>
                     <ConfigurationModal

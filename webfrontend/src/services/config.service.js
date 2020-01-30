@@ -1,5 +1,6 @@
 import config from "../config";
 import axios from "axios";
+import HttpService from "./http.service";
 //import HTTPService from "./http.service"
 
 export default class ConfigCreateService {
@@ -8,14 +9,13 @@ export default class ConfigCreateService {
     }
 
     static baseURL(){
-        return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/administrators`
+        return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/configurations`
     }
 
     static async createConfig(configData){
-        let createConfigRequest = await axios.post(ConfigCreateService.baseURL(), configData);
+        let createConfigRequest = await HttpService.post(ConfigCreateService.baseURL(), configData);
         if (createConfigRequest.status===200){
-            console.log("status is 200");
-            console.log(createConfigRequest.data);
+            
             return createConfigRequest.data;
         } else {
             console.log(createConfigRequest.message);
@@ -23,7 +23,7 @@ export default class ConfigCreateService {
     }
 
     static async fetchConfigs(){
-        let fetchConfigRequest = await axios.get(ConfigCreateService.baseURL());
+        let fetchConfigRequest = await HttpService.get(ConfigCreateService.baseURL());
         if (fetchConfigRequest.status===200){
             return fetchConfigRequest.data;
         }

@@ -3,7 +3,8 @@ import configuraitonSendDispatcher from '../dispatchers/configurationSend.dispat
 import ConfigService from '../services/config.service';
 
 let _store = {
-    configs: []
+    configs: [],
+    status : null
 };
 
 class ConfigStore extends EventEmitter{
@@ -20,12 +21,15 @@ class ConfigStore extends EventEmitter{
 
     async dispatcherCallback(action) {
         switch(action.actionType) {
+            case 'CONFIGURATION_CREATED_SUCCESS':
+                this.setStatus(200);
+
             case 'CONFIGURATOR_CREATION_FAILED':
-                console.dir(action.value.toJSON().message);
+                this.setStatus(400);
                 //localStorage.setItem("error", action.value.toString())
                 break;
             case 'FETCH_CONFIGS':
-                await this.fetchConfigs(action.value);
+                await this.fetchConfigs();
                 break;
         }
 
@@ -34,6 +38,10 @@ class ConfigStore extends EventEmitter{
         return true;
     }
 
+    setStatus(value){
+        _store.status = value;
+    }
+    
     addChangeListener(eventName, callback) {
         this.on(eventName, callback);
     }
@@ -42,7 +50,7 @@ class ConfigStore extends EventEmitter{
         this.removeListener(eventName, callback);
     }
 
-    async fetchConfigs(value) {
+    async fetchConfigs() {
         _store.fetchConfigs = await ConfigService.getEvents()
     }
 

@@ -1,5 +1,6 @@
 import config from "../config";
 import axios from "axios";
+import HttpService from "./http.service";
 
 export default class EventService {
     constructor() {
@@ -11,7 +12,8 @@ export default class EventService {
     }
 
     static async getEvents(){
-        let eventsRequest = await axios.get(EventService.baseURL());
+        let eventsRequest = await HttpService.get(EventService.baseURL());
+        console.log(eventsRequest);
         if (eventsRequest.status===200){
             return eventsRequest.data;
         }

@@ -5,6 +5,12 @@ class ConfigurationActions {
 
     createConfiguration(data) {
         ConfigService.createConfig(data)
+        .then(() => {
+            configurationSendDispatcher.dispatch({
+                actionType:'CONFIGURATION_CREATED_SUCCESS',
+                value: 200
+            });
+        })
             .catch((error)=>{
                 configurationSendDispatcher.dispatch({
                     actionType: 'CONFIGURATOR_CREATION_FAILED',
