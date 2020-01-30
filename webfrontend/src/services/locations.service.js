@@ -8,7 +8,7 @@ export default class LocationService {
     }
 
     static baseURL(){
-        return `http://${config.BACKEND_URL}:${config.BACKEND_PORT}/mainlocations`
+        return `http://${config.ADMINISTRATOR_URL}:${config.ADMINISTRATOR_PORT}/mainlocations`
     }
 
     static async getMainLocations(){

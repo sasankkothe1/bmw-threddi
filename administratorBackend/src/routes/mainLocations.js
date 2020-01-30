@@ -9,5 +9,4 @@ router.post('/',checkAuthentication, mainLocationsController.createLocation);
 router.put('/:locationId',checkAuthenticationForGetEndpoints, mainLocationsController.updateLocationById);
 router.delete('/:locationId',checkAuthentication, mainLocationsController.deleteLocationById);
 
-
 module.exports = router;

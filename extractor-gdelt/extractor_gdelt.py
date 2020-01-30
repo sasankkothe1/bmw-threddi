@@ -4,13 +4,14 @@ Class to fetch Data from the GDELT Database
 Therefore the class follows a polling mechanism.
 """
 import logging
-from urllib.request import urlopen
+import os
 
-import lxml.html
 import numpy as np
 
 import gdelt_fetcher
 from extractor import Extractor
+
+EXTRACTOR_ID = os.environ.get("EXTRACTOR_ID") or "GDELT_Extractor"
 
 
 def sigmoid(value):
@@ -23,18 +24,19 @@ def sigmoid(value):
 class GDELTExtractor(Extractor):
     _fetcher = gdelt_fetcher.GDELTFetcher()
 
-    def __init__(self):
-        super(GDELTExtractor, self).__init__()
+    def __init__(self, extractor_id):
+        super(GDELTExtractor, self).__init__(extractor_id)
 
     def fetch_current_data(self):
         logging.debug("Starting querying GDELT")
 
-        results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'))
+        results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'),
+                                                   self.default_properties.get('general_filter_options'))
         return results
 
     # Field Mappings
     def add_id(self, source_df):
-        naming = lambda x: "{}_{}".format(self.origin_name, x)
+        naming = lambda x: "{}_{}".format(self._extractor_id, x)
         vfunc = np.vectorize(naming)
         ids = vfunc(source_df['GLOBALEVENTID'])
         return ids.reshape((len(ids), 1))
@@ -57,25 +59,6 @@ class GDELTExtractor(Extractor):
     def add_actors(self, source_df):
         _actors = source_df.apply(self.get_actor_from_row, axis=1)
         return _actors
-
-    def add_description(self, source_df):
-        descriptions = source_df.apply(self.get_title_of_page_by_row, axis=1)
-        return descriptions
-
-    @staticmethod
-    def get_title_of_page_by_row(row):
-        logging.warning("Get description of " + row['EventCode'])
-        try:
-            t = lxml.html.parse(urlopen(row['SOURCEURL']))
-        except OSError as e:
-            return "no description accessible {}".format(e)
-        try:
-            title = t.find(".//title").text
-
-        except AttributeError as e:
-            return "No description accessible because source website does not have a title meta tag."
-
-        return title
 
     @staticmethod
     def get_actor_from_row(row):
@@ -135,5 +118,5 @@ class GDELTExtractor(Extractor):
 
 
 if __name__ == '__main__':
-    GDELTExtractor()
+    GDELTExtractor(EXTRACTOR_ID)
     pass

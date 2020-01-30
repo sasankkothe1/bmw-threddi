@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "weblabthreatanalysis",
+  "private_key_id": "56a74c861c77db64f4c394349731caf8054977fc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDD75C+s8HE9zrx\nY86+W7W394fioITwx09EehsBfa0QfePrYrfzzRVpDyp227fxWgkyX9VQw3rn6y9i\nQ8V5svcpppVPco0+vnFgnSbIvOQUkM4BLylyXHtxVBxCWqtY8vmhpyPBCgVxZsww\nfmfuq8MJPgmAO8BmvD1DQkW8hu+T1iI3PkkC3Kv9WkVB5JLutwDGN6Yt16WKn+G2\nXxsDCV6INRmfxvSnvd6rpczkmrRW1udK4ngApE5ZgVxyxBs7r1ZK3kdffhzp25pK\ncC/neqIho+wupCBZgpPSAQnj3ipQMhmlupXbm2FR6/6tiiUIt7lF3Ze0rkWfjicr\ngh3S3MdPAgMBAAECggEAQnHMy6bo2JMglXiLxUkTdDoIhkV6H67vRiEEZHqKhHO0\npX+6Mv7CunhupZT4KWwnf0I5dCR+WwSJ8pBZ+N3EbIb1zlXh6Tuq9iEE5IEN9Z1v\nhr5IF2SeZf2ogaX+wnDPT87+1HlCBEVgjDdppmnv/4Pes/JPWmeOfO8N+BNoTmDx\nGu0yigEOGVVJbPZSVUPXlqYMrBgtJLXan3pMp4EtyvwxmVyn9SpLgZnz6htPF57f\nbxUrUTdPfhWaduxNukACtr08UADeKQ4CfSf4XhDuKCWnD6fjndJS1nUIsh4hlGHg\nSlAK+jDNo7Pu3ltQaWmmnuTUlOHqSpjHwWi/ryHclQKBgQDiyXY6ul61YiAe//Zy\nExefHzODDS3WWlXXazZDA0lwqwbmkWo9YUgqgrH83x3XmRrMEfNHYkJQV1xofzkn\n62WXux7UkPFsJ7A6piCvix4Ee2O5IEv+AC9FKO1VKbPXUt0JykjQjPl0QTzhXgn+\nrjf8FXl9aVbWl9ZE6k7aSJ2mcwKBgQDdLMEWWYtpDA+haHsXnmpSWwNuTbKop1qA\npUifZdZRfQWCG+8lLagned9gxaFupp3uojEusMtM9aatZHtRUufl74twvgGoC54C\nJb4DP6u1DIu8yexNqbu0zOP1bTo009AtyWP9qoJX6GzIVTey+P9JWXk0mdBDnZa9\nd5eRkeOItQKBgBz89WDSW7LBpStxOlYgfJ95RINW1uoUR+6uJJRyQhvlsI8ePT81\nRR0x8YBKIK1jQ5qcHMWeGK3eTNCKmoqwux6m62zuTf2uIQeOHpVxqdeW0gtixnPk\nICat8ZA2MWevjtNmiOIncudaQ2bnN03XhQ5yzEGsik4JwHi0nnmmWIhjAoGAY31G\nPe95rn8maMy+0hkIapNWL7/zpbniFAxFZq5AgddjKuu131tyUI+Z08YSn9uDH10G\nEqKkULIPj9+rOSG5/syKROSzigvvv7eKiZuSeZZzJTEPgr/fF60yvausiybcdjwp\nJmoUx8ZdaKAste0bqLr+spKeBExXClNJcsnVOCECgYBlpb0Ce/U/gcsJZXJSRpir\n2W8xjmhVuJficPCctIeZ4wN5VNI/jvKAwUkXjSFS3zk0fgDq3nlO3th6wacXefrf\n+AtzjMmw13rPioiQb7G8mju7xqX0Kbud0igjHFKLzbivgrHCoCBfUoPyTDMOnFhc\nET+Sv1OjkdeJ7PteEW+sDQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "weblab-threatanalysis@weblabthreatanalysis.iam.gserviceaccount.com",
+  "client_id": "108269589041543940111",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/weblab-threatanalysis%40weblabthreatanalysis.iam.gserviceaccount.com"
+}

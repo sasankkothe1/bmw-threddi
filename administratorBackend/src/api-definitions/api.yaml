@@ -382,34 +382,67 @@ components:
           type: array
           items:
             type: string
+        general_filter_options:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              method:
+                type: string
+              threshhold:
+                type: integer
         default_properties:
           type: object
           properties:
             polling:
               type: integer
-            field_mappiong:
+            field_mappings:
               type: object
-            filter_options:
-              type: array
-              items:
+              properties:
+                description:
+                  type: string
+        filter_options:
+          type: array
+          items:
+            type: objectfield_mappings
+            properties:
+              field:
+                type: string
+              method:
+                type: string
+              threshhold:
+                type: integer
+        source_dependent_information:
+          type: array
+          items:
+            type: object
+            properties:
+              displayname:
+                type: string
+              id:
+                type: string
+              description:
+                type: string
+        processing_services:
+          type: array
+          items:
+            type: object
+            properties:
+              title-enricher:
                 type: object
                 properties:
-                  field:
+                  input_field:
                     type: string
-                  method:
-                    type: string
-                  threshhold:
-                    type: integer
-            source_dependent_information:
-              type: array
-              items:
+              translater-service:
                 type: object
                 properties:
-                  displayname:
-                    type: string
-                  id:
-                    type: string
-                  description:
+                  fields:
+                    type: array
+                    items:
+                      type: string
+                  output_language:
                     type: string
   securitySchemes:
     authenticationHeader:

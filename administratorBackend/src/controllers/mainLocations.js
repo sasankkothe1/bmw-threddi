@@ -123,6 +123,15 @@ const createLocation = async (req, res) => {
             message: 'The request body must contain a priority property'
         });
 
+        let pri = parseInt(req.body.priority);
+        if(!pri >= 1 ) return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body must contain a priority property and its value must larger than 1'
+        });
+
+        //renew the priority value
+        req.body.priority = pri;
+
         // Get coordinates for address
         try {
             let coords = await _getCoordinatesFromAddress(req.body.address);
