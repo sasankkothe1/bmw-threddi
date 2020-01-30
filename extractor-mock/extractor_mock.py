@@ -96,7 +96,7 @@ if __name__ == '__main__':
     with open("sample_events.txt", "r") as outputfile:
         _output_json = json.load(outputfile)
 
-    _routing_key = "enricher_title_to_description.enricher_translator.datastore"
+    _routing_key = "enricher_noun_fetcher.enricher_title_to_description.enricher_translator.datastore"
     _output_exchange = os.environ.get("OUTPUT_EXCHANGE")
 
     # Send to Queue

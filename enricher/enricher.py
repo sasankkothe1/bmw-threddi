@@ -75,10 +75,6 @@ class Enricher:
                                     body=event)
 
     def _get_configuration(self, origin_id):
-        # TODO implement Config Fetching
-
-        config = {"source_field": ["url"]}
-
         backend_url = os.environ.get('ADMINISTRATOR_BACKEND_URL')
         backend_port = os.environ.get('ADMINISTRATOR_BACKEND_PORT')
 
@@ -98,8 +94,6 @@ class Enricher:
         except KeyError as e:
             logging.error("NO CONFIG FOUND")
             return {}
-
-        return config
 
     def get_service_name(self):
         return self._service_name

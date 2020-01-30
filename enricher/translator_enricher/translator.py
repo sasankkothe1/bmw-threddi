@@ -1,8 +1,5 @@
 import logging
 
-import deepl
-import lxml.html
-from urllib.request import urlopen
 
 from googletrans import Translator
 
@@ -18,6 +15,7 @@ def _translate(field):
     print("{} (from {})".format(translation.text, translation.src))
 
     return translation.text,  translation.src
+
 
 class TranslatorEnricher(Enricher):
 

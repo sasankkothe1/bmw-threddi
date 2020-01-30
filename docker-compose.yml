@@ -132,7 +132,7 @@ services:
       - OUTPUT_EXCHANGE=ex_extractors
       - ADMINISTRATOR_BACKEND_PORT=4300
       - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
-      - ADMINISTRATOR_BACKEND_URL=administrator_backend
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
 
   event-backend:
     build: ./eventBackend
@@ -186,11 +186,28 @@ services:
       - MQ_PORT=5672
       - MQ_USER=rabbitmq
       - MQ_PASSWORD=rabbitmq
-      - LOG_LEVEL=10
+      - LOG_LEVEL=1
       - OUTPUT_EXCHANGE=ex_extractors
       - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
       - ADMINISTRATOR_BACKEND_URL=administrator-backend
       - ADMINISTRATOR_BACKEND_PORT=4300
+
+  noun_fetcher_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_noun_fetcher_enricher
+    environment:
+    - PYTHONUNBUFFERED=1
+    - MQ_HOST=rabbit
+    - MQ_PORT=5672
+    - MQ_USER=rabbitmq
+    - MQ_PASSWORD=rabbitmq
+    - LOG_LEVEL=10
+    - OUTPUT_EXCHANGE=ex_extractors
+    - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+    - ADMINISTRATOR_BACKEND_URL=administrator-backend
+    - ADMINISTRATOR_BACKEND_PORT=4300
+
 #networks:
 #  docker-elk:
 #    driver: bridge
