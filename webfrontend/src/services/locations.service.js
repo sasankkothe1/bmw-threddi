@@ -13,7 +13,7 @@ export default class LocationService {
     }
 
     static async getMainLocations(){
-        // let mainLocationRequest = await HttpService.get(LocationService.baseURL());
+        return HttpService.get(LocationService.baseURL());
         // if (mainLocationRequest.status===200){
         //     return mainLocationRequest.data;
         // }
