@@ -29,11 +29,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "react-table": "^6.10.3",
-<<<<<<< HEAD
     "semantic-ui-react": "^0.88.2",
-=======
     "redux": "^4.0.5",
->>>>>>> develop
     "styled-components": "^4.4.1"
   },
   "scripts": {

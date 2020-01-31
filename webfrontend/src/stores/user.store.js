@@ -21,7 +21,7 @@ class UserStore extends EventEmitter{
     async dispatcherCallback(action) {
         switch(action.actionType) {
             case 'LOGIN_SUCCESSFUL':
-               
+                
                 break;
             case 'LOGIN_ERROR':
                 
