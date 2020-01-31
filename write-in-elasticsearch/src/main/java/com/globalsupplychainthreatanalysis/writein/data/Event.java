@@ -25,6 +25,15 @@ public class Event implements Serializable {
     private Set<Dependency> source_dependent_information;
     private String timestamp;
     private LocationInfo locationInfo;
+    private String hidden_information;
+
+    public void setHidden_information(String hidden_information){
+        this.hidden_information = hidden_information;
+    }
+
+    public String getHidden_information(){
+        return this.hidden_information;
+    }
 
     public void getTimeStamp(String timestamp){
         this.timestamp = timestamp;
