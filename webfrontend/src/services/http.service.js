@@ -8,23 +8,23 @@ export default class HttpService {
         return this.doRequest(url, null, "GET");
     }
 
-    static put(url, data){
+    static put(url, data) {
         return this.doRequest(url, data, 'PUT');
     }
 
-    static remove(url, data){
+    static remove(url, data) {
         return this.doRequest(url, data, 'DELETE');
     }
 
-    static post(url, data){
+    static post(url, data) {
         return this.doRequest(url, data, 'POST');
     }
 
-    static doRequest(url, body, method){
+    static doRequest(url, body, method) {
 
         let possible_methods = ['GET', 'PUT', 'DELETE', 'POST'];
         if (!possible_methods.includes(method))
-            return new Promise((_,reject)=>reject("NO VALID METHOD FOR METHOD EVOCATION USED"));
+            return new Promise((_, reject) => reject("NO VALID METHOD FOR METHOD EVOCATION USED"));
 
         const token = window.localStorage.getItem("token");
 
@@ -36,7 +36,7 @@ export default class HttpService {
 
         let config = {method: method, headers: header};
 
-        if(body){
+        if (body) {
             config.body = JSON.stringify(body)
         }
 
@@ -44,15 +44,18 @@ export default class HttpService {
             fetch(url, config).then((resp) => {
                 if (this.checkIfUnauthorized(resp)) {
                     window.location = "/login";
-                }
-                else {
-                    return resp.json();
+                } else {
+                    try {
+                        return resp.json();
+                    } catch (error) {
+                        return resp
+                    }
+
                 }
             }).then((resp) => {
                 if (resp.error) {
                     reject(resp.error);
-                }
-                else {
+                } else {
                     if (resp.hasOwnProperty('token')) {
                         window.localStorage['token'] = resp.token;
                     }

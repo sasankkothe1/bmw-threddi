@@ -87,7 +87,7 @@ class Enricher:
         print(configurations)
         try:
             if configurations.status_code == 200:
-                return configurations.json()['_source']['configuration']['processing_service'].get(self._service_name)
+                return configurations.json()['_source']['configuration']['processing_services'].get(self._service_name)
             else:
                 logging.error(configurations)
                 return None

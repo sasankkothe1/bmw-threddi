@@ -83,7 +83,7 @@ default_properties:
       id: AvgTone
       description: Sentiment Analyses on the event by GDELT
 
-processing_service:
+processing_services:
    enricher_title_to_description:
       source_fields: ['url']
    enricher_translator:

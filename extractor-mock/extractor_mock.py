@@ -91,7 +91,7 @@ def convert(o):
 
 if __name__ == '__main__':
 
-    time.sleep(15)
+    # time.sleep(15)
     _load_config()
     with open("sample_events.txt", "r") as outputfile:
         _output_json = json.load(outputfile)

@@ -39,8 +39,6 @@ class TitleToDescriptionEnricher(Enricher):
         _source_fields = self._config.get('source_fields')
         _delimiter = self._config.get('delimiter') or "|"
 
-        assert _source_fields
-
         text = ""
 
         for _f in _source_fields:
