@@ -13,6 +13,7 @@ def _get_nouns(text):
     text_blob = TextBlob(text)
     return list(set(text_blob.noun_phrases))
 
+
 def _get_article_text(url):
     if url is None:
         return ""
@@ -48,10 +49,15 @@ class TitleToDescriptionEnricher(Enricher):
                 logging.error("Description could not be fetched {}".format(e))
                 continue
 
-        nouns  = ' '.join(map(str, _get_nouns(text)))
-        translator = Translator()
-        nouns = translator.translate(nouns, dest='en')
-        event['hidden_information'] = nouns.text
+        nouns = ' '.join(map(str, _get_nouns(text)))
+
+        try:
+            translator = Translator()
+            nouns = translator.translate(nouns, dest='en')
+            event['hidden_information'] = nouns.text
+        except:
+            event['hidden_information'] = nouns
+
         print(event['hidden_information'])
         return event
 
