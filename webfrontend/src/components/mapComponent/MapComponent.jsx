@@ -41,10 +41,9 @@ class MapComponent extends Component {
 
         this.map = React.createRef();
 
-        this.onMarkerClick = this.onMarkerClick.bind(this);
+
         this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
-        this.handleChange = this.handleChange.bind(this);
         this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
     }
