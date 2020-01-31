@@ -8,6 +8,11 @@ import MapLocationMarker from "../mapLocationComponent/mapLocationMarker";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import "./MapComponent.css"
+import SearchBar from "../locationTableComponent/SearchBar";
+import Input from "../locationFormComponent/Input";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import EventSearcher from "../../services/event.searcher";
 
 
 class MapComponent extends Component {
@@ -21,6 +26,7 @@ class MapComponent extends Component {
                 lat: 0,
                 lng: 0
             },
+            searchString: "",
             showHeatmap: true,
             showEvents: true,
             showFactories: true,
@@ -41,7 +47,6 @@ class MapComponent extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewHoveredEvent = this.onNewHoveredEvent.bind(this);
-
     }
 
     recursiveLoad() {
@@ -51,13 +56,16 @@ class MapComponent extends Component {
 
             this.setState((prev, props) => {
                 let events = EventStore.getEvents().slice(0, prev.events.length + 4);
-                let heatmapData = this.state.events.map((event) => {
-                    return {
-                        lat: event._source.lat,
-                        lng: event._source.long,
-                        weight: event._source.importance
-                    }
-                });
+                let heatmapData = EventSearcher.getSearchedEvents(events, this.state.searchText)
+                // let heatmapData = events
+                    .map((event) => {
+                        return {
+                            lat: event._source.lat,
+                            lng: event._source.long,
+                            weight: event._source.importance
+                        }
+                    })
+                    .filter(event => event.lat && event.lng && event.weight);
                 return {
                     events: events,
                     heatmapData: heatmapData
@@ -119,11 +127,14 @@ class MapComponent extends Component {
         this.recursiveLoad()
     }
 
+    changeSearchString(e) {
+        this.setState({searchString: e.target.value});
+        this.props.changeEventSearchtext(e.target.value);
+    }
+
     render() {
         if(this.state.events.length===0)
             this.recursiveLoad();
-
-        // this.map.current.heatmap.setMap(this.state.toggle_value.includes("show_heatmap") ? this.map._map : null);
 
         return (
             <>
@@ -137,8 +148,22 @@ class MapComponent extends Component {
                     />
                 </div>
                 <div className={"toolbar"}>
+                    <div>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon1">Search for</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                                onChange={(e) => this.changeSearchString(e)}
+                                placeholder="Tags"
+                                aria-label="tags"
+                                aria-describedby="basic-addon1"
+                            />
+                        </InputGroup>
+                    </div>
                     <ToggleButtonGroup type="checkbox" value={this.state.toggle_value}
                                        onChange={(val) => this.setState({toggle_value: val})} name={"show_toggles"}>
+
                         <ToggleButton value={"show_events"}>Show Events</ToggleButton>
                         <ToggleButton value={"show_heatmap"}>Show Heatmap</ToggleButton>
                         <ToggleButton value={"show_location"}>Show Locations</ToggleButton>
@@ -155,7 +180,7 @@ class MapComponent extends Component {
                                     radius: 20,
                                     opacity: 0.6
                                 }
-                            }:{positions:[]}}
+                            } : {positions: []}}
                         bootstrapURLKeys={{key: config.GOOGLE_MAPS_API_KEY}}
                         zoom={this.state.zoom}
                         center={this.state.initialCenter}
@@ -167,7 +192,7 @@ class MapComponent extends Component {
                         ref={this.map}
                     >
                         {this.state.events && this.state.toggle_value.includes("show_events") ? (
-                            this.state.events.map((event, i) => {
+                            EventSearcher.getSearchedEvents(this.state.events, this.state.searchString).map((event, i) => {
                                 if (event._source.lat) {
                                     return (
                                         <MapMarker lat={event._source.lat}

@@ -51,7 +51,7 @@ const register = async (req, res) => {
                 expiresIn: 100000,
             });
             console.log(token);
-            return res.status(200).send(token)
+            return res.status(200).send({token: token})
         }, (err => {
             if(err.statusCode === 404){
                 if(err.message.includes('index_not_found_exception')){
@@ -70,7 +70,7 @@ const register = async (req, res) => {
                             expiresIn: 100000,
                         });
                         console.log(token);
-                        return res.status(200).send(token)
+                        return res.status(200).send({token:token})
                     }, handleError(res))
                     })}
                 else{
@@ -106,7 +106,7 @@ const login = async (req, res) => {
                     expiresIn: 100000,
                 });
                 console.log(token);
-                res.status(200).send(token);
+                res.status(200).send({token:token});
             }else {
                 res.status(404).send();
             }

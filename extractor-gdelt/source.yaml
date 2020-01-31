@@ -1,16 +1,14 @@
 
 name: GDELT Database
-id: gdelt_01
+configuration_id: gdelt_05
 description: Datasource which fetches data from the GDELT Database
 
 # Shows which NLP Phases have to be done
 processing:
   # Not allowed to have a point in the name
-  - enricher_title
-  - enricher_nextlocation
-  - nlp_translator
-  - nlp_sentiment
-  - Datastore
+  - enricher_title_to_description
+  - enricher_translator
+  - datastore
 
 # Properties which will be copied to the configuration database and then managed from there
 default_properties:
@@ -84,17 +82,11 @@ default_properties:
       id: AvgTone
       description: Sentiment Analyses on the event by GDELT
 
-processing_service:
+processing_services:
    enricher_title_to_description:
-      input_field: SOURCE
-   enricher_article:
-     # OUTPUT FIELDS IN SOURCE_DEPENDENT INFORMATION OR NORMAL FIELDS
-      output_field: article_body
-   nlp_translator:
-      fields:
-        - descriptions
-        - content
-      output_language: "EN"
-   nlp_sentiment:
-      fields:
-        - article_body
+      source_fields: ['url']
+   enricher_translator:
+      source_fields: ['description']
+   enricher_noun_fetcher:
+      source_fields: ['url']
+      destination_field_to_add: ['hidden_information']

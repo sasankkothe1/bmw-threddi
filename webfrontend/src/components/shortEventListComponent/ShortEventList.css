@@ -3,3 +3,14 @@
     height: 100%;
     overflow-y: scroll;
 }
+
+.big-smiley{
+    font-size: 2em;
+}
+.not-found-message{
+    display:flex;
+    flex-direction: column;
+}
+.not-found-text{
+    font-size: 1em;
+}

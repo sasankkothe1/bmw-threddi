@@ -1,0 +1,19 @@
+FROM python:3.6
+
+RUN mkdir translator_enricher
+
+WORKDIR /usr/src/app/translator_enricher
+
+COPY requirements.txt ./
+COPY enricher.py ./
+
+RUN mkdir translator_enricher
+COPY translator_enricher/translator.py ./translator_enricher
+
+ENV MODE=PROD
+ENV PYTHONPATH .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "./translator_enricher/translator.py"]
+#CMD tail -f /dev/null

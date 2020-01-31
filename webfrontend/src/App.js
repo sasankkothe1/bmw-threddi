@@ -14,8 +14,13 @@ import './components/IncidentEventTable.css'
 import './components/incident.css';
 import './components/locationTableComponent/LocationRow.css';
 import './views/location/location.css';
+<<<<<<< HEAD
 import './components/search.css';
 
+=======
+import './views/login/LoginPage.css';
+import './views/registration/registration-page.css';
+>>>>>>> develop
 
 class App extends Component {
 

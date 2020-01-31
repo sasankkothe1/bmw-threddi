@@ -17,23 +17,6 @@ class EventStore extends EventEmitter {
 
     }
 
-    emitChange(eventName) {
-        this.emit(eventName)
-    }
-
-    updateNumber(value) {
-        _store.number += value;
-    }
-
-    updateActiveEvent(event) {
-        _store.activeEvent = event
-    }
-
-    updateHoveredEvent(event) {
-        _store.hovered_event = event
-    }
-
-
     async dispatcherCallback(action) {
         switch (action.actionType) {
             case 'UPDATE_NUMBER':
@@ -57,6 +40,23 @@ class EventStore extends EventEmitter {
         return true;
     }
 
+    emitChange(eventName) {
+        this.emit(eventName)
+    }
+
+    updateNumber(value) {
+        _store.number += value;
+    }
+
+    updateActiveEvent(event) {
+        _store.activeEvent = event
+    }
+
+    updateHoveredEvent(event) {
+        _store.hovered_event = event
+    }
+
+
 
     addChangeListener(eventName, callback) {
         this.on(eventName, callback);
@@ -78,15 +78,22 @@ class EventStore extends EventEmitter {
         //TODO Add the slice !
         return _store.events.slice(0,500);
     }
+
     getNumberOfEvents() {
         return _store.events.slice(0,500).length;
     }
+
     getHoveredEvent(){
         return _store.hovered_event;
     }
 
     async fetchEvents(value) {
-        _store.events = await EventService.getEvents()
+        try {
+            _store.events = await EventService.getEvents()
+        }catch (e) {
+            _store.events_fetch_error = e;
+            this.emitChange("EVENTS_COULD_NOT_BE_FETCHED");
+        }
     }
 
     getFirstEvent(){

@@ -96,6 +96,22 @@ services:
     depends_on:
     - rabbit
 
+
+#  sentiment-service:
+#    build: ./sentiment-component
+#    environment:
+#    ## adjust the routing key!!
+#    - RABBITMQ_HOST=rabbit
+#    - RABBITMQ_PORT=5672
+#    - RABBITMQ_USERNAME=rabbitmq
+#    - RABBITMQ_PASSWORD=rabbitmq
+#    - ROUTING_KEY=sentiment.#
+#    - TOPIC_EXCHANGE_NAME=ex_extractors
+#    ports:
+#    - 8902:8902
+#    depends_on:
+#    - rabbit
+
 # UNCOMMENT for PROD
 #  extractor-gdelt:
 #    build:
@@ -114,8 +130,10 @@ services:
 #
 #      # GOOGLE BIGTABLE LICENCE FILE
 #      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/extractor_gdelt/WeblabThreatAnalysis-56a74c861c77.json
-
+#      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+#      - EXTRACTOR_ID=gdelt_01
 # MOCK EXTRACTOR FOR MORE EASY TESTING AND DEVELOPMENT
+
   extractor-mock:
     build:
         context: ./extractor-mock
@@ -128,6 +146,9 @@ services:
       - MQ_PASSWORD=rabbitmq
       - LOG_LEVEL=10
       - OUTPUT_EXCHANGE=ex_extractors
+      - ADMINISTRATOR_BACKEND_PORT=4300
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
 
   event-backend:
     build: ./eventBackend
@@ -150,6 +171,59 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=changeme
       - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+
+  ###########################
+  # Enrichers
+  ###########################
+
+  title_fetcher_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_title_fetcher_enricher
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MQ_HOST=rabbit
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=10
+      - OUTPUT_EXCHANGE=ex_extractors
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
+      - ADMINISTRATOR_BACKEND_PORT=4300
+
+  translator_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_translator_enricher
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MQ_HOST=rabbit
+      - MQ_PORT=5672
+      - MQ_USER=rabbitmq
+      - MQ_PASSWORD=rabbitmq
+      - LOG_LEVEL=1
+      - OUTPUT_EXCHANGE=ex_extractors
+      - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+      - ADMINISTRATOR_BACKEND_URL=administrator-backend
+      - ADMINISTRATOR_BACKEND_PORT=4300
+
+  noun_fetcher_enricher:
+    build:
+      context: enricher
+      dockerfile: dockerfile_noun_fetcher_enricher
+    environment:
+    - PYTHONUNBUFFERED=1
+    - MQ_HOST=rabbit
+    - MQ_PORT=5672
+    - MQ_USER=rabbitmq
+    - MQ_PASSWORD=rabbitmq
+    - LOG_LEVEL=10
+    - OUTPUT_EXCHANGE=ex_extractors
+    - SERVICE_AUTHENTICATION_CODE=VerySecretSecret
+    - ADMINISTRATOR_BACKEND_URL=administrator-backend
+    - ADMINISTRATOR_BACKEND_PORT=4300
+
 #networks:
 #  docker-elk:
 #    driver: bridge

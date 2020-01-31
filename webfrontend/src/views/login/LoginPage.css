@@ -1,0 +1,79 @@
+.login-page-container{
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 1000000000000;
+
+}
+
+.login-form-label{
+  color: white;
+  width: 100%;
+  text-align: center;
+  font-size: 42px;
+  padding-top: 150px;
+  padding-bottom: 100px;
+}
+
+.email-input-line{
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.5px solid white;
+  border-radius: 0px;
+  text-align: center;
+}
+
+.password-input-line{
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.5px solid white;
+  border-radius: 0px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.text-muted{
+  width: 100%;
+  text-align: center;
+}
+
+.login-form{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form-container{
+  display: flex;
+  justify-content: center;
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 110px;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+   font-family: Montserrat, sans-serif;
+}
+
+.help-tool-bar-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-family: Montserrat, sans-serif;
+  padding-top: 30px;
+}
+
+.button-create-account{
+  border: none;
+}
+
+.button-recover-account{
+  border:none;
+}
+
+.button-help{
+  border:none;
+}

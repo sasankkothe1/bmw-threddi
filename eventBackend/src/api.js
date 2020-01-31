@@ -30,6 +30,7 @@ api.get('/', (req, res) => {
 
 // API routes
 api.use('/events', events);
+api.use('/historicalEvents', events);
 api.use('/api-docs', swaggerUi.serve);
 api.get('/api-docs', swaggerUi.setup(swaggerDocument));
 

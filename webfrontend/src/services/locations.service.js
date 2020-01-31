@@ -1,5 +1,6 @@
 import config from "../config";
 import axios from "axios";
+import HttpService from "./http.service";
 
 export default class LocationService {
     constructor() {
@@ -7,17 +8,18 @@ export default class LocationService {
     }
 
     static baseURL(){
-        return `http://${config.BACKEND_URL}:${config.BACKEND_PORT}/mainlocations`
+        return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/mainlocations`
+        
     }
 
     static async getMainLocations(){
-        let mainLocationRequest = await axios.get(LocationService.baseURL());
-        if (mainLocationRequest.status===200){
-            return mainLocationRequest.data;
-        }
+        return HttpService.get(LocationService.baseURL());
+        // if (mainLocationRequest.status===200){
+        //     return mainLocationRequest.data;
+        // }
     }
     static async deleteMainLocations(locationId){
-        let eventsRequest = await axios.delete(`${LocationService.baseURL()}/${locationId}`);
+        let eventsRequest = await HttpService.delete(`${LocationService.baseURL()}/${locationId}`);
         if (eventsRequest.status===200){
             return eventsRequest.data;
         }
@@ -29,7 +31,7 @@ export default class LocationService {
         }
     }
     static async createMainLocations(newLocation){
-        let eventsRequest = await axios.post(LocationService.baseURL(), newLocation);
+        let eventsRequest = await HttpService.post(LocationService.baseURL(), newLocation);
         if (eventsRequest.status===200){
             return eventsRequest.data;
         }

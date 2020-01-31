@@ -27,3 +27,9 @@
   right : 2em;
   z-index: 100;
 }
+
+.page-container-button-bar-bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

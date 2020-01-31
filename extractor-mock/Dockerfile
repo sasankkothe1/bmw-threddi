@@ -10,6 +10,7 @@ COPY requirements.txt ./
 COPY extractor_mock.py ./
 COPY RabbitMQHandler.py ./
 COPY sample_events.txt ./
+COPY source.yaml ./
 
 ENV MODE=PROD
 ENV PYTHONPATH .

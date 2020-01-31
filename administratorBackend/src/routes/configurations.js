@@ -6,7 +6,7 @@ const configurationsController = require('../controllers/configurations');
 
 
 router.get('/', checkAuthenticationForGetEndpoints, configurationsController.getAllConfigurations);
-router.post('/', checkAuthentication, configurationsController.createConfiguration);
+router.post('/', checkAuthenticationForGetEndpoints, configurationsController.createConfiguration);
 router.get('/:configurationId', checkAuthenticationForGetEndpoints, configurationsController.getConfigurationById);
 router.put('/:configurationId', checkAuthentication, configurationsController.updateConfigurationById);
 router.delete('/:configurationId', checkAuthentication, configurationsController.deleteConfigurationById);

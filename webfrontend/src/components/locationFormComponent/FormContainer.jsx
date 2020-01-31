@@ -124,6 +124,7 @@ class FormContainer extends Component {
         let userData = this.state.newLocation;
         console.log(userData);
         if (userData.location_id) {
+            userData['name'] = userData.location_id.replace(" ", "_");
             userData['location_id'] = userData.location_id.replace(" ", "_");
             LocationActions.createLocation(userData);
         }

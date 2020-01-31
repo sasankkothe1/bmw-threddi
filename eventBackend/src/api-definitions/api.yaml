@@ -17,10 +17,8 @@ tags:
   externalDocs:
     description: Find out more
     url: https://www.gdeltproject.org/data.html#documentation
-- name: location
-  description: Access to location objects
-- name: configuration
-  description: Access to configuration objects
+- name: historicalEvents
+  description: Access to historical events objects
 
 
 paths:
@@ -132,6 +130,63 @@ paths:
           content: {}
         500:
           description: internal error happened by elasticsearch database
+
+  /historicalEvents:
+    summary: Event object type
+    description: This resource represents an individual event in the system. Each event is identified by an unique event_id.
+    get:
+      tags:
+      - historicalEvents
+      summary: Return array with event information.
+      description: Obtain information about ongoing events.
+      operationId: getEvent
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/events'
+        400:
+          description: Invalid request
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+
+  /historicalEvents/{historicalEventId}:
+    summary: Tbd
+    description: Tbd
+    get:
+      tags:
+      - historicalEvents
+      summary: Return event by event_id.
+      description: Obtain information about a specific event by stating the event_id.
+      operationId: getEventById
+      parameters:
+      - name: historicalEventId
+        in: path
+        description: ID of event that needs to be fetched
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/events'
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: ID not found
+          content: {}
+        500:
+          description: internal error happened by elasticsearch database
+
 
 components:
   schemas:

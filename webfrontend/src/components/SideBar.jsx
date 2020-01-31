@@ -1,12 +1,21 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
+import ConfigurationModal from '../../src/components/configurationComponents/configurationModal';
 
 class SideBar extends Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            addModalShow: false,
+        };
 
-        this.getActiveRouteElement = this.getActiveRouteElement.bind(this)
+        this.getActiveRouteElement = this.getActiveRouteElement.bind(this);
+        this.addModalClose = this.addModalClose.bind(this);
+    }
+
+    addModalClose(){
+        this.setState({addModalShow: false});
     }
 
     render() {
@@ -22,6 +31,12 @@ class SideBar extends Component {
                     <div className={"nav-item " + this.getActiveRouteElement('/locations')} onClick={()=>this.forwardTo('/locations')}>
                         <i className="fas fa-map-marker-alt fa-2x"/>
                     </div>
+                    <div className="nav-item" onClick={() => this.setState({addModalShow: true})}>
+                        <i className="fas fa-cog fa-2x"/>
+                    </div>
+                    <ConfigurationModal
+                    show={this.state.addModalShow}
+                    onHide={this.addModalClose}/>
                 </aside>
             </div>
         )
