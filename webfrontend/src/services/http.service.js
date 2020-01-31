@@ -26,10 +26,11 @@ export default class HttpService {
         if (!possible_methods.includes(method))
             return new Promise((_, reject) => reject("NO VALID METHOD FOR METHOD EVOCATION USED"));
 
-        const token = window.localStorage.getItem("token");
+        const token = window.localStorage.getItem('token');
 
         let header = new Headers();
         header.append('Content-Type', 'application/json');
+
         if (token) {
             header.append('authentication', `Bearer ${token}`);
         }
@@ -45,19 +46,16 @@ export default class HttpService {
                 if (this.checkIfUnauthorized(resp)) {
                     window.location = "/login";
                 } else {
-                    try {
-                        return resp.json();
-                    } catch (error) {
-                        return resp
-                    }
-
+                    return resp.json();
                 }
             }).then((resp) => {
+                console.log(resp)
                 if (resp.error) {
                     reject(resp.error);
                 } else {
                     if (resp.hasOwnProperty('token')) {
-                        window.localStorage['token'] = resp.token;
+                        console.log(resp.token)
+                        window.localStorage.setItem("token", resp.token);
                     }
                     resolve(resp);
                 }
@@ -67,108 +65,8 @@ export default class HttpService {
         });
     }
 
-    // static put(url, data, onSuccess, onError) {
-    //     let token = window.localStorage.getItem('token');
-    //     let header = new Headers();
-    //     if (token) {
-    //         header.append('authentication', `Bearer ${token}`);
-    //     }
-    //     header.append('Content-Type', 'application/json');
-    //
-    //     fetch(url, {
-    //         method: 'PUT',
-    //         headers: header,
-    //         body: JSON.stringify(data)
-    //     }).then((resp) => {
-    //         if (this.checkIfUnauthorized(resp)) {
-    //             window.location = "/login";
-    //         }
-    //         else {
-    //             return resp.json();
-    //         }
-    //     }).then((resp) => {
-    //         if (resp.error) {
-    //             onError(resp.error);
-    //         }
-    //         else {
-    //             if (resp.hasOwnProperty('token')) {
-    //                 window.localStorage['token'] = resp.token;
-    //             }
-    //             onSuccess(resp);
-    //         }
-    //     }).catch((e) => {
-    //         onError(e.message);
-    //     });
-    // }
-    //
-    // static post(url, data, onSuccess, onError) {
-    //     let token = window.localStorage.getItem('token');
-    //     let header = new Headers();
-    //     if (token) {
-    //         header.append('authentication', `Bearer ${token}`);
-    //     }
-    //     header.append('Content-Type', 'application/json');
-    //
-    //     fetch(url, {
-    //         method: 'POST',
-    //         headers: header,
-    //         body: JSON.stringify(data)
-    //     }).then((resp) => {
-    //         if (this.checkIfUnauthorized(resp)) {
-    //             window.location = "/login";
-    //             return;
-    //         }
-    //         else {
-    //             return resp.json();
-    //         }
-    //     }).then((resp) => {
-    //         if (resp.error) {
-    //             onError(resp.error);
-    //         }
-    //         else {
-    //             if (resp.hasOwnProperty('token')) {
-    //                 window.localStorage['token'] = resp.token;
-    //             }
-    //             onSuccess(resp);
-    //         }
-    //     }).catch((e) => {
-    //         onError(e.message);
-    //     });
-    // }
-    //
-    // static remove(url, onSuccess, onError) {
-    //     let token = window.localStorage.getItem('token');
-    //     let header = new Headers();
-    //     if (token) {
-    //         header.append('Authentication', `Bearer ${token}`);
-    //     }
-    //
-    //     fetch(url, {
-    //         method: 'DELETE',
-    //         headers: header
-    //     }).then((resp) => {
-    //         if (this.checkIfUnauthorized(resp)) {
-    //             window.location = "/login";
-    //             return;
-    //         }
-    //         else {
-    //             return resp.json();
-    //         }
-    //     }).then((resp) => {
-    //         if (resp.error) {
-    //             onError(resp.error);
-    //         }
-    //         else {
-    //             onSuccess(resp)
-    //         }
-    //     }).catch((e) => {
-    //         onError(e.message);
-    //     });
-    // }
-
     static checkIfUnauthorized(res) {
         return res.status === 401;
-
     }
 
 }

@@ -61,8 +61,6 @@ class MapComponent extends Component {
                         }
                     })
                     .filter(event => event.lat && event.lng && event.weight);
-
-                console.log(heatmapData.length);
                 return {
                     events: events,
                     heatmapData: heatmapData

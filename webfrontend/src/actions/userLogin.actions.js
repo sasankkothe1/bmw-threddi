@@ -12,6 +12,7 @@ class UserLoginActions {
                 });
             })
             .catch((error)=>{
+                console.log(error)
                 UserLoginDispatcher.dispatch({
                     actionType: 'LOGIN_ERROR',
                     value: error
