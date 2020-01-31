@@ -8,6 +8,7 @@ import moment from "moment";
 import UIActions from "../../actions/ui.actions";
 import ShortEventList from "../shortEventListComponent/ShortEventList";
 import DetailedEventView from "../detailedEventView/DetailedEventView";
+import AdditionalInformationModalComponent from "../additionalInformationModal/AdditionalInformationModalComponent";
 
 export default class EventSidebar extends Component {
 
@@ -20,9 +21,9 @@ export default class EventSidebar extends Component {
                     </Button>
                 ) :  ""}
                 {this.props.activeEvent ? (
-                    <DetailedEventView activeEvent={this.props.activeEvent}/>) :
+                    <DetailedEventView  activeEvent={this.props.activeEvent}/>) :
                     (this.props.mode==="list"?
-                        <ShortEventList />
+                        <ShortEventList searchText={this.props.searchText} />
                         : "Please chose an event to get more information")
                 }
             </div>

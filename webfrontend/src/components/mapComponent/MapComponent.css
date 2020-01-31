@@ -10,6 +10,14 @@
 .toolbar{
     position: absolute;
     z-index: 100;
+
+    top:10px;
+    left:10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }
 
 #mapBox > * { position: relative !important; height: 100% !important; }

@@ -17,11 +17,13 @@ export default class Home extends Component {
                     <MapComponent events={this.state.events.slice(0, 100)}
                                   activeElement={this.state.activeEvent}
                                   activeLocation={this.state.activeLocation}
-                                  locations={this.state.locations}/>
+                                  locations={this.state.locations}
+                                  changeEventSearchtext={this.updateEventSearch}/>
                 </div>
                 <div className="fright">
                     <EventSidebar activeEvent={this.state.activeEvent}
                                   mode={"list"}
+                                  searchText={this.state.searchText}
                                   onRemoveActiveEvent={() => this.onRemoveActiveEvent()}/>
                 </div>
                 <div>
@@ -39,7 +41,8 @@ export default class Home extends Component {
             locations: [],
             activeEvent: EventStore.getActiveEvent(),
             activeLocation: LocationStore.getActiveLocation(),
-            shouldLoad: true
+            shouldLoad: true,
+            searchText: ""
         };
 
         this.onFetchLocations = this.onFetchLocations.bind(this);
@@ -47,6 +50,7 @@ export default class Home extends Component {
         this.onNewActiveEvent = this.onNewActiveEvent.bind(this);
         this.recursiveLoad = this.recursiveLoad.bind(this);
         this.onNewActiveLocation = this.onNewActiveLocation.bind(this);
+        this.updateEventSearch = this.updateEventSearch.bind(this);
 
         EventAction.fetchEvents();
         LocationAction.getLocation();
@@ -87,6 +91,10 @@ export default class Home extends Component {
 
     onChangeActiveEvent(event) {
         EventAction.updateActiveEvent(event);
+    }
+
+    updateEventSearch(searchText){
+        this.setState({searchText: searchText})
     }
 
     recursiveLoad() {

@@ -8,6 +8,7 @@ import Spinner from "react-bootstrap/Spinner";
 import BaseTable from "react-base-table";
 import Column from "react-base-table/es/Column";
 import AutoResizer from "react-base-table/es/AutoResizer";
+import EventSearcher from "../../services/event.searcher";
 
 
 export default class ShortEventList extends Component {
@@ -26,6 +27,7 @@ export default class ShortEventList extends Component {
     componentWillMount() {
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
     }
+
     componentDidMount() {
         this.recursiveLoad()
     }
@@ -38,12 +40,17 @@ export default class ShortEventList extends Component {
         EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.recursiveLoad()
+    }
+
     recursiveLoad() {
         setTimeout(() => {
             let event_length = EventStore.getNumberOfEvents();
             let hasMore = this.state.data.length + 1 < event_length;
             this.setState((prev, props) => {
-                let data = EventStore.getEvents().slice(0, prev.data.length + 5)
+                let data = EventSearcher.getSearchedEvents(EventStore.getEvents(), this.props.searchText)
+                    .slice(0, prev.data.length + 5)
                     .map((value) => value._source)
                     .map((value) => {
                         return {
@@ -86,19 +93,30 @@ export default class ShortEventList extends Component {
 
         return (
             <div className="short-event-list-wrapper">
-                {this.state.data[0]?
+                {this.state.data[0] ?
                     (<BootstrapTable
                         keyField={"id"}
                         columns={columns}
                         data={this.state.data}
                         rowEvents={rowEvents}
                         hover
-                        />)
+                    />)
                     :
-                    (<div className={"central_spinner"}>
-                        <Spinner animation="border"/>
-                    </div>)
+                    (this.props.searchText === "" ? (
+                                <div className={"central_spinner"}>
+                                    <Spinner animation="border"/>
+                                </div>) :
+                            (<div>
+                                <div className="big-smiley">
+                                    {":("}
+                                </div>
+                                <div className="not-found-text">
+                                    We could not find events which matches your query
+                                </div>
+                            </div>)
+                    )
                 }
-            </div>)
+            </div>
+        )
     }
 }
