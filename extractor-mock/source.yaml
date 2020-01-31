@@ -6,6 +6,7 @@ description: Datasource which fetches data from the GDELT Database
 # Shows which NLP Phases have to be done
 processing:
   # Not allowed to have a point in the name
+  - enricher_noun_fetcher
   - enricher_title_to_description
   - enricher_translator
   - datastore
@@ -87,6 +88,6 @@ processing_service:
       source_fields: ['url']
    enricher_translator:
       source_fields: ['description']
-   enricher_nouns_fetcher:
+   enricher_noun_fetcher:
       source_fields: ['url']
       destination_field_to_add: ['hidden_information']

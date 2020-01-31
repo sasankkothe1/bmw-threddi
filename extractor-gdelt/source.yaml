@@ -87,6 +87,6 @@ processing_service:
       source_fields: ['url']
    enricher_translator:
       source_fields: ['description']
-   enricher_nouns_fetcher:
+   enricher_noun_fetcher:
       source_fields: ['url']
       destination_field_to_add: ['hidden_information']

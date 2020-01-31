@@ -115,6 +115,7 @@ class MapComponent extends Component {
                 <div className={"toolbar"}>
                     <ToggleButtonGroup type="checkbox" value={this.state.toggle_value}
                                        onChange={(val) => this.setState({toggle_value: val})} name={"show_toggles"}>
+
                         <ToggleButton value={"show_events"}>Show Events</ToggleButton>
                         <ToggleButton value={"show_heatmap"}>Show Heatmap</ToggleButton>
                         <ToggleButton value={"show_location"}>Show Locations</ToggleButton>
