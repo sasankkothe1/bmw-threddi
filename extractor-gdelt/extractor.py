@@ -3,6 +3,7 @@ import logging
 import os
 import time
 import uuid
+from _thread import start_new_thread
 from threading import Thread
 
 import requests
@@ -10,7 +11,9 @@ import yaml
 import pandas as pd
 import numpy as np
 
+
 import RabbitMQHandler
+from rpc_receiver import FlaskAppWrapper
 
 RADIUS_MAPPING = {
     1: 50000,
@@ -22,6 +25,7 @@ RADIUS_MAPPING = {
 
 
 class Extractor:
+
     _is_polling = False
     _config = None
     _source_df = None
@@ -51,6 +55,8 @@ class Extractor:
         self._rabbitmq_handler = RabbitMQHandler.RabbitMQHandler()
         self._rabbitmq_handler.init_destination_exchange(self._output_exchange)
 
+        start_new_thread(self._rpc_endpoint_management, ())
+
         self._init_threading()
         self._start_threading()
 
@@ -68,48 +74,54 @@ class Extractor:
         logging.info("Start polling...")
         iteration = 0
         while self._is_polling:
-
-            status, _endpoint_config = self._load_configuration_from_endpoint(self._extractor_id)
-            if status == 200:
-                self._config = _endpoint_config
-
             iteration += 1
-            self._source_df = self.fetch_current_data()
 
-            if len(self._source_df) == 0:
-                # Sleep for 60* Minutes seconds
-                self._logger.warning("No EVENTS COULD BE FETCHED: Waiting for {min} minutes".format(min=minutes))
-                time.sleep(minutes * 60)
-                continue
-
-            self._logger.info("Iteration {iteration}".format(iteration=iteration))
-
-            try:
-                self._do_mapping()
-                self._add_fields()
-            except KeyError as e:
-                self._logger.error("One accessed Key is not available, when adding fields...{}".format(e))
-
-            self._convert_to_json()
-
-            try:
-                self._add_additional_information()
-            except KeyError as e:
-                self._logger.error(
-                    "One accessed Key is not available. when adding additional information.....{}".format(e))
-
-            with open("sample_events.txt", "w") as outputfile:
-                json.dump(self._output_json[:1000], outputfile, default=self.convert)
-
-            for event in self._output_json:
-                _event = json.dumps(event, default=self.convert)
-                self._rabbitmq_handler.send_message(_event, routing_key=self._routing_key)
-
+            _success = self._do_enriching(minutes=minutes, iteration=iteration)
             # Sleep for 60* Minutes seconds
             self._logger.debug("Waiting for {min} minutes".format(min=minutes))
             time.sleep(minutes * 60)
 
             self._clear_data()
+
+    def _do_enriching(self, minutes=0, iteration=0):
+
+        if iteration:
+            self._logger.info("Iteration {iteration}".format(iteration=iteration))
+        else:
+            self._logger.info("Extraordinary Fetching of events")
+
+        status, _endpoint_config = self._load_configuration_from_endpoint(self._extractor_id)
+        if status == 200:
+            self._config = _endpoint_config
+
+        self._source_df = self.fetch_current_data()
+
+        if len(self._source_df) == 0:
+            # Sleep for 60* Minutes seconds
+            self._logger.warning("No EVENTS COULD BE FETCHED: Waiting for {min} minutes".format(min=minutes))
+            time.sleep(minutes * 60)
+            return False
+
+        try:
+            self._do_mapping()
+            self._add_fields()
+        except KeyError as e:
+            self._logger.error("One accessed Key is not available, when adding fields...{}".format(e))
+
+        self._convert_to_json()
+
+        try:
+            self._add_additional_information()
+        except KeyError as e:
+            self._logger.error(
+                "One accessed Key is not available. when adding additional information.....{}".format(e))
+
+        with open("sample_events.txt", "w") as outputfile:
+            json.dump(self._output_json[:1000], outputfile, default=self.convert)
+
+        for event in self._output_json:
+            _event = json.dumps(event, default=self.convert)
+            self._rabbitmq_handler.send_message(_event, routing_key=self._routing_key)
 
     def _clear_data(self):
         self._source_df = None
@@ -285,7 +297,7 @@ class Extractor:
         if configurations.status_code != 200:
             logging.error(configurations)
 
-        return configurations.status_code, configurations.json().get('_source')['configuration']\
+        return configurations.status_code, configurations.json().get('_source')['configuration'] \
             if configurations.status_code == 200 else None
 
     @staticmethod
@@ -316,3 +328,14 @@ class Extractor:
                              json.dumps(_file_config),
                              headers=headers)
         return post.status_code == 200, post
+
+    def rpc_triggered(self):
+        self._do_enriching()
+
+    def _rpc_endpoint_management(self):
+        a = FlaskAppWrapper('wrap')
+        a.add_endpoint(endpoint='/triggerextracting', endpoint_name='/triggerextracting', handler=self.rpc_triggered)
+
+        port = os.environ.get("RPC_PORT", 4321)
+
+        a.run(port=port)
