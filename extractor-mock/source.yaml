@@ -9,6 +9,7 @@ processing:
   - enricher_noun_fetcher
   - enricher_title_to_description
   - enricher_translator
+  - distance
   - datastore
 
 # Properties which will be copied to the configuration database and then managed from there

@@ -24,7 +24,8 @@ public class Event implements Serializable {
     private String origin;
     private Set<Dependency> source_dependent_information;
     private String timestamp;
-    private LocationInfo locationInfo;
+    private LocationInfo location_info;
+    private String hidden_information;
 
     public void getTimeStamp(String timestamp){
         this.timestamp = timestamp;
@@ -79,6 +80,14 @@ public class Event implements Serializable {
         return lat;
     }
 
+    public String getHidden_information() {
+        return hidden_information;
+    }
+
+    public void setHidden_information(String hidden_information) {
+        this.hidden_information = hidden_information;
+    }
+
     @JsonGetter(value = "long")
     public String getLong() {
         return Long;
@@ -116,16 +125,16 @@ public class Event implements Serializable {
         this.actors = actors;
     }
 
-    public void setLocationInfo(LocationInfo locationInfo) {
-        this.locationInfo = locationInfo;
+    public void setLocationInfo(LocationInfo location_info) {
+        this.location_info = location_info;
     }
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public LocationInfo getLocationInfo() {
-        return locationInfo;
+    public LocationInfo getLocation_info() {
+        return location_info;
     }
 
     public String getTimestamp() {

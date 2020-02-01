@@ -56,6 +56,7 @@ services:
 #      - elasticsearch
 #    external_links:
 #      - elasticsearch
+
   write-in-elasticsearch-service:
     build: ./write-in-elasticsearch
     environment:

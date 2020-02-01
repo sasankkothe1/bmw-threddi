@@ -78,8 +78,8 @@ const getAllLocations = async (req, res) => {
         index: 'main_locations',
         // keep the search results "scrollable" for 30 seconds
         scroll: '30s',
-        // for the sake of this example, we will get only 10000 result per search
-        size: 1000,
+        // for the sake of this example, we will get only 200 result per search
+        size: 200,
         // filter the source to only include the quote field
         body: {
             query: {
@@ -157,27 +157,10 @@ const createLocation = async (req, res) => {
             id: req.body.location_id,
             body: {mainLocation: Object.assign(req.body)},
         }).then(response => {
-            console.log(response);
             return res.status(200).send()
         }, (err => {
-            if(err.statusCode === 404){
-                if(err.message.includes('index_not_found_exception')){
-                    client.indices.create({
-                            index: "main_locations"
-                        }
-                    ).then(res => {client.index({
-                        index: 'main_locations',
-                        id: req.body.location_id,
-                        body: {mainLocation: Object.assign(req.body)},
-                    }).then(response => {
-                        console.log(response);
-                        return res.status(200).send()
-                    }, handleError(res))
-                    })}
-                else{
-                    return res.status(404).json();
-                }
-            }
+            console.log(err);
+            return res.status(404).json();
         }));
     }else {
         return res.status(400).json("No Request Body");
@@ -204,7 +187,6 @@ const getById = async (locationId) => {
         id: locationId,
     }).then(response =>{
         if(response.found) {
-            console.log(response);
             return response;
         }else {
             return null;

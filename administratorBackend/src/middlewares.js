@@ -26,7 +26,6 @@ const checkAuthentication = (req, res, next) => {
             });
     }
     const token = authentication.split('Bearer ')[1];
-    console.log('token = ' + token);
     // verifies secret and checks exp
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
         if (err) return res.status(401).send({
@@ -65,7 +64,6 @@ const checkAuthenticationForGetEndpoints = (req, res, next) => {
             });
         }
         const token = authentication.split('Bearer ')[1];
-        console.log('token = ' + token);
         // verifies secret and checks exp
         jwt.verify(token, config.jwtSecret, (err, decoded) => {
             if (err) return res.status(401).send({

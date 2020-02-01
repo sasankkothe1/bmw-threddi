@@ -28,7 +28,7 @@ function handleError(response) {
         if(err.statusCode === 404){
             if(err.message.includes('index_not_found_exception')){
                 client.indices.create({
-                        index: "events"
+                        index: "historical_events"
                     }
                 ).then(res => {response.status(200).send([])}, handleError(response))
             }

@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
 const events = require('./routes/events');
+const historicalEvents = require('./routes/historicalEvents');
 const middlewares = require('./middlewares');
 const api = express();
 
@@ -30,7 +31,7 @@ api.get('/', (req, res) => {
 
 // API routes
 api.use('/events', events);
-api.use('/historicalEvents', events);
+api.use('/historicalEvents', historicalEvents);
 api.use('/api-docs', swaggerUi.serve);
 api.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
