@@ -49,7 +49,7 @@ const getAllConfigurations = async (req, res) => {
         // keep the search results "scrollable" for 30 seconds
         scroll: '30s',
         // for the sake of this example, we will get only 10000 result per search
-        size: 1000,
+        size: 200,
         // filter the source to only include the quote field
         body: {
             query: {
@@ -118,7 +118,6 @@ const createConfiguration = async (req, res) => {
             id: req.body.configuration_id,
             body: {configuration: Object.assign(req.body)},
         }).then(response => {
-            console.log(response);
             return res.status(200).send()
         }, (err => {
             if(err.statusCode === 404){
@@ -131,7 +130,6 @@ const createConfiguration = async (req, res) => {
                         id: req.body.configuration_id,
                         body: {configuration: Object.assign(req.body)},
                     }).then(response => {
-                        console.log(response);
                         return res.status(200).send()
                     }, handleError(res))
                 })}
@@ -154,7 +152,6 @@ const getConfigurationById = async (req, res) => {
         id: configurationId,
     }).then(response =>{
         if(response.found) {
-            console.log(response);
             res.status(200).send(response);
         }else {
             res.status(404).send();
@@ -209,7 +206,6 @@ const getById = async (configurationId) => {
         id: configurationId,
     }).then(response =>{
         if(response.found) {
-            console.log(response);
             return response;
         }else {
             return null;

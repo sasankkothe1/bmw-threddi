@@ -26,6 +26,8 @@ import java.util.UUID;
 public class Receiver {
     Logger logger = LoggerFactory.getLogger(Receiver.class);
 
+    private List<MainLocation> locations;
+
     @Autowired
     LocationRepository locationRepository;
 
@@ -39,7 +41,6 @@ public class Receiver {
 
     @RabbitListener(queues = "#{autoDeleteQueue1.name}")
     public void receiveDirectQueue(Message message) {
-        List<MainLocation> locations;
         String routingKey = message.getMessageProperties().getReceivedRoutingKey();
         String nextRoutingKey = routingKey.split("\\.", 2)[1];
         try {
@@ -54,18 +55,16 @@ public class Receiver {
         }
 
         try {
-            List<Event> events = objectMapper.readValue(message.getBody(), objectMapper.getTypeFactory().constructCollectionType(List.class, Event.class));
-            logger.info("received events + number" + events.size());
-            for (Event event : events) {
-                if (event.getId() == null) {
-                    UUID uuid = UUID.randomUUID();
-                    event.setId(uuid.toString());
-                }
-
-                LocationInfo locationInfo = getNearestFacility(locations, event);
-                event.setLocationInfo(locationInfo);
-                sender.send(event, nextRoutingKey);
+            Event event = objectMapper.readValue(message.getBody(), Event.class);
+            if (event.getId() == null) {
+                UUID uuid = UUID.randomUUID();
+                event.setId(uuid.toString());
             }
+
+            LocationInfo locationInfo = getNearestFacility(locations, event);
+            event.setLocationInfo(locationInfo);
+            sender.send(event, nextRoutingKey);
+
         } catch (IOException e) {
             logger.error("Failed to holds events from processing services" + e.getMessage());
         }
@@ -86,12 +85,14 @@ public class Receiver {
 
     private LocationInfo getNearestFacility(List<MainLocation> locations, Event event){
         LocationInfo locationInfo = new LocationInfo();
-        for(MainLocation mainLocation : locations){
-            double distance = getDistance(Double.valueOf(mainLocation.getLong()), Double.valueOf(mainLocation.getLat()), Double.valueOf(event.getLong()), Double.valueOf(event.getLat()));
-            if(locationInfo.getDistance() == null || Double.valueOf(locationInfo.getDistance()) > distance){
+        if(event.getLat() != null && event.getLong() != null) {
+            for (MainLocation mainLocation : locations) {
+                double distance = getDistance(Double.valueOf(mainLocation.getLong()), Double.valueOf(mainLocation.getLat()), Double.valueOf(event.getLong()), Double.valueOf(event.getLat()));
+
                 locationInfo.setDistance("" + distance);
                 locationInfo.setLocation_id(mainLocation.getLocation_id());
                 locationInfo.setName(mainLocation.getName());
+
             }
         }
         return locationInfo;

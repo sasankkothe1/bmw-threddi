@@ -148,7 +148,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/events'
+                  $ref: '#/components/schemas/historical_events'
         400:
           description: Invalid request
           content: {}
@@ -177,7 +177,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/events'
+                $ref: '#/components/schemas/historical_events'
         400:
           description: Invalid request
           content: {}
@@ -239,6 +239,14 @@ components:
                 type: string
               description:
                 type: string
+    historical_events:
+      type: object
+      $ref: '#/components/schemas/historical_events'
+      properties:
+        timestamp:
+          type: long
+        event_count:
+          type: integer
   securitySchemes:
     authenticationHeader:
       type: apiKey

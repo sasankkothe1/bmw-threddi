@@ -44,13 +44,11 @@ const register = async (req, res) => {
             id: req.body.username,
             body: {administrator: Object.assign(req.body)},
         }).then(response => {
-            console.log(response);
             const token = jwt.sign({
                 username: req.body.username,
             }, config.jwtSecret, {
                 expiresIn: 100000,
             });
-            console.log(token);
             return res.status(200).send({token: token})
         }, (err => {
             if(err.statusCode === 404){
@@ -63,13 +61,11 @@ const register = async (req, res) => {
                         id: req.body.username,
                         body: {administrator: Object.assign(req.body)},
                     }).then(response => {
-                        console.log(response);
                         const token = jwt.sign({
                             username: req.body.username,
                         }, config.jwtSecret, {
                             expiresIn: 100000,
                         });
-                        console.log(token);
                         return res.status(200).send({token:token})
                     }, handleError(res))
                     })}
@@ -105,7 +101,6 @@ const login = async (req, res) => {
                 }, config.jwtSecret, {
                     expiresIn: 100000,
                 });
-                console.log(token);
                 res.status(200).send({token:token});
             }else {
                 res.status(404).send();
@@ -136,7 +131,6 @@ const getByUsername = async (username) => {
         id: username,
     }).then(response =>{
         if(response.found) {
-            console.log(response);
             return response;
         }else {
             return null;

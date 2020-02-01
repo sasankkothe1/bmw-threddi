@@ -56,21 +56,21 @@ public class Receiver {
                 elasticSearchRepository.addHistoricalEvent("historical_events", historicalEvent);
             } else {
                 if (!oldEvent.equals(event)) {
-                    if (oldEvent.getLocationInfo().getDistance() != null) {
-                        if (event.getLocationInfo().getDistance() == null) {
-                            event.setLocationInfo(oldEvent.getLocationInfo());
+                    if (oldEvent.getLocation_info().getDistance() != null) {
+                        if (event.getLocation_info().getDistance() == null) {
+                            event.setLocationInfo(oldEvent.getLocation_info());
                         } else {
-                            if (event.getLocationInfo().getDistance() != null && Double.valueOf(oldEvent.getLocationInfo().getDistance()) < Double.valueOf(event.getLocationInfo().getDistance())) {
-                                event.setLocationInfo(oldEvent.getLocationInfo());
+                            if (event.getLocation_info().getDistance() != null && Double.valueOf(oldEvent.getLocation_info().getDistance()) < Double.valueOf(event.getLocation_info().getDistance())) {
+                                event.setLocationInfo(oldEvent.getLocation_info());
                             }
                         }
                     }
                     elasticSearchRepository.addEvent("events", event);
                 } else {
-                    if (event.getLocationInfo() != null && oldEvent.getLocationInfo() == null ||
-                            (oldEvent.getLocationInfo().getDistance() == null && event.getLocationInfo().getDistance() != null)
-                            || (oldEvent.getLocationInfo().getDistance() != null && event.getLocationInfo().getDistance() != null &&
-                            Double.valueOf(oldEvent.getLocationInfo().getDistance()) < Double.valueOf(event.getLocationInfo().getDistance()))) {
+                    if (event.getLocation_info() != null && oldEvent.getLocation_info() == null ||
+                            (oldEvent.getLocation_info().getDistance() == null && event.getLocation_info().getDistance() != null)
+                            || (oldEvent.getLocation_info().getDistance() != null && event.getLocation_info().getDistance() != null &&
+                            Double.valueOf(oldEvent.getLocation_info().getDistance()) < Double.valueOf(event.getLocation_info().getDistance()))) {
                         elasticSearchRepository.addEvent("events", event);
                     }
                 }
