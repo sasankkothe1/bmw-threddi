@@ -338,9 +338,7 @@ components:
           type: string
         address:
           type: string
-        lat:
-          type: string
-        long:
+        name:
           type: string
         description:
           type: string
