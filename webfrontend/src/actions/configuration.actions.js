@@ -10,6 +10,7 @@ class ConfigurationActions {
                     actionType: 'CONFIGURATION_CREATED_SUCCESS',
                     value: 200
                 });
+                ConfigurationActions.triggerExtracting();
             })
             .catch((error) => {
                     configurationSendDispatcher.dispatch({

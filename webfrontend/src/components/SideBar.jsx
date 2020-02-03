@@ -3,7 +3,6 @@ import {withRouter} from "react-router";
 import ConfigurationModal from '../../src/components/configurationComponents/configurationModal';
 import Toast from "react-bootstrap/Toast";
 import ConfigurationStore from "../stores/config.store";
-import ConfigurationActions from "../actions/configuration.actions";
 
 class SideBar extends Component {
 
@@ -32,7 +31,6 @@ class SideBar extends Component {
         ConfigurationStore.removeChangeListener("TRIGGER_EXTRACTOR", this.showTriggerModal)
     }
     addModalClose() {
-        ConfigurationActions.triggerExtracting();
         this.setState({addModalShow: false});
 
     }
