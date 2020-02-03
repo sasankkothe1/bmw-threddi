@@ -45,13 +45,10 @@ export default class HttpService {
                 if (this.checkIfUnauthorized(resp)) {
                     window.location = "/login";
                 } else {
-                    return resp;
+                    return resp.json();
                 }
             }).then((resp) => {
-                resp = resp.json();
-
                 if (resp.error) {
-
                     reject(resp.error);
                 } else {
                     if (resp.hasOwnProperty('token')) {
