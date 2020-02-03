@@ -24,8 +24,6 @@ public class LocationRepository {
 
     @Value(value = "${backend.authentication.code}")
     private String authenticationCode;
-    @Value(value = "${backend.administrator.endpoint}")
-    private String administratorEndpoint;
     @Value(value = "${backend.location.endpoint}")
     private String locationEndpoint;
 
