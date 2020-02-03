@@ -12,6 +12,8 @@ class ConfigStore extends EventEmitter{
     constructor() {
         super();
 
+        this.dispatchToken = configurationSendDispatcher.register(this.dispatcherCallback.bind(this))
+
     }
 
     emitChange(eventName){
@@ -32,7 +34,6 @@ class ConfigStore extends EventEmitter{
                 await this.fetchConfigs();
                 break;
             case 'TRIGGER_EXTRACTOR':
-                alert("tRIGER it");
                 break;
             default:
                 break;
@@ -56,7 +57,7 @@ class ConfigStore extends EventEmitter{
     }
 
     async fetchConfigs() {
-        _store.fetchConfigs = await ConfigService.getEvents()
+        _store.fetchConfigs = await ConfigService.fetchConfigs()
     }
 
     getConfigs() {

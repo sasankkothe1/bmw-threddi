@@ -25,7 +25,6 @@ export default class MapMarker extends Component {
         let isHovered = this.props.isHovered ? " hovered-marker " : "";
         let isActive = this.props.isActive ? "active_element" : "";
         let classes = "fas fa-exclamation-triangle hovered mapmarker " + size + " " + isActive + isHovered;
-        console.log(this.props.event._source);
         return (
             <div>
                 <i className={classes}

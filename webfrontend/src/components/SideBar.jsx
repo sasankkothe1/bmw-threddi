@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import ConfigurationModal from '../../src/components/configurationComponents/configurationModal';
-import ConfigurationActions from '../../src/actions/configuration.actions';
 import Toast from "react-bootstrap/Toast";
-import LocationStore from "../stores/location.store";
+import ConfigurationStore from "../stores/config.store";
+import ConfigurationActions from "../actions/configuration.actions";
 
 class SideBar extends Component {
 
@@ -20,20 +20,21 @@ class SideBar extends Component {
     }
 
     componentDidMount(){
-        LocationStore.addChangeListener("TRIGGER_EXTRACTOR", this.showTriggerModal)
+        ConfigurationStore.addChangeListener("TRIGGER_EXTRACTOR", this.showTriggerModal)
     }
 
     showTriggerModal(){
+        console.log("Show trigger modal");
         this.setState({showTriggerModal:true})
     }
 
     componentWillMount(){
-        LocationStore.removeChangeListener("TRIGGER_EXTRACTOR", this.showTriggerModal)
+        ConfigurationStore.removeChangeListener("TRIGGER_EXTRACTOR", this.showTriggerModal)
     }
     addModalClose() {
-        // TODO DELETE IMPORT
         ConfigurationActions.triggerExtracting();
         this.setState({addModalShow: false});
+
     }
 
     render() {

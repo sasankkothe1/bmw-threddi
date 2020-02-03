@@ -44,7 +44,7 @@ class GDELTFetcher:
         query = (
             'SELECT *  FROM `gdelt-bq.gdeltv2.events` WHERE DATEADDED>{lastdate} AND ({location_query} {conditions})  ORDER BY DATEADDED DESC'
                 .format(location_def=location_def,
-                        lastdate=self._last_fetch if special_fetch else self._special_fetch_date,
+                        lastdate=self._special_fetch_date if special_fetch else self._last_fetch,
                         conditions=conditions[4:],
                         location_query=location_query)
         )
