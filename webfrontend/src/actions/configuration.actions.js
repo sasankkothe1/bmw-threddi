@@ -5,26 +5,43 @@ class ConfigurationActions {
 
     createConfiguration(data) {
         ConfigService.createConfig(data)
-        .then(() => {
-            configurationSendDispatcher.dispatch({
-                actionType:'CONFIGURATION_CREATED_SUCCESS',
-                value: 200
-            });
-        })
-            .catch((error)=>{
+            .then(() => {
                 configurationSendDispatcher.dispatch({
-                    actionType: 'CONFIGURATOR_CREATION_FAILED',
-                    value: error
+                    actionType: 'CONFIGURATION_CREATED_SUCCESS',
+                    value: 200
                 });
-            }
-        );
+            })
+            .catch((error) => {
+                    configurationSendDispatcher.dispatch({
+                        actionType: 'CONFIGURATOR_CREATION_FAILED',
+                        value: error
+                    });
+                }
+            );
     }
 
-    fetchConfigs(data){
+    fetchConfigs(data) {
         configurationSendDispatcher.dispatch({
             actionType: 'FETCH_CONFIGS',
             value: data
         });
+    }
+
+    triggerExtracting() {
+
+        ConfigService.triggerConfig()
+            .then(() => {
+                configurationSendDispatcher.dispatch({
+                    actionType: 'TRIGGER_EXTRACTOR',
+                    value: true
+                })
+            }).catch(()=>{
+                 configurationSendDispatcher.dispatch({
+                    actionType: 'TRIGGER_EXTRACTOR_ERROR',
+                    value: true
+                })
+        });
+
     }
 
 }

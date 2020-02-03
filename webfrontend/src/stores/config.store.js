@@ -23,13 +23,16 @@ class ConfigStore extends EventEmitter{
         switch(action.actionType) {
             case 'CONFIGURATION_CREATED_SUCCESS':
                 this.setStatus(200);
-
+                break;
             case 'CONFIGURATOR_CREATION_FAILED':
                 this.setStatus(400);
                 //localStorage.setItem("error", action.value.toString())
                 break;
             case 'FETCH_CONFIGS':
                 await this.fetchConfigs();
+                break;
+            case 'TRIGGER_EXTRACTOR':
+                alert("tRIGER it");
                 break;
             default:
                 break;

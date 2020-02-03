@@ -38,7 +38,8 @@ class CreateConfiguratorForm extends Component {
     this.configCreationFailError = this.configCreationFailError.bind(this);
     this.configurationCreatedSuccess = this.configurationCreatedSuccess.bind(this);
     ConfigStore.addChangeListener("CONFIGURATOR_CREATION_FAILED" , this.configCreationFailError);
-    configStore.addChangeListener("CONFIGURATION_CREATED_SUCCESS", this.configurationCreatedSuccess)
+    configStore.addChangeListener("CONFIGURATION_CREATED_SUCCESS", this.configurationCreatedSuccess);
+    configStore.addChangeListener("TRIGGER_EXTRACTOR", ()=>alert("EXTRACTOR TRIGGERED"));
   }
 
   configurationCreatedSuccess(){
@@ -108,7 +109,7 @@ class CreateConfiguratorForm extends Component {
       e.preventDefault();
       e.stopPropagation();
     }
-    this.setState({validated:true})
+    this.setState({validated:true});
 
     if(form.checkValidity() === true) {
         let createdConfiguration = this.state.newConfiguration;

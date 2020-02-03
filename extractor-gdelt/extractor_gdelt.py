@@ -27,11 +27,12 @@ class GDELTExtractor(Extractor):
     def __init__(self, extractor_id):
         super(GDELTExtractor, self).__init__(extractor_id)
 
-    def fetch_current_data(self):
+    def fetch_current_data(self, special_fetch=False):
         logging.debug("Starting querying GDELT")
 
         results = self._fetcher.fetch_current_data(self.default_properties.get('filter_options'),
-                                                   self.default_properties.get('general_filter_options'))
+                                                   self.default_properties.get('general_filter_options'),
+                                                   special_fetch)
         return results
 
     # Field Mappings
