@@ -1,40 +1,58 @@
 import React, { Component } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
-import ConfigurationActions from '../../actions/configuration.actions';
-import ConfigStore from '../../stores/config.store';
-import configStore from "../../stores/config.store";
+import ConfigurationActions from "../../actions/configuration.actions";
+import ConfigStore from "../../stores/config.store";
+import ConfigurationTable from "./ConfigurationTable";
 
 class ListConfigurators extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        configs: ConfigStore.getConfigs()
-    }
+      configs: [],
+    };
 
     this.onFetchConfigs = this.onFetchConfigs.bind(this);
+    ConfigurationActions.fetchConfigs();
   }
 
-  componentDidMount() {
-    ConfigStore.addChangeListener("FETCH_CONFIGS", this.onFetchConfigs);
+  componentWillMount() {
+    ConfigStore.addChangeListener('FETCH_CONFIGS', this.onFetchConfigs);
 
-    if (this.state.configs.length < 1) {
-        ConfigurationActions.fetchConfigs();
-    }
+  }
 
-}
+  componentWillUnmount() {
+    ConfigStore.removeChangeListener("FETCH_CONFIGS", this.onFetchConfigs);
+  }
 
-onFetchConfigs() {
+  onFetchConfigs() {
     this.setState({
-        configs: configStore.getConfigs()
+      configs: ConfigStore.getConfigs()
     })
-    console.log(this.state.configs[0]);
-}
+
+    //console.log("+++++++++++" + this.state.configs[0]._source.configuration.name)
+
+    // let configs = this.state.configs;
+    // let configs_array = []
+    // // let json_config = configs[0]._source.configuration;
+    // // console.log(json_config.name)
+    // // console.log(json_config.configuration_id)
+    // // console.log(json_config.description)
+    // // console.log(json_config.processing)
+    // for(let i = 0; i<configs.length; i++){
+    //   configs_array.push(configs[0]._source.configuration);
+    // }
+
+    // this.setState({
+    //   configurations: configs_array
+    // })
+  }
 
   render() {
     return (
-        <h1>This is bla bla</h1>
-    );
+    <>
+      <ConfigurationTable configurations = {this.state.configs} />
+    </>
+    )
   }
 }
 export default ListConfigurators;

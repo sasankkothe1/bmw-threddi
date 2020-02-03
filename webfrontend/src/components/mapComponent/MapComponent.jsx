@@ -137,15 +137,7 @@ class MapComponent extends Component {
 
         return (
             <>
-                <div className="searchInput">
-                    <input
-                        className="searchInputField"
-                        name="searchInput"
-                        value={this.state.searchInput || ""}
-                        onChange={this.handleChange}
-                        placeholder="Search"
-                    />
-                </div>
+    
                 <div className={"toolbar"}>
                     <div>
                         <InputGroup className="mb-3">

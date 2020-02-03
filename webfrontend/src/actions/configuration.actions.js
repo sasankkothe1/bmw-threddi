@@ -20,10 +20,9 @@ class ConfigurationActions {
         );
     }
 
-    fetchConfigs(data){
+    fetchConfigs(){
         configurationSendDispatcher.dispatch({
-            actionType: 'FETCH_CONFIGS',
-            value: data
+            actionType: 'FETCH_CONFIGS'
         });
     }
 

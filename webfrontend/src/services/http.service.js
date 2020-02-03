@@ -58,7 +58,7 @@ export default class HttpService {
                         window.localStorage.setItem("token", resp.token);
                     }
                     resolve(resp);
-                }
+                } 
             }).catch((e) => {
                 reject(e.message);
             })

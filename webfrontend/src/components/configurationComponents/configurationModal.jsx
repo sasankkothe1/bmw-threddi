@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Modal, Button, Tabs, Tab } from "react-bootstrap";
-import CreateConfiguratorForm from "./createConfiguratorForm";
-import ListConfigurators from "./listConfigurators";
+import EditConfigurationform from "./EditConfigurationForm";
+import ListConfigurators from "./ListConfigurators";
 
 export default class ConfigurationModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: 1
+      activeTab: 1,
+      activeKey : "add"
     };
 
   }
@@ -22,18 +23,9 @@ export default class ConfigurationModal extends Component {
         centered
         className="modal-wrapper"
       >
-        <Tabs defaultActiveKey="add" id="noanim-tab-example">
-          <Tab eventKey="add" title="Add Configurator">
-            <Modal.Header closeButton />
-            <Modal.Body>
-              <div className="container">
-                {/* <CreateConfigurationForm /> */}
-                <CreateConfiguratorForm />
-              </div>
-            </Modal.Body>
-           
-          </Tab>
-          <Tab eventKey="edit" title="All Configurators">
+        <Tabs activeKey={this.state.activeKey} id="noanim-tab-example">
+         
+          <Tab eventKey="add" title="All Configurators">
           <Modal.Header/>
             <Modal.Body>
               <div className="container">
