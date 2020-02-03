@@ -1,5 +1,6 @@
 import {EventEmitter} from 'events';
 import configurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
+import ConfigurationActions from '../actions/configuration.actions';
 import ConfigService from '../services/config.service';
 
 let _store = {

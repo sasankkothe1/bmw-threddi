@@ -7,11 +7,11 @@ class ConfigurationActions {
         console.log("Update");
         ConfigService.updateConfig(data)
             .then(() => {
+                ConfigurationActions.triggerExtracting();
                 configurationSendDispatcher.dispatch({
                     actionType: 'CONFIGURATION_CREATED_SUCCESS',
                     value: 200
                 });
-                ConfigurationActions.triggerExtracting();
             })
             .catch((error) => {
                     configurationSendDispatcher.dispatch({
@@ -30,14 +30,14 @@ class ConfigurationActions {
     }
 
     triggerExtracting() {
-
         ConfigService.triggerConfig()
             .then(() => {
                 configurationSendDispatcher.dispatch({
                     actionType: 'TRIGGER_EXTRACTOR',
                     value: true
                 })
-            }).catch(()=>{
+            }).catch((error)=>{
+                console.log("error", error);
                  configurationSendDispatcher.dispatch({
                     actionType: 'TRIGGER_EXTRACTOR_ERROR',
                     value: true

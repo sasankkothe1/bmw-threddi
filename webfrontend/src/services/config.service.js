@@ -26,10 +26,9 @@ export default class ConfigCreateService {
         }
     }
     static async updateConfig(configData){
-        console.log(`${ConfigCreateService.baseURL()}/${configData.id}`);
         let createConfigRequest = await HttpService.put(`${ConfigCreateService.baseURL()}/${configData.id}`, configData);
-        console.log(createConfigRequest);
         if (createConfigRequest.status===200){
+
 
             return createConfigRequest.data;
         } else {
@@ -45,6 +44,6 @@ export default class ConfigCreateService {
     }
 
     static triggerConfig(){
-        return axios.post(ConfigCreateService.extractorURL(), {});
+        return HttpService.post(ConfigCreateService.extractorURL(),{});
     }
 }
