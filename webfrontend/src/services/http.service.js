@@ -37,7 +37,7 @@ export default class HttpService {
         let config = {method: method, headers: header};
 
         if (body) {
-            config.body = JSON.stringify(body)
+            config.body = JSON.stringify(body);
         }
 
         return new Promise((resolve, reject) => {
@@ -45,10 +45,13 @@ export default class HttpService {
                 if (this.checkIfUnauthorized(resp)) {
                     window.location = "/login";
                 } else {
-                    return resp.json();
+                    return resp;
                 }
             }).then((resp) => {
+                resp = resp.json();
+
                 if (resp.error) {
+
                     reject(resp.error);
                 } else {
                     if (resp.hasOwnProperty('token')) {

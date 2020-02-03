@@ -11,19 +11,22 @@ export default class IncidentEventTable extends Component {
         super(props);
         this.state = {
             number: 0,
-            data : [],
-            events : [],
-            activeEvent : null,
-            filteredData : [],
-            searchInput : ""
+            data: [],
+            events: [],
+            activeEvent: null,
+            filteredData: [],
+            searchInput: ""
         };
         this.onFetchEvents = this.onFetchEvents.bind(this);
         this.onRowClick = this.onRowClick.bind(this);
         this.getTrProps = this.getTrProps.bind(this);
 
     }
+
     componentDidMount() {
         EventStore.addChangeListener("FETCH_EVENTS", this.onFetchEvents);
+
+        EventAction.fetchEvents();
         if (this.state.events.length < 1) {
             EventAction.fetchEvents();
         }
@@ -32,53 +35,60 @@ export default class IncidentEventTable extends Component {
     componentWillUnmount() {
         EventStore.removeChangeListener("FETCH_EVENTS", this.onFetchEvents);
     }
+
     onFetchEvents() {
+        let events = EventStore.getEvents();
         this.setState({
-            events: EventStore.getEvents()
-        })
-        this.setState({
-            data : this.state.events
-            .map((event)=> event._source)
-            .map((event)=> ({...event, 'timestamp':moment(event.timestamp, "YYYYMMDDHHmmSS" ).format("DD/MM/YYYY")}))
-            .map((event)=> ({...event, 'time':moment(event.timestamp, "YYYYHHDDHHmmSS").format("hh:mm")}))
+            events: EventStore.getEvents(),
+            data: events
+                .map((event) => event._source)
+                .map((event) => ({
+                    ...event,
+                    'timestamp': moment(event.timestamp, "YYYYMMDDHHmmSS").format("DD/MM/YYYY")
+                }))
+                .map((event) => ({...event, 'time': moment(event.timestamp, "YYYYHHDDHHmmSS").format("hh:mm")}))
+                .map((event) => ({
+                    ...event,
+                    'distance_to_next_location': event['location_info'] ? event['location_info']['distance'] + " km" : "-"
+                }))
+                .map((event) => (
+                    {
+                        ...event,
+                        'next_location': event['location_info'] ? event['location_info']['name'] : "-"
+                    }
+                ))
+                .map((event) => (
+                    {
+                        ...event,
+                        'location_id': event['location_info'] ? event['location_info']['location_id'] : "-"
+                    }
+                ))
+
         })
     }
-    getTrProps(state, rowInfo, column, instance){
+
+    getTrProps(state, rowInfo, column, instance) {
         return {
             onClick: e => this.onRowClick(rowInfo)
         }
     }
-    onRowClick (rowInfo){
-        console.log('It was in this row:', rowInfo.row._original);
+
+    onRowClick(rowInfo) {
         this.props.onChangeActiveEvent(rowInfo.row._original);
-        console.log(this.state.events?this.state.events[0]._source : " ")
     }
 
-    handleSetData = data => {
-        console.log(data);
-        this.setState({ data });
-      };
-    
-      handleSetFilteredData = filteredData => {
-        this.setState({ filteredData });
-      };
-    
-      handleSetSearchInput = searchInput => {
-        this.setState({ searchInput });
-      };
+    handleSetFilteredData = filteredData => {
+        this.setState({filteredData});
+    };
+
+    handleSetSearchInput = searchInput => {
+        this.setState({searchInput});
+    };
 
     render() {
-        
+
 
         const columns = [
-            // {
-            //     Header: "Actor",
-            //     accessor: "actor",
-            //     width: 80,
-            //     style: {
-            //         textAlign: "center"
-            //     }
-            // },
             {
                 Header: "Importance",
                 accessor: "importance",
@@ -89,25 +99,25 @@ export default class IncidentEventTable extends Component {
                 accessor: "description",
             },
             {
-                Header:"ID",
+                Header: "ID",
                 accessor: "id",
                 width: 190
             },
             {
-                Header:"Sentiment Group",
+                Header: "Sentiment Group",
                 accessor: "sentiment_group",
-                width:160
-            },    
+                width: 160
+            },
             {
-                Header:"Date Occured",
+                Header: "Date Occured",
                 accessor: 'timestamp',
-                width:125
-            },  
+                width: 125
+            },
             {
                 Header: "Time",
                 accessor: "time",
                 width: 60
-            },  
+            },
             // {
             //     Header: "Country",
             //     accessor: "body",
@@ -119,9 +129,33 @@ export default class IncidentEventTable extends Component {
                 width: 200
             },
             {
-                Header:"LAT",
+                Header: "LAT",
                 accessor: "lat",
-                show:false
+                show: false
+            },
+            {
+                Header: "Distance to next Location",
+                accessor: "distance_to_next_location",
+                width: 80,
+                style: {
+                    textAlign: "center"
+                }
+            },
+            {
+                Header: "Next Location",
+                accessor: "next_location",
+                width: 80,
+                style: {
+                    textAlign: "center"
+                }
+            },
+            {
+                Header: "Location ID",
+                accessor: "location_id",
+                width: 80,
+                style: {
+                    textAlign: "center"
+                }
             }
             // {
             //     Header: "Source Origin",
@@ -130,14 +164,14 @@ export default class IncidentEventTable extends Component {
             //     filterable: true
             // },
         ];
-        let { data, filteredData, searchInput } = this.state;
+        let {data, filteredData, searchInput} = this.state;
         const dataToDisplay = searchInput.length ? filteredData : data;
         return (
             <div className="tablePage">
                 <div className="searchField">
                     <Search
-                        columns = {columns}
-                        data = {this.state.data}
+                        columns={columns}
+                        data={this.state.data}
                         handleSetFilteredData={this.handleSetFilteredData}
                         handleSetSearchInput={this.handleSetSearchInput}
                     >
@@ -147,17 +181,17 @@ export default class IncidentEventTable extends Component {
                 {
                     this.state.events[0] ? (
 
-                    <ReactTable
-                    className="-striped -highlight"
-                        columns={columns}
-                        data={dataToDisplay}
-                        defaultPageSize={-1}
-                        showPagination={false}
-                        getTrProps={this.getTrProps}
-                    >
+                        <ReactTable
+                            className="-striped -highlight"
+                            columns={columns}
+                            data={dataToDisplay}
+                            defaultPageSize={-1}
+                            showPagination={false}
+                            getTrProps={this.getTrProps}
+                        >
 
-                    </ReactTable>) : ""}
-                    </div>
+                        </ReactTable>) : ""}
+            </div>
         )
     }
 }

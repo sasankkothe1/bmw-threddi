@@ -37,9 +37,13 @@ class TitleToDescriptionEnricher(Enricher):
 
     def enrich_event(self, event):
         print("Start Enriching")
-        _source_fields = self._config.get('source_fields')
-        _delimiter = self._config.get('delimiter') or "|"
-
+        try:
+            _source_fields = self._config.get('source_fields')
+            _delimiter = self._config.get('delimiter') or "|"
+        except AttributeError as e:
+            print(e)
+            return None
+        
         text = ""
 
         for _f in _source_fields:

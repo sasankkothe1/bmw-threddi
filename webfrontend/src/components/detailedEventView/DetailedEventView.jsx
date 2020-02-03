@@ -31,7 +31,7 @@ export default class DetailedEventView extends Component {
                     <div className={"ev-batches"}>
                         <MetricBatchComponent size="big" value={this.props.activeEvent.importance}
                                               field="Importance"/>
-                        <MetricBatchComponent size="big" value="TBC" field="Distance To Location"/>
+                        <MetricBatchComponent size="big" value={this.props.activeEvent.location_info?this.this.props.activeEvent.location_info.distance + " km":"-"} field="Distance To Location"/>
                     </div>
                     <div className={"ev-batches"}>
                         <MetricBatchComponent size="medium"
@@ -52,7 +52,6 @@ export default class DetailedEventView extends Component {
                     }
 
                 </div>
-
 
                 <div className={"ev-show-on-map"}>
                     <Button variant="outline-primary">Show on Map</Button>

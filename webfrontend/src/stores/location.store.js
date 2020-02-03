@@ -1,5 +1,6 @@
 import {EventEmitter} from 'events';
 import LocationsDispatcher from '../dispatchers/locations.dispatcher';
+import LocationsActions from '../actions/location.actions';
 
 let _store = {
     locations: [],
@@ -11,7 +12,6 @@ class EventStore extends EventEmitter {
 
     constructor() {
         super();
-        console.log("Construct Store");
         this.dispatchToken = LocationsDispatcher.register(this.dispatcherCallback.bind(this))
     }
 

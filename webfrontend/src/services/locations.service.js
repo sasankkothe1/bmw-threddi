@@ -31,10 +31,8 @@ export default class LocationService {
         }
     }
     static async createMainLocations(newLocation){
-        let eventsRequest = await HttpService.post(LocationService.baseURL(), newLocation);
-        if (eventsRequest.status===200){
-            return eventsRequest.data;
-        }
+        return HttpService.post(LocationService.baseURL(), newLocation);
+
     }
 }
 

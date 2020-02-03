@@ -63,9 +63,6 @@ class FormContainer extends Component {
         this.setState({showError: true, error_msg: LocationStore.getLocationError()})
     }
 
-    locationCreated(value) {
-        console.log(value)
-    }
 
     handleAddress(e) {
         let value = e.target.value;
@@ -75,8 +72,7 @@ class FormContainer extends Component {
                     ...prevState.newLocation,
                     address: value
                 }
-            }),
-            () => console.log(this.state.newLocation)
+            })
         );
     }
 
@@ -88,8 +84,7 @@ class FormContainer extends Component {
                     ...prevState.newLocation,
                     priority: value
                 }
-            }),
-            () => console.log(this.state.newLocation)
+            })
         );
     }
 
@@ -114,15 +109,13 @@ class FormContainer extends Component {
                     ...prevState.newLocation,
                     description: value
                 }
-            }),
-            () => console.log(this.state.newLocation)
+            })
         );
     }
 
     handleFormSubmit(e) {
         e.preventDefault();
         let userData = this.state.newLocation;
-        console.log(userData);
         if (userData.location_id) {
             userData['name'] = userData.location_id.replace(" ", "_");
             userData['location_id'] = userData.location_id.replace(" ", "_");
@@ -207,7 +200,7 @@ class FormContainer extends Component {
                 />{" "}
                 {this.state.showError ?
                     <Alert variant={"danger"}>
-                        {Object.values(this.state.error_msg).toString()}
+                        {this.state.error_msg.toString()}
                     </Alert> : ""}
             </form>
         );

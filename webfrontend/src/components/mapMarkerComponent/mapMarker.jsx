@@ -22,9 +22,10 @@ export default class MapMarker extends Component {
     render() {
 
         let size = this.props.isActive ? "fa-2x" : "fa-2x";
-        let isHovered = this.props.isHovered? " hovered-marker " :"";
+        let isHovered = this.props.isHovered ? " hovered-marker " : "";
         let isActive = this.props.isActive ? "active_element" : "";
         let classes = "fas fa-exclamation-triangle hovered mapmarker " + size + " " + isActive + isHovered;
+        console.log(this.props.event._source);
         return (
             <div>
                 <i className={classes}
@@ -32,7 +33,7 @@ export default class MapMarker extends Component {
                    onMouseOver={this.onHover}
                    lat={this.props.lat}
                    lng={this.props.lng}/>
-                {this.props.isActive?
+                {this.props.isActive ?
                     <Card className={"info-window"}>
                         <Card.Body>
                             <Card.Title>{this.props.event._source.id}</Card.Title>
@@ -42,15 +43,15 @@ export default class MapMarker extends Component {
                                                       value={this.props.event._source.importance}
                                                       field="Importance"/>
                                 <MetricBatchComponent size="big"
-                                                      value={20}
-                                                      field="Importance"/>
+                                                      value={this.props.event._source.location_info ? this.props.event._source.location_info.distance + " km" : "-"}
+                                                      field="Distance To Location"/>
                             </div>
                             <hr className="horizontal-line"/>
 
                             {this.props.event._source.description}
                         </Card.Body>
                     </Card> : ""}
-                {this.props.isHovered && !this.props.isActive?
+                {this.props.isHovered && !this.props.isActive ?
                     <Card className={"info-window"}>
                         <Card.Body>
                             <Card.Title>{this.props.event._source.id}</Card.Title>

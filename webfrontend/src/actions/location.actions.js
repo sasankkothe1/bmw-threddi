@@ -24,16 +24,17 @@ class LocationActions {
     createLocation(data) {
         LocationService.createMainLocations(data)
             .then((locations) => {
+                this.getLocation();
                 LocationDispatcher.dispatch({
                     actionType: 'POST_LOCATION_SUCCESSFUL',
                     value: locations
                 });
             })
             .catch((error)=>{
-                    console.dir(error.response.data);
                     LocationDispatcher.dispatch({
                         actionType: 'POST_LOCATION_ERROR',
-                        value: error.response.data
+                        value: error
+
                     });
                 }
             );

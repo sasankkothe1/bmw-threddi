@@ -72,8 +72,8 @@ export default class GlobalSearchComponent extends React.Component {
             value={columnSearch}
           >
             <option value=""> All columns</option>
-            {columns.map(col => {
-              return col.accessor !== "lat"?<option value={col.accessor}>{col.Header}</option>:"";
+            {columns.map((col, idx) => {
+              return col.accessor !== "lat"?<option key={idx} value={col.accessor}>{col.Header}</option>:"";
             })}
           </select>
         </div>

@@ -62,11 +62,14 @@ class Enricher:
         # Do event processing
         _event = self.enrich_event(event=_event)
 
-        # Change routing key
-        _new_routing_key = method.routing_key.split(".", 1)[1]
+        if _event is None:
+            print("There was an error, maybe no configurations")
+        else:
+            # Change routing key
+            _new_routing_key = method.routing_key.split(".", 1)[1]
 
-        # Send it
-        self._send_event(json.dumps(_event), _new_routing_key)
+            # Send it
+            self._send_event(json.dumps(_event), _new_routing_key)
 
     def _send_event(self, event, routing_key):
         logging.info("Send: Event to {} with routing key {}".format(self._output_exchange, routing_key))

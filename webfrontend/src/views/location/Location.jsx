@@ -28,7 +28,6 @@ export default class Location extends Component {
     }
 
     successfullyCreatedLocation() {
-        console.log("Created successfully");
         this.showPostInfo(true);
     }
 
