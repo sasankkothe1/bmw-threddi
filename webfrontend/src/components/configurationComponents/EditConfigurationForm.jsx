@@ -13,6 +13,7 @@ class EditConfigurationForm extends Component {
     this.state = {
       validated: false,
       setValidated: false,
+      processingArray: [],
       editConfiguration : {
         name: props.configuration.name,
         id: props.configuration.configuration_id,
@@ -44,6 +45,9 @@ class EditConfigurationForm extends Component {
     this.configurationCreatedSuccess = this.configurationCreatedSuccess.bind(this);
     this.handleProcessingChange = this.handleProcessingChange.bind(this)
     this.addSDIInformation = this.addSDIInformation.bind(this)
+    this.deleteGF = this.deleteGF.bind(this)
+    this.deleteFO = this.deleteFO.bind(this)
+    this.deleteSDI = this.deleteSDI.bind(this)
     ConfigStore.addChangeListener("CONFIGURATOR_CREATION_FAILED" , this.configCreationFailError);
     configStore.addChangeListener("CONFIGURATION_CREATED_SUCCESS", this.configurationCreatedSuccess)
   }
@@ -62,6 +66,28 @@ class EditConfigurationForm extends Component {
       alert("something went wrong");
   }
 
+  deleteGF = (e) => {
+    e.persist()
+    let array = [...this.state.editConfiguration.generalFilterOptions];
+    console.log(array.splice(e.target.id,1))
+    // this.setState({
+    //   editConfiguration: {
+    //     ...this.state.editConfiguration,
+    //     generalFilterOptions : array.splice(e.target.id , 1)
+    //   }
+    // });
+  }
+
+  deleteFO(index) {
+
+  }
+
+  deleteSDI(index) {
+
+
+  }
+
+
   handleChange = e => {
     e.persist();
     let value = e.target.value;
@@ -76,8 +102,17 @@ class EditConfigurationForm extends Component {
   };
 
   handleProcessingChange = (selectedOption) => {
-    this.setState({ selectedOption });
-  }
+    console.log("1     "  + this.state.processingArray)
+    let processingArray = [];
+    selectedOption.map((val,idx)=>{
+      this.setState(prevState => ({
+        processingArray: [...prevState.processingArray, val.value]
+      }))
+    });
+    //this.setState({processingArray : processingArray});
+    console.log(this.state.processingArray)
+    }
+  
 
   // handleFieldMapping(e) {
   //     e.persist();
@@ -94,7 +129,6 @@ class EditConfigurationForm extends Component {
   handleFilterMapping(e) {
     e.persist();
     let classSplit = e.target.className.split(" ");
-    console.log(classSplit[0]);
     if(["filter","method","threshold"].includes(classSplit[0])){
         
         let filterOptions = [...this.state.editConfiguration.filterOptions];
@@ -107,7 +141,6 @@ class EditConfigurationForm extends Component {
   handleGeneralFilterMapping(e) {
     e.persist();
     let classSplit = e.target.className.split(" ");
-    console.log(classSplit[0]);
     if(["filter","method","threshold"].includes(classSplit[0])){
         
         let generalFilterOptions = [...this.state.editConfiguration.generalFilterOptions];
@@ -122,7 +155,6 @@ class EditConfigurationForm extends Component {
   handleSDIMapping(e) {
     e.persist();
     let classSplit = e.target.className.split(" ");
-    console.log(classSplit[0]);
     if(["sdi_name","sdi_type","sdi_description"].includes(classSplit[0])){
         
         let sdi = [...this.state.editConfiguration.sdi];
@@ -203,7 +235,7 @@ class EditConfigurationForm extends Component {
               />
             </Form.Group>
 
-            <Form.Group as={Col} md="4" id="sourceDescription">
+            <Form.Group as={Col} md="3" id="sourceDescription">
               <Form.Control
                 required
                 type="text"
@@ -215,6 +247,9 @@ class EditConfigurationForm extends Component {
                 className = "sdi_description"
               />
             </Form.Group>
+            <Form.Group as={Col} md="1" >
+                <Button block variant="danger" id={descId} onClick={this.deleteSDI}>-</Button>
+              </Form.Group>
           </Form.Row>
         );
       
@@ -381,7 +416,7 @@ class EditConfigurationForm extends Component {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} md="4" id="thresholdColumn">
+              <Form.Group as={Col} md="3" id="thresholdColumn">
                 <Form.Control
                   required
                   type="text"
@@ -393,6 +428,9 @@ class EditConfigurationForm extends Component {
                   className = "threshold"
                 />
               </Form.Group>
+              <Form.Group as={Col} md="1" >
+                <Button block variant="danger" id={thresholdId} onClick={this.deleteGF}>-</Button>
+              </Form.Group>
             </Form.Row>
           );
         })}
@@ -400,7 +438,7 @@ class EditConfigurationForm extends Component {
           + General Filter
         </Button>
         <hr/>
-        {this.state.editConfiguration.filterOptions.map((val, idx) => {
+        { this.state.editConfiguration.filterOptions.map((val, idx) => {
         let fieldId = `${idx}`, methodId = `${idx}`, thresholdId = `${idx}`
           return (
             <Form.Row>
@@ -430,7 +468,7 @@ class EditConfigurationForm extends Component {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} md="4" id="thresholdColumn">
+              <Form.Group as={Col} md="3" id="thresholdColumn">
                 <Form.Control
                   required
                   type="text"
@@ -441,6 +479,9 @@ class EditConfigurationForm extends Component {
                   defaultValue={val.threshold}
                   className = "threshold"
                 />
+              </Form.Group>
+              <Form.Group as={Col} md="1" >
+                <Button block variant="danger" id={thresholdId} onclick={this.deleteFO}>-</Button>
               </Form.Group>
             </Form.Row>
           );

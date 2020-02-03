@@ -15,6 +15,7 @@ import './components/incident.css';
 import './components/locationTableComponent/LocationRow.css';
 import './views/location/location.css';
 import './components/search.css';
+import './components/configurationComponents/editConfigurationform.css';
 
 import './views/login/LoginPage.css';
 import './views/registration/registration-page.css';

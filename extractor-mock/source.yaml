@@ -58,11 +58,11 @@ default_properties:
 
     - displayname: GDELT Event Code
       id: EventCode
-      description: 
+      description: GDELT Event Code for the respective Base Event
 
     - displayname: GDELT Base Code
       id: EventBaseCode
-      description: GDELT Event Code for the respective Base Event
+      description: GDELT Base Code for the respective Base Event
 
     - displayname: Quad_class
       id: QuadClass
