@@ -3,8 +3,9 @@ import configurationSendDispatcher from '../dispatchers/configurationSend.dispat
 
 class ConfigurationActions {
 
-    createConfiguration(data) {
-        ConfigService.createConfig(data)
+    updateConfiguration(data) {
+        console.log("Update");
+        ConfigService.updateConfig(data)
             .then(() => {
                 configurationSendDispatcher.dispatch({
                     actionType: 'CONFIGURATION_CREATED_SUCCESS',

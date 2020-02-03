@@ -63,7 +63,7 @@ class EditConfigurationForm extends Component {
   }
 
   configCreationFailError (){
-      alert("something went wrong");
+      console.log("something went wrong")
   }
 
   deleteGF = (e) => {
@@ -170,13 +170,12 @@ class EditConfigurationForm extends Component {
       e.preventDefault();
       e.stopPropagation();
     }
-    this.setState({validated:true})
+    this.setState({validated:true});
 
     if(form.checkValidity() === true) {
-        // let editedConfiguration = this.state.editConfiguration;
-        // ConfigurationActions.createConfiguration(editedConfiguration);
-        console.log(this.state.selectedOption)
-        console.log(this.state.editConfiguration)
+        let editedConfiguration = this.state.editConfiguration;
+        ConfigurationActions.updateConfiguration(editedConfiguration);
+        ConfigurationActions.triggerExtracting();
     }
   }
   // addMappingField = () => {

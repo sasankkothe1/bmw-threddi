@@ -8,6 +8,7 @@ export default class HttpService {
     }
 
     static put(url, data) {
+        console.log("url");
         return this.doRequest(url, data, 'PUT');
     }
 
