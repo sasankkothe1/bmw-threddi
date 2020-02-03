@@ -9,12 +9,6 @@ import UIActions from "../../actions/ui.actions";
 
 export default class DetailedEventView extends Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
-
     render() {
         return (
             <div className={"event-sidebar"}>

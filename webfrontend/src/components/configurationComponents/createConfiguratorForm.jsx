@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row, Form, Button, InputGroup } from "react-bootstrap";
+import { Col, Row, Form, Button } from "react-bootstrap";
 import ToastComponent from "../ToastComponent";
 import ConfigurationActions from '../../actions/configuration.actions';
 import ConfigStore from '../../stores/config.store';

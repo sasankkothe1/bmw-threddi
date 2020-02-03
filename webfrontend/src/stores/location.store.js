@@ -39,6 +39,8 @@ class EventStore extends EventEmitter {
             case 'UPDATE_ACTIVE_LOCATION':
                 _store.active_location = action.value;
                 break;
+            default:
+                break;
         }
 
         this.emitChange(action.actionType);

@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import EventStore from "../stores/event.store";
 import EventAction from "../actions/event.actions";
 import Search from './Search';
-import eventStore from '../stores/event.store';
 import moment from "moment";
 
 export default class IncidentEventTable extends Component {

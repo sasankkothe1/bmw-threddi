@@ -26,6 +26,8 @@ class UIStore extends EventEmitter{
             case 'CLOSE_ADDITIONAL_INFORMATION_MODAL':
                 this.closeAdditionalInformationModal(action.value);
                 break;
+            default:
+                break;
 
         }
 

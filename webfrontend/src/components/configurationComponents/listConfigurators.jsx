@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import React, {Component} from "react";
 import ConfigurationActions from '../../actions/configuration.actions';
 import ConfigStore from '../../stores/config.store';
-import configStore from "../../stores/config.store";
+import configStore from '../../stores/config.store';
 
 class ListConfigurators extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class ListConfigurators extends Component {
 onFetchConfigs() {
     this.setState({
         configs: configStore.getConfigs()
-    })
+    });
     console.log(this.state.configs[0]);
 }
 

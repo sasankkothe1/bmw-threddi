@@ -1,5 +1,4 @@
 import config from "../config";
-import axios from "axios";
 import HttpService from "./http.service";
 
 export default class AuthService {

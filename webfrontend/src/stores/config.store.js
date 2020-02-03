@@ -1,5 +1,5 @@
 import {EventEmitter} from 'events';
-import configuraitonSendDispatcher from '../dispatchers/configurationSend.dispatcher';
+import configurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
 import ConfigService from '../services/config.service';
 
 let _store = {
@@ -30,6 +30,8 @@ class ConfigStore extends EventEmitter{
                 break;
             case 'FETCH_CONFIGS':
                 await this.fetchConfigs();
+                break;
+            default:
                 break;
         }
 
