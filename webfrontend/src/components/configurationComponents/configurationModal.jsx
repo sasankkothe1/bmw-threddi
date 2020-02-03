@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Tabs, Tab } from "react-bootstrap";
 import EditConfigurationform from "./EditConfigurationForm";
-import ListConfigurators from "./ListConfigurators";
+import ListConfigurators from "./listConfigurators";
 
 export default class ConfigurationModal extends Component {
   constructor(props) {
