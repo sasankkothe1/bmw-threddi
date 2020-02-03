@@ -66,19 +66,19 @@ default_properties:
       id: QuadClass
       description: Quad Class of GDELT
 
-    - displayName: Number of Sources
+    - displayname: Number of Sources
       id: NumSources
       description: Number of Sources
 
-    - displayName: Number of Articles
+    - displayname: Number of Articles
       id: NumArticles
       description: Number of Articles about the event
 
-    - displayName: Impact
+    - displayname: Impact
       id: GoldsteinScale
       description: Goldstein Scale to measure the impact of an event
 
-    - displayName: Average Tone
+    - displayname: Average Tone
       id: AvgTone
       description: Sentiment Analyses on the event by GDELT
 
