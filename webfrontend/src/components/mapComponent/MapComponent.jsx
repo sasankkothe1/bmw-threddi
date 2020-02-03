@@ -8,8 +8,6 @@ import MapLocationMarker from "../mapLocationComponent/mapLocationMarker";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import "./MapComponent.css"
-import SearchBar from "../locationTableComponent/SearchBar";
-import Input from "../locationFormComponent/Input";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import EventSearcher from "../../services/event.searcher";
@@ -137,7 +135,6 @@ class MapComponent extends Component {
 
         return (
             <>
-    
                 <div className={"toolbar"}>
                     <div>
                         <InputGroup className="mb-3">

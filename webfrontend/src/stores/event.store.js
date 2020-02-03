@@ -33,6 +33,8 @@ class EventStore extends EventEmitter {
             case 'UPDATE_HOVERED_EVENT':
                 await this.updateHoveredEvent(action.value);
                 break;
+            default:
+                break;
         }
 
         this.emitChange(action.actionType);

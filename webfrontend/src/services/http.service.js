@@ -1,4 +1,3 @@
-"use strict";
 
 export default class HttpService {
     constructor() {
@@ -38,7 +37,7 @@ export default class HttpService {
         let config = {method: method, headers: header};
 
         if (body) {
-            config.body = JSON.stringify(body)
+            config.body = JSON.stringify(body);
         }
 
         return new Promise((resolve, reject) => {
@@ -49,12 +48,10 @@ export default class HttpService {
                     return resp.json();
                 }
             }).then((resp) => {
-                console.log(resp)
                 if (resp.error) {
                     reject(resp.error);
                 } else {
                     if (resp.hasOwnProperty('token')) {
-                        console.log(resp.token)
                         window.localStorage.setItem("token", resp.token);
                     }
                     resolve(resp);

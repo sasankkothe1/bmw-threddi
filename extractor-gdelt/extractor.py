@@ -84,17 +84,22 @@ class Extractor:
             self._clear_data()
 
     def _do_enriching(self, minutes=0, iteration=0):
-
+        special_fetch = False
         if iteration:
             self._logger.info("Iteration {iteration}".format(iteration=iteration))
         else:
+            special_fetch = True
+            self._logger.info("_")
+            self._logger.info("#####################################################################################")
             self._logger.info("Extraordinary Fetching of events")
+            self._logger.info("#####################################################################################")
+            self._logger.info("_")
 
         status, _endpoint_config = self._load_configuration_from_endpoint(self._extractor_id)
         if status == 200:
             self._config = _endpoint_config
 
-        self._source_df = self.fetch_current_data()
+        self._source_df = self.fetch_current_data(special_fetch)
 
         if len(self._source_df) == 0:
             # Sleep for 60* Minutes seconds
@@ -158,7 +163,7 @@ class Extractor:
             value = pd.DataFrame(function(self._source_df))
             self._output_frame[key] = value if len(value) > 0 else default_value
 
-    def fetch_current_data(self):
+    def fetch_current_data(self, specialfetch=None):
         pass
 
     def start_polling(self):

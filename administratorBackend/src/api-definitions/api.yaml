@@ -355,17 +355,6 @@ components:
           type: array
           items:
             type: string
-    historical_events:
-      type: object
-      properties:
-        location_id: # id of location
-          type: string
-        day:
-          type: string
-          format: datetime
-        event_count: # Amount of events at a particular day
-          type: integer
-          format: int64
     configurations:
       type: object
       $ref: '#/components/schemas/configurations'

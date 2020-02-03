@@ -12,6 +12,10 @@ export default class ConfigCreateService {
         return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/configurations`
     }
 
+    static extractorURL(){
+        return `http://${config.EXTRACTOR_URL}:${config.EXTRACTOR_PORT}/triggerextracting`
+    }
+
     static async createConfig(configData){
         let createConfigRequest = await HttpService.post(ConfigCreateService.baseURL(), configData);
         if (createConfigRequest.status===200){
@@ -27,5 +31,9 @@ export default class ConfigCreateService {
         if (fetchConfigRequest.length){
             return fetchConfigRequest;
         }
+    }
+
+    static triggerConfig(){
+        return axios.post(ConfigCreateService.extractorURL(), {});
     }
 }

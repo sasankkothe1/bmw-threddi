@@ -47,6 +47,8 @@ export default class EventSearcher {
                     return event[field] <= parseFloat(parameter);
                 case '==':
                     return event[field] === parseFloat(parameter);
+                default:
+                    return false;
             }
         }
     }

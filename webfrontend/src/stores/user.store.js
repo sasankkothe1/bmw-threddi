@@ -27,6 +27,8 @@ class UserStore extends EventEmitter{
                 
                 localStorage.setItem("error", action.value.toString())
                 break;
+            default:
+                break;
 
         }
 

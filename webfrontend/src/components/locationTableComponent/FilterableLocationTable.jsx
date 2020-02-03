@@ -17,14 +17,14 @@ export default class FilterableLocationTable extends Component {
         this.state = {
             addModalShow: false,
             locations: [],
-            filter:""
+            filter: ""
         };
 
         LocationActions.getLocation();
 
         this.inputRef = React.createRef();
         this.updateLocations = this.updateLocations.bind(this);
-        this.addModalClose= this.addModalClose.bind(this)
+        this.addModalClose = this.addModalClose.bind(this)
     }
 
     componentWillMount() {
@@ -32,7 +32,7 @@ export default class FilterableLocationTable extends Component {
         LocationStore.addChangeListener("POST_LOCATION_SUCCESSFUL", this.addModalClose)
     }
 
-    componentWillUnount() {
+    componentWillUnmount() {
         LocationStore.removeChangeListener("GET_LOCATIONS", this.updateLocations);
         LocationStore.removeChangeListener("POST_LOCATION_SUCCESSFUL", this.addModalClose)
     }
@@ -43,13 +43,14 @@ export default class FilterableLocationTable extends Component {
         })
     }
 
-    handleFilterChange(){
+    handleFilterChange() {
         this.setState({filter: this.inputRef.current.value})
     }
-    addModalClose(){
-        this.updateLocations();
-        this.setState({addModalShow: false});
+
+    addModalClose() {
+        this.setState({addModalShow: false, locations: LocationStore.getLocations()});
     }
+
     render() {
 
 
@@ -63,7 +64,7 @@ export default class FilterableLocationTable extends Component {
                             </InputGroup.Prepend>
                             <FormControl
                                 ref={this.inputRef}
-                                onChange={()=>this.handleFilterChange()}
+                                onChange={() => this.handleFilterChange()}
                                 placeholder="Filter Locations"
                                 aria-label="Filter Locations"
                                 aria-describedby="filter-field"
@@ -74,7 +75,8 @@ export default class FilterableLocationTable extends Component {
                         Add location </Button>
                 </div>
 
-                <LocationTable locations={this.state.locations.filter((location)=>this.state.filter?location._source.mainLocation.location_id.toLowerCase().replace("_"," ").includes(this.state.filter.toLowerCase()):true)}/>
+                <LocationTable
+                    locations={this.state.locations.filter((location) => this.state.filter ? location._source.mainLocation.location_id.toLowerCase().replace("_", " ").includes(this.state.filter.toLowerCase()) : true)}/>
                 <LocationFormModal
                     show={this.state.addModalShow}
                     onHide={this.addModalClose}/>

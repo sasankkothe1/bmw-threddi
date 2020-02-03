@@ -23,8 +23,9 @@ METHOD_MAPPING = {
 
 class GDELTFetcher:
     client = None
-    # _last_fetch = datetime.now().strftime("%Y%m%d000000")
-    _last_fetch = datetime(2020, 1, 27).strftime("%Y%m%d000000")
+    _special_fetch_date = datetime.now().strftime("%Y%m%d000000")
+    _last_fetch = datetime.now().strftime("%Y%m%d000000")
+    #_last_fetch = datetime(2020, 1, 27).strftime("%Y%m%d000000")
 
     def __init__(self):
         self.client = bigquery.Client()
@@ -32,9 +33,7 @@ class GDELTFetcher:
         self._logger = logging.getLogger(__name__)
         self._logger.setLevel(int(os.environ.get('LOG_LEVEL')) or logging.WARNING)
 
-    def fetch_current_data(self, filter_options, general_filter_option):
-        event = pd.DataFrame()
-        query_job = None
+    def fetch_current_data(self, filter_options, general_filter_option, special_fetch=False):
 
         # Get Conditions from the Source.yaml
         conditions = self.get_conditions(general_filter_option)
@@ -45,7 +44,7 @@ class GDELTFetcher:
         query = (
             'SELECT *  FROM `gdelt-bq.gdeltv2.events` WHERE DATEADDED>{lastdate} AND ({location_query} {conditions})  ORDER BY DATEADDED DESC'
                 .format(location_def=location_def,
-                        lastdate=self._last_fetch,
+                        lastdate=self._special_fetch_date if special_fetch else self._last_fetch,
                         conditions=conditions[4:],
                         location_query=location_query)
         )

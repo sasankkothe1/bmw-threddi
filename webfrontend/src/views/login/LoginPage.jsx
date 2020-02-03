@@ -12,7 +12,6 @@ export default class LoginPage extends Component {
     super(props);
 
     this.state = {
-      redirect : false,
             username: '',
             password: '',
             submitted: false,

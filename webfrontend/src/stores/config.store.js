@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
+import configurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
 import ConfigService from '../services/config.service';
-import ConfigurationSendDispatcher from '../dispatchers/configurationSend.dispatcher';
 
 let _store = {
     configs: [],
@@ -12,7 +12,8 @@ class ConfigStore extends EventEmitter{
     constructor() {
         super();
 
-        this.dispatchToken = ConfigurationSendDispatcher.register(this.dispatcherCallback.bind(this))
+        this.dispatchToken = configurationSendDispatcher.register(this.dispatcherCallback.bind(this))
+
     }
 
     emitChange(eventName){
@@ -21,8 +22,8 @@ class ConfigStore extends EventEmitter{
 
 
     /**
-     * location error creation: 400, 402. 
-     * 
+     * location error creation: 400, 402.
+     *
      */
     async dispatcherCallback(action) {
         switch(action.actionType) {
@@ -34,9 +35,13 @@ class ConfigStore extends EventEmitter{
                 //localStorage.setItem("error", action.value.toString())
                 break;
             case 'FETCH_CONFIGS':
-                
+
                 await this.fetchConfigs();
-                
+
+                break;
+            case 'TRIGGER_EXTRACTOR':
+                break;
+            default:
                 break;
         }
 
@@ -48,7 +53,6 @@ class ConfigStore extends EventEmitter{
     setStatus(value){
         _store.status = value;
     }
-
     
     addChangeListener(eventName, callback) {
         this.on(eventName, callback);

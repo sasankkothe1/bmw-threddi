@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import './EventSidebar.css';
-import MetricBatchComponent from "../metricBatchComponent/MetricBatchComponent";
-import BatchComponent from "../actorBatchComponent/BatchComponent";
 import Button from "react-bootstrap/Button";
-import moment from "moment";
 
-import UIActions from "../../actions/ui.actions";
 import ShortEventList from "../shortEventListComponent/ShortEventList";
 import DetailedEventView from "../detailedEventView/DetailedEventView";
-import AdditionalInformationModalComponent from "../additionalInformationModal/AdditionalInformationModalComponent";
 
 export default class EventSidebar extends Component {
 

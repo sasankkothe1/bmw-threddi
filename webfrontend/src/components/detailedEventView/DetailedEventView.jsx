@@ -9,12 +9,6 @@ import UIActions from "../../actions/ui.actions";
 
 export default class DetailedEventView extends Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
-
     render() {
         return (
             <div className={"event-sidebar"}>
@@ -37,7 +31,9 @@ export default class DetailedEventView extends Component {
                     <div className={"ev-batches"}>
                         <MetricBatchComponent size="big" value={this.props.activeEvent.importance}
                                               field="Importance"/>
-                        <MetricBatchComponent size="big" value="TBC" field="Distance To Location"/>
+                        <MetricBatchComponent size="big"
+                                              value={this.props.activeEvent.location_info.distance?parseInt(this.props.activeEvent.location_info.distance) + " km":"-"}
+                                              field={this.props.activeEvent.location_info.distance? "To " + this.props.activeEvent.location_info.name.replace("_"," "):"Distance To Location"} />
                     </div>
                     <div className={"ev-batches"}>
                         <MetricBatchComponent size="medium"
@@ -58,7 +54,6 @@ export default class DetailedEventView extends Component {
                     }
 
                 </div>
-
 
                 <div className={"ev-show-on-map"}>
                     <Button variant="outline-primary">Show on Map</Button>

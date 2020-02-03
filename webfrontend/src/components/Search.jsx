@@ -1,5 +1,4 @@
 import React from "react";
-import { Input } from "semantic-ui-react";
 
 export default class GlobalSearchComponent extends React.Component {
   constructor(props) {
@@ -73,8 +72,8 @@ export default class GlobalSearchComponent extends React.Component {
             value={columnSearch}
           >
             <option value=""> All columns</option>
-            {columns.map(col => {
-              if(col.accessor != "lat") return <option value={col.accessor}>{col.Header}</option>;
+            {columns.map((col, idx) => {
+              return col.accessor !== "lat"?<option key={idx} value={col.accessor}>{col.Header}</option>:"";
             })}
           </select>
         </div>

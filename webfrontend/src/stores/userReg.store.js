@@ -26,7 +26,8 @@ class UserRegStore extends EventEmitter{
             case 'REGISTRATION_ERROR':
                 console.dir(action.value.toJSON().message);
                 break;
-
+            default:
+                break;
         }
 
         this.emitChange(action.actionType);
