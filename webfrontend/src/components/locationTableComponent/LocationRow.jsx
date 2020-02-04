@@ -32,7 +32,7 @@ export default class LocationRow extends Component {
  }
 
  deleteLocationSuccessful(){
-    alert("Location successfully deleted. Please reload the page.")
+    alert("Location successfully deleted.")
     this.setState({deleted: true});
   }
 
