@@ -197,9 +197,10 @@ class FormContainer extends Component {
                     type={"secondary"}
                     title={"Clear"}
                     style={buttonStyle}
-                />{" "}
-                {this.state.showError ?
-                    <Alert variant={"danger"}>
+                />
+                {" "}
+                {!this.state.showError ?
+                    <Alert >
                         {this.state.error_msg.toString()}
                     </Alert> : ""}
             </form>
