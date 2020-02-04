@@ -89,9 +89,11 @@ public class Receiver {
             for (MainLocation mainLocation : locations) {
                 double distance = getDistance(Double.valueOf(mainLocation.getLong()), Double.valueOf(mainLocation.getLat()), Double.valueOf(event.getLong()), Double.valueOf(event.getLat()));
 
-                locationInfo.setDistance("" + distance);
-                locationInfo.setLocation_id(mainLocation.getLocation_id());
-                locationInfo.setName(mainLocation.getName());
+                if(event.getLocation_info() == null || Double.valueOf(event.getLocation_info().getDistance()) > distance) {
+                    locationInfo.setDistance("" + distance);
+                    locationInfo.setLocation_id(mainLocation.getLocation_id());
+                    locationInfo.setName(mainLocation.getName());
+                }
 
             }
         }
