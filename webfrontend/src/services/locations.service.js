@@ -9,7 +9,7 @@ export default class LocationService {
 
     static baseURL(){
         return `http://${config.ADMIN_BACKEND_URL}:${config.ADMIN_BACKEND_PORT}/mainlocations`
-        
+
     }
 
     static async getMainLocations(){
@@ -19,13 +19,13 @@ export default class LocationService {
         // }
     }
     static async deleteMainLocations(locationId){
-        let eventsRequest = await HttpService.delete(`${LocationService.baseURL()}/${locationId}`);
+        let eventsRequest = await HttpService.remove(`${LocationService.baseURL()}/${locationId}`);
         if (eventsRequest.status===200){
             return eventsRequest.data;
         }
     }
     static async putMainLocations(locationId, updatedLocation){
-        let eventsRequest =  await axios.put(`${LocationService.baseURL()}/${locationId}`,updatedLocation);
+        let eventsRequest =  await HttpService.put(`${LocationService.baseURL()}/${locationId}`,updatedLocation);
         if (eventsRequest.status===200){
             return eventsRequest.data;
         }
@@ -35,4 +35,3 @@ export default class LocationService {
 
     }
 }
-
