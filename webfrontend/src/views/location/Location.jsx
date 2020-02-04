@@ -66,11 +66,9 @@ export default class Location extends Component {
                             {/*height={500}*/}
                             {/*width={700}*/}
                         {/*/>*/}
-                      </div>
-                        <div className="picture">
-                            <img src={Image} alt="website logo" height={400} width={'auto'}/>
-                        </div>
-                    </div> */}
+
+
+                    {/* <div></div> */}
                 </div>
                 
             </>
