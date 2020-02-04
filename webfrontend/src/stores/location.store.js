@@ -5,10 +5,11 @@ import LocationsActions from '../actions/location.actions';
 let _store = {
     locations: [],
     locations_error: {},
-    active_location: null
+    active_location: null,
+    deleted : false
 };
 
-class EventStore extends EventEmitter {
+class LocationStore extends EventEmitter {
 
     constructor() {
         super();
@@ -39,6 +40,12 @@ class EventStore extends EventEmitter {
             case 'UPDATE_ACTIVE_LOCATION':
                 _store.active_location = action.value;
                 break;
+            case 'DELETE_LOCATION_ERROR':
+                _store.locations_error = action.value;
+                break;
+            case 'DELETE_LOCATION_SUCCESSFUL':
+                _store.deleted = true
+                break;
             default:
                 break;
         }
@@ -67,7 +74,11 @@ class EventStore extends EventEmitter {
         return _store.locations;
     }
 
+    getDeleted(){
+      return _store.deleted;
+    }
+
 
 }
 
-export default new EventStore()
+export default new LocationStore()

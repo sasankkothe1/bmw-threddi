@@ -6,12 +6,19 @@ import Button from 'react-bootstrap/Button';
 
 import LocationAction from '../../actions/location.actions';
 import {Redirect} from "react-router";
+import LocationStore from '../../stores/location.store';
 
 export default class LocationRow extends Component {
 
   constructor(props) {
     super(props);
-    this.state={redirect: false}
+    this.state={
+      redirect: false,
+      deleted: false
+    }
+     this.deleteLocation = this.deleteLocation.bind(this)
+     this.setActiveLocation = this.setActiveLocation.bind(this)
+     this.deleteLocationSuccessful = this.deleteLocationSuccessful.bind(this)
   }
 
   setActiveLocation(location){
@@ -20,9 +27,26 @@ export default class LocationRow extends Component {
     this.setState({redirect:true})
   }
 
+  componentWillMount() {
+     LocationStore.addChangeListener("DELETE_LOCATION_SUCCESSFUL", this.deleteLocationSuccessful);
+ }
+
+ deleteLocationSuccessful(){
+    alert("Location successfully deleted. Please reload the page.")
+    this.setState({deleted: true});
+  }
+
+  deleteLocation(location){
+    LocationAction.deleteLocation(location);
+  }
+
 
   render() {
     let location = this.props.location.mainLocation;
+    if (this.state.deleted) {
+      window.location.reload();
+      this.setState({deleted: false});
+    }
     return (
       <Accordion>
         {this.state.redirect? <Redirect to={{path:"/", state: {location_id: this.props.location.mainLocation.location_id}}} />:""}
@@ -51,7 +75,7 @@ export default class LocationRow extends Component {
 
                 <div className="cardBodyButtons">
                   <Button variant="secondary"> Edit Location </Button>
-                  <Button variant="danger" > Delete Location </Button>
+                  <Button variant="danger" onClick={()=>this.deleteLocation(this.props.location.mainLocation.location_id)}> Delete Location </Button>
                   <Button variant="link" onClick={()=>this.setActiveLocation(this.props.location)}>Show on map</Button>
                 </div>
               </Card.Body>
