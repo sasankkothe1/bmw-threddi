@@ -5,7 +5,8 @@ class ToastComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        state : false
+        state : false,
+	trueState : false
     }
   }
 
