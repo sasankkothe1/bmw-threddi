@@ -157,7 +157,7 @@ const createLocation = async (req, res) => {
             id: req.body.location_id,
             body: {mainLocation: Object.assign(req.body)},
         }).then(response => {
-            return res.status(200).send()
+            return res.status(200).json()
         }, (err => {
             console.log(err);
             return res.status(404).json();

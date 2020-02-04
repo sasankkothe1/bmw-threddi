@@ -61,11 +61,11 @@ export default class Location extends Component {
                     </div>
                     {/* <div className="picture-container-wrapper">
                       <div className="picture-container">
-                        <Line
-                            data={mockdata}
-                            height={500}
-                            width={700}
-                        />
+                        {/*<Line*/}
+                            {/*data={mockdata}*/}
+                            {/*height={500}*/}
+                            {/*width={700}*/}
+                        {/*/>*/}
                       </div>
                         <div className="picture">
                             <img src={Image} alt="website logo" height={400} width={'auto'}/>
