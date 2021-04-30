@@ -20,7 +20,7 @@ pytz==2019.3
 PyYAML==5.1.2
 regex==2019.11.1
 requests==2.22.0
-rsa==4.0
+rsa==4.7
 six==1.13.0
 times==0.7
 tqdm==4.38.0
