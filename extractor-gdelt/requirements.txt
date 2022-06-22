@@ -11,7 +11,7 @@ googleapis-common-protos==1.6.0
 idna==2.8
 lxml==4.4.2
 moment==0.8.2
-numpy==1.17.3
+numpy==1.22.0
 pandas==0.25.3
 pika==1.1.0
 protobuf==3.11.1
